@@ -1,0 +1,2752 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
+  <title>北部親子二日自駕慢活提案 (11/20 13:00 - 11/21 20:40)</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <style>
+    :root {
+      --bg-base: oklch(98.5% 0.008 85);
+      --bg-surface: oklch(100% 0 0);
+      --bg-subtle: oklch(96% 0.012 85);
+      --border-subtle: oklch(91% 0.015 85);
+      --border-strong: oklch(82% 0.02 85);
+      
+      --text-main: oklch(22% 0.02 260);
+      --text-muted: oklch(48% 0.02 260);
+      --text-light: oklch(62% 0.015 260);
+
+      --color-primary: oklch(45% 0.12 250);
+      --color-primary-bg: oklch(94% 0.03 250);
+      
+      --color-accent-food: oklch(52% 0.15 45);
+      --color-accent-food-bg: oklch(95% 0.04 45);
+      
+      --color-accent-culture: oklch(48% 0.13 180);
+      --color-accent-culture-bg: oklch(94% 0.03 180);
+
+      --color-accent-stay: oklch(42% 0.12 290);
+      --color-accent-stay-bg: oklch(94% 0.03 290);
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang TC", "Microsoft JhengHei", sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      background-color: var(--bg-surface);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    header h1 {
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 68ch;
+      margin: 0 auto;
+    }
+
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.25rem;
+      font-size: 0.85rem;
+    }
+
+    .meta-pill {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+    }
+
+    .meta-pill strong {
+      color: var(--text-main);
+    }
+
+    main {
+      padding: 2.5rem 0 4rem;
+    }
+
+    section {
+      margin-bottom: 3.5rem;
+    }
+
+    .section-header {
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Traffic Note Box */
+    .notice-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+    }
+
+    .notice-box h3 {
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+      color: var(--text-main);
+    }
+
+    .notice-box ul {
+      padding-left: 1.2rem;
+      color: var(--text-muted);
+    }
+
+    .notice-box li {
+      margin-bottom: 0.35rem;
+    }
+
+    /* Timeline Section */
+    .day-block {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .day-heading {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--color-primary);
+    }
+
+    .timeline-list {
+      list-style: none;
+      position: relative;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 2.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: 7px;
+      top: 6px;
+      bottom: -1.75rem;
+      width: 2px;
+      background: var(--border-subtle);
+    }
+
+    .timeline-item:last-child::before {
+      display: none;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 0;
+      top: 5px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+      border: 3px solid var(--color-primary);
+    }
+
+    .timeline-time {
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+      display: inline-block;
+    }
+
+    .timeline-transit-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius-sm);
+      margin-left: 0.5rem;
+    }
+
+    .timeline-content-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .timeline-content-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .alt-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: 0.6rem;
+      background: var(--bg-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+    }
+
+    .alt-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+    }
+
+    .badge-primary {
+      font-size: 0.7rem;
+      font-weight: 700;
+      background: var(--color-primary-bg);
+      color: var(--color-primary);
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .badge-secondary {
+      font-size: 0.7rem;
+      font-weight: 600;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .anchor-link {
+      color: var(--color-primary);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .anchor-link:hover {
+      color: var(--text-main);
+    }
+
+    /* Map Section */
+    #map-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .map-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .map-toolbar-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .map-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.25rem 0.65rem;
+      font-size: 0.775rem;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .map-btn:hover {
+      background: var(--bg-subtle);
+      border-color: var(--border-strong);
+    }
+
+    .map-btn.active {
+      background: var(--color-primary-bg);
+      color: var(--color-primary);
+      border-color: var(--color-primary);
+      font-weight: 700;
+    }
+
+    #map {
+      height: 520px;
+      width: 100%;
+      border-radius: var(--radius-md);
+      z-index: 1;
+    }
+
+    /* 底圖降噪淡化：抑制複雜線條與過度飽和色塊，大幅凸顯自訂景點圖標 */
+    .leaflet-tile-pane {
+      filter: grayscale(45%) contrast(0.92) opacity(0.82);
+    }
+
+    /* 升級醒目實體圖釘標籤 (Badge Pin) */
+    .map-badge-pin {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: #ffffff;
+      color: #0f172a;
+      padding: 0.25rem 0.55rem;
+      border-radius: 9999px;
+      font-size: 0.775rem;
+      font-weight: 700;
+      white-space: nowrap;
+      border: 2px solid var(--pin-color, #2563eb);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .map-badge-pin:hover {
+      transform: translate(-50%, -50%) scale(1.12);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
+      z-index: 9999 !important;
+    }
+
+    .map-badge-pin .pin-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--pin-color, #2563eb);
+      flex-shrink: 0;
+    }
+
+    .map-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.8rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--text-muted);
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    /* Directory / Places Section */
+    .place-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .place-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      scroll-margin-top: 2rem;
+      transition: border-color 0.2s ease;
+    }
+
+    .place-card:target {
+      border: 2px solid var(--color-primary);
+      background-color: oklch(99.5% 0.01 250);
+    }
+
+    .place-top {
+      margin-bottom: 0.75rem;
+    }
+
+    .place-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .place-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .place-category {
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+    }
+
+    .cat-culture {
+      background: var(--color-accent-culture-bg);
+      color: var(--color-accent-culture);
+    }
+
+    .cat-food {
+      background: var(--color-accent-food-bg);
+      color: var(--color-accent-food);
+    }
+
+    .cat-stay {
+      background: var(--color-accent-stay-bg);
+      color: var(--color-accent-stay);
+    }
+
+    .cat-transit {
+      background: var(--bg-subtle);
+      color: var(--text-muted);
+    }
+
+    .place-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 0.75rem;
+    }
+
+    .place-info-list {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      list-style: none;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 0.6rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .place-info-list li {
+      margin-bottom: 0.35rem;
+      line-height: 1.55;
+    }
+
+    .place-info-list strong {
+      color: var(--text-main);
+    }
+
+    .place-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 0.75rem;
+      font-size: 0.8rem;
+    }
+
+    .voucher-preview {
+      margin: 0.85rem 0 0.5rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: var(--bg-subtle);
+    }
+
+    .voucher-preview img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      display: block;
+      cursor: zoom-in;
+      transition: opacity 0.15s ease;
+    }
+
+    .voucher-preview.table-preview img {
+      height: auto;
+      object-fit: contain;
+    }
+
+    .voucher-preview img:hover {
+      opacity: 0.92;
+    }
+
+    .voucher-caption {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      padding: 0.4rem 0.6rem;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-subtle);
+      line-height: 1.4;
+    }
+
+    /* Lightbox Modal */
+    .lightbox-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(4px);
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      cursor: zoom-out;
+    }
+
+    .lightbox-modal.active {
+      display: flex;
+    }
+
+    .lightbox-content-wrapper {
+      position: relative;
+      max-width: 95vw;
+      max-height: 90vh;
+      background: var(--bg-surface);
+      border-radius: var(--radius-md);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25);
+      padding: 0.85rem;
+      cursor: default;
+    }
+
+    .lightbox-img {
+      max-width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+      display: block;
+      border-radius: var(--radius-sm);
+    }
+
+    .lightbox-close-btn {
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      width: 34px;
+      height: 34px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 50%;
+      font-size: 1.25rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-main);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .lightbox-hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+
+    .place-ext-link {
+      color: var(--color-primary);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .place-ext-link:hover {
+      text-decoration: underline;
+    }
+
+    .place-gmaps-link {
+      color: oklch(35% 0.12 150);
+      background: oklch(96% 0.03 150);
+      border: 1px solid oklch(88% 0.05 150);
+      border-radius: var(--radius-sm);
+      padding: 0.2rem 0.55rem;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.775rem;
+    }
+
+    .place-gmaps-link:hover {
+      background: oklch(92% 0.05 150);
+    }
+
+    .rating-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: oklch(46% 0.16 65);
+      background: oklch(96% 0.04 65);
+      border: 1px solid oklch(88% 0.06 65);
+      padding: 0.15rem 0.45rem;
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+    }
+
+    .rating-star {
+      color: oklch(62% 0.19 75);
+    }
+
+    .rating-count {
+      font-size: 0.7rem;
+      font-weight: normal;
+      color: var(--text-muted);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    /* Popup styling in Leaflet */
+    .leaflet-popup-content-wrapper {
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-md);
+      font-family: inherit;
+    }
+
+    .custom-popup h4 {
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+      color: var(--text-main);
+    }
+
+    .custom-popup p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .custom-popup a {
+      font-size: 0.8rem;
+      color: var(--color-primary);
+      font-weight: 700;
+      text-decoration: underline;
+    }
+
+    /* Plan Switcher */
+    .plan-switcher-wrap {
+      margin-bottom: 2rem;
+    }
+
+    .plan-switcher {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1rem;
+      background: var(--bg-subtle);
+      padding: 0.5rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .plan-tab {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      background: var(--bg-surface);
+      border: 2px solid transparent;
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .plan-tab:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-1px);
+    }
+
+    .plan-tab.active {
+      background: var(--bg-surface);
+      border-color: var(--color-primary);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12);
+    }
+
+    .plan-badge {
+      display: inline-block;
+      font-size: 0.725rem;
+      font-weight: 700;
+      padding: 0.15rem 0.55rem;
+      border-radius: 4px;
+      margin-bottom: 0.4rem;
+      background: var(--bg-subtle);
+      color: var(--text-muted);
+    }
+
+    .plan-tab.active .plan-badge {
+      background: var(--color-primary-bg);
+      color: var(--color-primary);
+    }
+
+    .plan-tab-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+    }
+
+    .plan-tab-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .plan-view {
+      display: none !important;
+    }
+
+    .plan-view.active {
+      display: block !important;
+    }
+
+    .place-grid.plan-view.active {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .map-toolbar.plan-view.active {
+      display: flex !important;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <h1>北部親子二日自駕慢活提案</h1>
+      <div class="meta-bar">
+        <div class="meta-pill">行程時段：<strong>11/20 (五) 13:00 至 11/21 (六) 20:40</strong></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 方案切換器 -->
+    <div class="plan-switcher-wrap">
+      <div class="plan-switcher" role="tablist" aria-label="行程方案切換">
+        <button type="button" class="plan-tab active" id="tab-zhongli" role="tab" aria-selected="true" aria-controls="view-zhongli">
+          <span class="plan-badge">方案 A</span>
+          <span class="plan-tab-title">中壢青埔線（Xpark 水族館 ＆ 老街溪／新勢公園）</span>
+          <span class="plan-tab-meta">住福容徠旅中壢 ｜ 水母企鵝・涵管滑梯・海盜船放電・繪本老宅</span>
+        </button>
+        <button type="button" class="plan-tab" id="tab-linkou" role="tab" aria-selected="false" aria-controls="view-linkou">
+          <span class="plan-badge">方案 B</span>
+          <span class="plan-tab-title">林口休閒線（台灣山豬城餵動物 ＆ 三井 OUTLET 雙館）</span>
+          <span class="plan-tab-meta">住福容徠旅林口 ｜ 萌寵互動・美式商場・小熊磨石溜滑梯沙坑</span>
+        </button>
+        <button type="button" class="plan-tab" id="tab-taoyuan" role="tab" aria-selected="false" aria-controls="view-taoyuan">
+          <span class="plan-badge">方案 C</span>
+          <span class="plan-tab-title">桃園藝文線（最美圖書館 ＆ 風禾滾輪滑梯・77 藝文町）</span>
+          <span class="plan-tab-meta">住福容大飯店桃園 ｜ 生命樹總圖・烤鴨三溫暖・50米滾輪溜滑梯・日式舒芙蕾</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 方案 A 注意事項 -->
+    <div class="notice-box plan-view active" id="notice-zhongli">
+      <h3>方案 A（中壢青埔線）路況節奏與注意事項</h3>
+      <ul>
+        <li><strong>親子不趕行程原則</strong>：每日上下午僅安排「單一核心主題場域」，避免頻繁上下車與換點。Day 1 下午停妥飯店後全程步行放電，Day 2 車停置地廣場後全程室內水族與步道悠遊。</li>
+        <li><strong>去程 (11/20 五 13:00 出發)</strong>：13:00 自信義區廣慈取車出發，走信義快接國三南下避開晨間尖峰；下大溪交流道轉台 66 線至平鎮龍岡，Google Maps 預估約 50～60 分鐘。阿美米干午後無休，適合 14:15 抵達悠閒用餐。</li>
+        <li><strong>市區停車策略</strong>：午餐後先至<strong>福容徠旅中壢</strong>停妥車輛，後續水管溜滑梯、新勢公園與壢小森林全程步行（單程僅 5～10 分鐘），徹底免去中壢市區尋找車位的困擾。</li>
+        <li><strong>回程 (11/21 六 19:30-20:40)</strong>：青埔大竹交流道上國二轉國三返台北，週六晚間北返預估需 50～60 分鐘，建議於 19:30-19:40 啟程，確保 20:40 前順利完成還車。</li>
+        <li><strong>住宿券平日規範</strong>：11/20（週五）依福容聯合住宿券規章屬平日，憑券 1 張入住閱旅客房<strong>免加大假日差額 $500</strong>。</li>
+      </ul>
+    </div>
+
+    <!-- 方案 B 注意事項 -->
+    <div class="notice-box plan-view" id="notice-linkou">
+      <h3>方案 B（林口休閒線）路況節奏與客觀提醒</h3>
+      <ul>
+        <li><strong>出發與山豬城踏青 (11/20 五 13:00 出發)</strong>：13:00 自廣慈出發走國一北上往林口，車程約 35～45 分鐘。午後直接前往下福山區台灣山豬城親近餵動物，傍晚返回市區入住福容徠旅林口。山路狹窄需注意行車與防暈車。</li>
+        <li><strong>三井 Outlet 避塞車策略</strong>：週末下午 14:00-18:00 文化二／三路商場停車場常態大排長龍。因入住<strong>福容徠旅林口</strong>距三井僅 2.5 公里，強烈建議將車輛停放飯店，改搭短程計程車（約 8 分鐘、車資約 110 元）前往，免去排隊找車位煩惱。</li>
+        <li><strong>週六晚間順暢返程 (11/21 六 19:45-20:40)</strong>：國道一號林口北上匝道週六 17:30-19:00 稍有車流，建議傍晚在文化二路享用特色晚餐後，於 <strong>19:45 啟程返北</strong>（車程約 40～45 分鐘），可於 20:40 前從容抵達台北廣慈完成還車。</li>
+        <li><strong>住宿券平日規範</strong>：11/20（週五）依福容聯合住宿券規章屬平日，憑券 1 張入住閱旅客房<strong>免加大假日差額 $500</strong>。</li>
+      </ul>
+    </div>
+
+    <!-- 方案 C 注意事項 -->
+    <div class="notice-box plan-view" id="notice-taoyuan">
+      <h3>方案 C（桃園藝文線）路況節奏與應援備忘錄</h3>
+      <ul>
+        <li><strong>週五出發與交通時程</strong>：11/20 (五) 13:00 自信義區廣慈出發，正好避開午間尖峰，國道南下一高行經林口/南崁路段車流平穩，Google Maps 車程預估約 45～50 分鐘可順抵藝文特區中茂新天地。</li>
+        <li><strong>福容飯店停車須知</strong>：福容大飯店桃園店（大興西路一段）房客每房享一台免費停車。因車位為機械與平面混合且採先到先得，強烈建議第一天 17:15 辦理入住後即將車停妥，晚間改採散步（至藝文特區約 10 分鐘）或短程計程車，徹底避開週五晚間藝文特區周邊尋找車位的困擾。</li>
+        <li><strong>福粵樓烤鴨預約</strong>：飯店 2 樓福粵樓之櫻桃片皮鴨為高人氣料理，若確定週五晚餐於館內享用，務必於訂房時或出發前一週致電餐廳預訂。</li>
+        <li><strong>公園保暖與防風</strong>：11 月底受東北季風影響，風禾公園地形空曠風勢稍大，午後女兒體驗滾輪溜滑梯時，請攜帶防風薄外套與防蚊液。</li>
+        <li><strong>週六晚間順暢還車 (11/21 六 19:40-20:40)</strong>：週六在市區享用晚餐至 19:30，19:40 上國道返回台北廣慈奉天宮，車程約 50 分鐘，輕鬆於 20:40 前抵達完成還車手續。</li>
+        <li><strong>聯合住宿券規定</strong>：本方案適用「福容大飯店 桃園」1 張聯合住宿券入住精緻客房（含 2 客早餐），週五屬平日免加大假日差額（實際規定以票券及現場公告為準）。</li>
+      </ul>
+    </div>
+
+    <!-- Chapter 1: Timeline -->
+    <section id="timeline-section">
+      <div class="section-header">
+        <div class="section-title">第一章：行程時間軸與交通時程</div>
+        <div class="section-subtitle">提供首選與順路備選，供當日彈性調整</div>
+      </div>
+
+      <!-- 方案 A：中壢青埔時間軸 -->
+      <div class="plan-view active" id="timeline-zhongli">
+        <!-- Day 1 -->
+        <div class="day-block">
+          <div class="day-heading">
+            <span>Day 1：11/20 (五) 廣慈取車 → 龍岡美食午茶 → 馬祖新村 → 老街溪溜滑梯與新勢放電</span>
+            <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">主要移動方式：自駕 + 市區徒步</span>
+          </div>
+
+        <ul class="timeline-list">
+          <!-- 13:00 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">13:00</span>
+            <span class="timeline-transit-badge">出發前置 15 分</span>
+            <div class="timeline-content-title">廣慈博愛園區取車出發</div>
+            <div class="timeline-content-desc">
+              於廣慈地下停車場或周邊路邊租還據點（iRent / 格上 Go Smart）完成取車與驗車。週五午後出發正好避開上午尖峰車潮。
+            </div>
+            <div class="alt-options">
+              <div class="alt-row">
+                <span class="badge-primary">首選</span>
+                <span>廣慈園區地下停車場（共享汽車，如 iRent / 格上 Go Smart）</span>
+              </div>
+              <div class="alt-row">
+                <span class="badge-secondary">備選</span>
+                <span>南港昆陽周邊實體門市（若租借傳統車隊車輛，可搭乘板南線一站取車）</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 13:15 - 14:15 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">13:15 - 14:15</span>
+            <span class="timeline-transit-badge">高速與快速道路 50～60 分</span>
+            <div class="timeline-content-title">行車動線：廣慈 → 信義快 → 國三 → 大溪交流道 → 台 66 線 → 平鎮/龍岡</div>
+            <div class="timeline-content-desc">
+              走信義快速道路直上國三南下，至大溪交流道轉台 66 快速道路往平鎮，車流順暢好走。
+            </div>
+          </li>
+
+          <!-- 14:15 - 15:30 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">14:15 - 15:30</span>
+            <span class="timeline-transit-badge">車程 5 分至停車場</span>
+            <div class="timeline-content-title">午後餐點時段：龍岡忠貞異國米干商圈</div>
+            <div class="timeline-content-desc">
+              避開中午排隊巔峰，悠閒品嚐滇緬泰眷村特色飲食，鄰近多座收費停車場（如忠貞市場公有停車場）。
+            </div>
+            <div class="alt-options">
+              <div class="alt-row">
+                <span class="badge-primary">首選順路</span>
+                <span><strong>阿美米干 1981</strong>（午後無休、環境寬敞、附設文物展區、出餐動線穩定）</span>
+                <a href="#place-amei" class="anchor-link">查看介紹</a>
+              </div>
+              <div class="alt-row">
+                <span class="badge-secondary">排隊名店</span>
+                <span><strong>國旗屋米干</strong>（滿滿國旗拍照地標，米干湯頭濃郁）</span>
+                <a href="#place-flag" class="anchor-link">查看介紹</a>
+              </div>
+              <div class="alt-row">
+                <span class="badge-secondary">舒適備選</span>
+                <span><strong>大漢饌雲南拉麵</strong> 或 忠貞市場內無名米干</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 15:45 - 17:00 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">15:45 - 17:00</span>
+            <span class="timeline-transit-badge">車程 8 分 / 2.3 公里</span>
+            <div class="timeline-content-title">午後景點：馬祖新村眷村文創園區</div>
+            <div class="timeline-content-desc">
+              桃園三大眷村文創聚落之一，保存完整的將軍眷舍、紅磚矮牆、文創手作工坊與光影電影館。
+            </div>
+            <div class="alt-options">
+              <div class="alt-row">
+                <span class="badge-primary">首選推薦</span>
+                <span><strong>馬祖新村文創園區</strong>（停留約 1～1.5 小時，園區對面有大型公有停車場）</span>
+                <a href="#place-matsu" class="anchor-link">查看介紹</a>
+              </div>
+              <div class="alt-row">
+                <span class="badge-secondary">文化古蹟備選</span>
+                <span><strong>李騰芳古宅</strong>（若去程大溪交流道下後先前往，但需回程繞行約 20 分鐘）</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 17:15 - 17:45 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">17:15 - 17:45</span>
+            <span class="timeline-transit-badge">車程 15～20 分鐘</span>
+            <div class="timeline-content-title">飯店入住與停妥車輛：福容徠旅中壢</div>
+            <div class="timeline-content-desc">
+              至飯店辦理 Check-in，將車輛停入特約/地下停車場（週五平日憑券入住免加價）。自此轉換為<strong>完全徒步放鬆模式</strong>。
+            </div>
+            <div class="alt-options">
+              <div class="alt-row">
+                <span class="badge-primary">基地首選</span>
+                <span><strong>福容徠旅中壢</strong>（近中壢火車站與日式古蹟群，步行即達各景點）</span>
+                <a href="#place-fullon" class="anchor-link">查看介紹</a>
+              </div>
+            </div>
+          </li>
+
+          <!-- 17:45 - 19:15 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">17:45 - 19:15</span>
+            <span class="timeline-transit-badge">全程徒步 單段步行 5～8 分</span>
+            <div class="timeline-content-title">市區傍晚親子大放電：老街溪水管溜滑梯 ＋ 新勢共融公園 ＋ 壢小森林繪本館</div>
+            <div class="timeline-content-desc">
+              專為 6 歲孩童規劃的戶外遊樂與繪本時光，夜幕降臨前享受滑梯草坪與老宅繪本。全程徒步安全舒適。
+            </div>
+            <div class="alt-options">
+              <div class="alt-row">
+                <span class="badge-primary">放電第 1 站</span>
+                <span><strong>老街溪河川教育中心</strong>（必玩山坡彩繪巨型水泥涵管溜滑梯）</span>
+                <a href="#place-laojie" class="anchor-link">查看介紹</a>
+              </div>
+              <div class="alt-row">
+                <span class="badge-primary">放電第 2 站</span>
+                <span><strong>新勢公園海洋風共融遊戲場</strong>（海盜船山丘、白沙坑、360度旋轉鞦韆、大草坪奔跑）</span>
+                <a href="#place-xinshi" class="anchor-link">查看介紹</a>
+              </div>
+              <div class="alt-row">
+                <span class="badge-secondary">靜態休息</span>
+                <span><strong>壢小故事森林</strong>（回飯店順路走訪，日式黑瓦老宅童書繪本館吹冷氣共讀）</span>
+                <a href="#place-forest" class="anchor-link">查看介紹</a>
+              </div>
+            </div>
+          </li>
+
+          <!-- 19:15 - 20:45 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">19:15 - 20:45</span>
+            <span class="timeline-transit-badge">步行 10～15 分</span>
+            <div class="timeline-content-title">晚餐與夜晚彈性時光</div>
+            <div class="timeline-content-desc">
+              市區徒步覓食，享受親子友善家庭餐飲或中壢夜市地道小吃。
+            </div>
+            <div class="alt-options">
+              <div class="alt-row">
+                <span class="badge-primary">夜市首選</span>
+                <span><strong>中壢觀光夜市</strong>（新明夜市，小吃雲集，從飯店步行約 15 分鐘）</span>
+              </div>
+              <div class="alt-row">
+                <span class="badge-secondary">在地老店備選</span>
+                <span><strong>永川牛肉麵 / 新明牛肉麵</strong> 或 站前商圈在地客家小館</span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Day 2 -->
+      <div class="day-block">
+        <div class="day-heading">
+          <span>Day 2：11/21 (六) 青埔 Xpark 夢幻水族 ＆ 企鵝咖啡館 → 橫山湖畔餵魚看鴨 → 順暢返程</span>
+          <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">主要移動方式：自駕定點停放 ＋ 室內/水岸步行</span>
+        </div>
+
+        <ul class="timeline-list">
+          <!-- 09:30 - 10:15 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">09:30 - 10:15</span>
+            <span class="timeline-transit-badge">車程約 20 分</span>
+            <div class="timeline-content-title">退房移師青埔：車輛定點停放置地廣場</div>
+            <div class="timeline-content-desc">
+              飯店退房後直奔青埔置地廣場地下停車場停妥車，全日行程步行即可串聯水族館、商場與水岸公園。
+            </div>
+          </li>
+
+          <!-- 10:15 - 13:30 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">10:15 - 13:30</span>
+            <span class="timeline-transit-badge">全室內 3～3.5 小時</span>
+            <div class="timeline-content-title">上午焦點：Xpark 都會型水生公園 ＆ Xcafe 企鵝咖啡館午餐</div>
+            <div class="timeline-content-desc">
+              日本八景島團隊打造的旗艦水族館，全程空調無日曬雨淋。6 歲女孩最愛的水母萬花筒光影、透明水管游過的企鵝、海豹穿越隧道與互動塗鴉投影。
+            </div>
+            <div class="alt-options">
+              <div class="alt-row">
+                <span class="badge-primary">親子必訪</span>
+                <span><strong>Xpark 都會型水生公園</strong>（停留約 2.5 小時，免去曬太陽與戶外蚊蟲）</span>
+                <a href="#place-xpark" class="anchor-link">查看介紹</a>
+              </div>
+              <div class="alt-row">
+                <span class="badge-primary">午餐特色</span>
+                <span><strong>Xcafe 企鵝咖啡館</strong>（企鵝在頭頂透明水管滑行穿梭，邊吃義大利麵/點心邊看企鵝）</span>
+              </div>
+              <div class="alt-row">
+                <span class="badge-secondary">午餐備選</span>
+                <span><strong>華泰名品城 / 置地廣場美食街</strong>（步行 3 分鐘天橋直達，餐廳品牌多元）</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 13:45 - 15:45 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">13:45 - 15:45</span>
+            <span class="timeline-transit-badge">步行 5 分 或 車程 3 分</span>
+            <div class="timeline-content-title">午後戶外放鬆：橫山書法藝術公園湖畔慢步</div>
+            <div class="timeline-content-desc">
+              不強求小孩進館內安靜看展，純粹享受戶外大自然：沿著埤塘平緩木棧道散步看白鷺鷥與野鴨、湖畔餵魚、大草坪吹泡泡放電。
+            </div>
+            <div class="alt-options">
+              <div class="alt-row">
+                <span class="badge-primary">悠閒散步</span>
+                <span><strong>橫山書法藝術公園</strong>（環湖無障礙步道、湖面微風、廣闊草皮奔跑）</span>
+                <a href="#place-hengshan" class="anchor-link">查看介紹</a>
+              </div>
+              <div class="alt-row">
+                <span class="badge-secondary">雨天備案</span>
+                <span><strong>巧虎夢想樂園</strong>（置地廣場 1 樓，若遇天候不佳可轉室內球池主題樂園）</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 16:00 - 18:30 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">16:00 - 18:30</span>
+            <span class="timeline-transit-badge">購物中心悠閒補給</span>
+            <div class="timeline-content-title">傍晚緩衝時光：華泰名品城漫步 ＆ 享用晚餐</div>
+            <div class="timeline-content-desc">
+              美式露天商場採買小朋友零食或衣服，於 17:30-18:30 享用豐盛晚餐，悠閒散策儲備精神。
+            </div>
+          </li>
+
+          <!-- 19:30 - 20:40 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">19:30 - 20:40</span>
+            <span class="timeline-transit-badge">返程車程約 50～60 分</span>
+            <div class="timeline-content-title">返程歸途：青埔 → 國二大竹交流道 → 國三 → 信義快 → 廣慈還車</div>
+            <div class="timeline-content-desc">
+              置地廣場取車出發，行駛大竹交流道上國道，平穩回程台北廣慈，於 20:40 前順利完成還車手續，小孩在車上舒適補眠。
+            </div>
+          </li>
+        </ul>
+      </div>
+      </div> <!-- /#timeline-zhongli -->
+
+      <!-- 方案 B：林口休閒時間軸 -->
+      <div class="plan-view" id="timeline-linkou">
+        <!-- Day 1 -->
+        <div class="day-block">
+          <div class="day-heading">
+            <span>Day 1：11/20 (五) 廣慈取車 → 台灣山豬城餵萌寵 → 福容徠旅入住 → 三井 OUTLET 雙館晚餐</span>
+            <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">主要移動方式：自駕定點停放 ＋ 短程計程車/室內漫步</span>
+          </div>
+
+          <ul class="timeline-list">
+            <!-- 13:00 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">13:00</span>
+              <span class="timeline-transit-badge">出發前置 15 分</span>
+              <div class="timeline-content-title">廣慈博愛園區取車出發</div>
+              <div class="timeline-content-desc">
+                於廣慈地下停車場或周邊共享汽車點完成取車，出發上信義快速道路，轉建國高架或國三接國道一號北上往林口。
+              </div>
+            </li>
+
+            <!-- 13:15 - 14:15 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">13:15 - 14:15</span>
+              <span class="timeline-transit-badge">車程約 45～50 分</span>
+              <div class="timeline-content-title">行車動線：前往林口下福山區</div>
+              <div class="timeline-content-desc">
+                週五午後車流平順，由林口交流道下後順行前往下福山區，沿途山林景緻宜人。
+              </div>
+            </li>
+
+            <!-- 14:15 - 16:15 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">14:15 - 16:15</span>
+              <span class="timeline-transit-badge">戶外萌寵 2 小時</span>
+              <div class="timeline-content-title">午後焦點：台灣山豬城戶外親近餵動物</div>
+              <div class="timeline-content-desc">
+                免門票農莊，6 歲女孩購買草料、紅蘿蔔親手餵食水牛、白鴕鳥、山羊、山豬、天鵝與錦鯉，享受山林大自然踏青。
+              </div>
+              <div class="alt-options">
+                <div class="alt-row">
+                  <span class="badge-primary">萌寵互動</span>
+                  <span><strong>台灣山豬城</strong>（免門票入園，飼料投餵、水鳥池塘環湖慢步，停留約 1.5～2 小時）</span>
+                  <a href="#place-boar" class="anchor-link">查看介紹</a>
+                </div>
+                <div class="alt-row">
+                  <span class="badge-secondary">順遊備選</span>
+                  <span><strong>林口大峽谷（八里水牛坑）</strong>（若時間充裕可遠眺海景與荒野地貌，停留 20 分鐘）</span>
+                </div>
+              </div>
+            </li>
+
+            <!-- 16:45 - 17:30 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">16:45 - 17:30</span>
+              <span class="timeline-transit-badge">車程約 20 分</span>
+              <div class="timeline-content-title">福容徠旅林口：Check-in 入住 ＆ 車輛定點停妥</div>
+              <div class="timeline-content-desc">
+                車輛駛入飯店地下停車場停妥，辦理入住手續（週五平日憑券入住免加大假日加價），客房稍作休息恢復體能。
+              </div>
+              <div class="alt-options">
+                <div class="alt-row">
+                  <span class="badge-primary">住宿核心</span>
+                  <span><strong>福容徠旅林口</strong>（憑 ITF 聯合住宿券 1 張入住，週五平日免加價）</span>
+                  <a href="#place-fullon-linkou" class="anchor-link">查看介紹</a>
+                </div>
+              </div>
+            </li>
+
+            <!-- 17:45 - 20:30 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">17:45 - 20:30</span>
+              <span class="timeline-transit-badge">計程車 8 分鐘（避開周邊塞車）</span>
+              <div class="timeline-content-title">夜晚時光：MITSUI OUTLET PARK 林口（一二館）漫步晚餐</div>
+              <div class="timeline-content-desc">
+                由飯店搭乘短程計程車直達商場門口，免去開車排隊找車位。全室內平坦無障礙空間、品嚐精緻各國美食、採買小朋友零食。
+              </div>
+              <div class="alt-options">
+                <div class="alt-row">
+                  <span class="badge-primary">晚餐首選</span>
+                  <span><strong>三井 OUTLET 餐廳群</strong>（日式豬排、拉麵、義式餐廳或二館特色料理）</span>
+                  <a href="#place-mitsui" class="anchor-link">查看介紹</a>
+                </div>
+                <div class="alt-row">
+                  <span class="badge-secondary">生活採買</span>
+                  <span>三井二館大型生活專門店、日系藥妝與甜點輕食漫步</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Day 2 -->
+        <div class="day-block">
+          <div class="day-heading">
+            <span>Day 2：11/21 (六) 徠旅晨間退房 → 小熊特色公園磨石滑梯放電 → 三井二館親子時光 → 順暢返北</span>
+            <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">主要移動方式：自駕短程接駁 ＋ 傍晚國道順暢返程</span>
+          </div>
+
+          <ul class="timeline-list">
+            <!-- 09:30 - 10:30 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">09:30 - 10:30</span>
+              <span class="timeline-transit-badge">11:00 前退房</span>
+              <div class="timeline-content-title">悠閒早餐 ＆ 辦理退房</div>
+              <div class="timeline-content-desc">
+                於飯店享用元氣早餐後退房取車，車程約 5 分鐘抵達林口最熱門的戶外共融特色遊戲場。
+              </div>
+            </li>
+
+            <!-- 10:30 - 12:30 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">10:30 - 12:30</span>
+              <span class="timeline-transit-badge">戶外放電 2 小時</span>
+              <div class="timeline-content-title">上午焦點：林口小熊特色運動公園（社區運動公園）</div>
+              <div class="timeline-content-desc">
+                新北市代表性全共融遊戲場。2.9 公尺獨立磨石子溜滑梯、多功能球型攀爬網、大面積潔淨白沙坑與樹皮木屑鋪面，讓 6 歲孩童在陽光大草坪盡情奔跑放電。
+              </div>
+              <div class="alt-options">
+                <div class="alt-row">
+                  <span class="badge-primary">戶外首選</span>
+                  <span><strong>林口小熊特色遊戲場</strong>（磨石子滑梯、沙坑、旋轉盤、草地野餐）</span>
+                  <a href="#place-bear-park" class="anchor-link">查看介紹</a>
+                </div>
+                <div class="alt-row">
+                  <span class="badge-secondary">文化備案</span>
+                  <span><strong>竹林山觀音寺公園</strong>（江南宮殿庭園造景、錦鯉池餵魚與林蔭步道）</span>
+                </div>
+              </div>
+            </li>
+
+            <!-- 12:45 - 16:30 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">12:45 - 16:30</span>
+              <span class="timeline-transit-badge">室內悠閒親子時光</span>
+              <div class="timeline-content-title">午餐與室內充電：三井 OUTLET 二館親子主題區</div>
+              <div class="timeline-content-desc">
+                戶外放電後重回全空調三井二館，享用美味正餐與甜品下午茶，館內提供寬敞親子設施與舒適休息座椅。
+              </div>
+              <div class="alt-options">
+                <div class="alt-row">
+                  <span class="badge-primary">悠閒午餐</span>
+                  <span><strong>三井 OUTLET 二館主題美食</strong>（美式、日式、義式多樣選擇）</span>
+                  <a href="#place-mitsui" class="anchor-link">查看介紹</a>
+                </div>
+                <div class="alt-row">
+                  <span class="badge-secondary">室內玩樂</span>
+                  <span><strong>室內親子樂園／遊戲主題店</strong>（雨天或烈日備用）</span>
+                </div>
+              </div>
+            </li>
+
+            <!-- 17:00 - 19:30 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">17:00 - 19:30</span>
+              <span class="timeline-transit-badge">特色晚餐 ＆ 休憩</span>
+              <div class="timeline-content-title">林口市區在地晚餐 ＆ 避開傍晚國道尖峰</div>
+              <div class="timeline-content-desc">
+                於文化二路或昕境廣場周邊享用小家庭友善晚餐，避開 17:30-19:00 第一波北返車流。
+              </div>
+            </li>
+
+            <!-- 19:45 - 20:40 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">19:45 - 20:40</span>
+              <span class="timeline-transit-badge">國道返程約 40～45 分</span>
+              <div class="timeline-content-title">順暢返北歸途：林口交流道 → 國道一號 → 台北廣慈還車</div>
+              <div class="timeline-content-desc">
+                晚間 19:45 自林口出發由林口交流道上國道一號，順暢行駛約 40 分鐘抵達台北信義區，於 20:40 前從容抵達廣慈博愛園區完成還車，孩子在車上安穩就寢。
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div> <!-- /#timeline-linkou -->
+
+      <!-- 方案 C：桃園藝文時間軸 -->
+      <div class="plan-view" id="timeline-taoyuan">
+        <!-- Day 1 -->
+        <div class="day-block">
+          <div class="day-heading">
+            <span>Day 1：11/20 (五) 漫步城市森林與最美圖書館 → 福容泡湯 ＆ 櫻桃烤鴨晚餐</span>
+            <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">主要移動方式：自駕定點 ＋ 藝文特區散策</span>
+          </div>
+
+          <ul class="timeline-list">
+            <!-- 13:00 - 13:50 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">13:00 - 13:50</span>
+              <span class="timeline-transit-badge">車程約 45～50 分</span>
+              <div class="timeline-content-title">輕鬆出發、避開通勤車潮</div>
+              <div class="timeline-content-desc">
+                從廣慈奉天宮出發，週五午後出發正好避開早通勤尖峰，行駛信義快接國道一號南下，順暢抵達桃園藝文特區。
+              </div>
+            </li>
+
+            <!-- 13:50 - 15:15 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">13:50 - 15:15</span>
+              <span class="timeline-transit-badge">室內用餐 ＋ 停車續停</span>
+              <div class="timeline-content-title">中茂新天地：午後餐點與精緻甜品</div>
+              <div class="timeline-content-desc">
+                直接導航進入中茂新天地地下停車場，帶孩子享用精緻家庭料理或下午茶。餐後車輛續停於商場地下室，直接步行至隔壁圖書館。
+              </div>
+              <div class="alt-options">
+                <div class="alt-row">
+                  <span class="badge-primary">日料首選</span>
+                  <span><strong>欣葉日本料理（中茂店）</strong>（精緻日料自助餐，菜色多元適合親子）</span>
+                </div>
+                <div class="alt-row">
+                  <span class="badge-secondary">鍋物備選</span>
+                  <span><strong>中茂新天地特色火鍋</strong>（環境舒適寬敞，用餐折抵停車）</span>
+                </div>
+              </div>
+            </li>
+
+            <!-- 15:15 - 17:15 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">15:15 - 17:15</span>
+              <span class="timeline-transit-badge">步行 2 分 全室內 2 小時</span>
+              <div class="timeline-content-title">桃園市立圖書館總館：生命樹童書繪本與蔦屋書店</div>
+              <div class="timeline-content-desc">
+                全國最美綠建築圖書館，內部規劃超寬敞舒適的兒童閱覽區與玩具租借區，1 樓設有日本蔦屋書店與星巴克。午後吹冷氣共讀繪本毫無壓力。
+              </div>
+              <div class="alt-options">
+                <div class="alt-row">
+                  <span class="badge-primary">童書繪本</span>
+                  <span><strong>桃園市立圖書館總館兒童閱覽區</strong>（生命樹採光中庭、分齡繪本與立體玩具）</span>
+                  <a href="#place-ty-library" class="anchor-link">查看介紹</a>
+                </div>
+                <div class="alt-row">
+                  <span class="badge-secondary">咖啡午茶</span>
+                  <span><strong>蔦屋書店 (Tsutaya Books) ＆ 星巴克</strong>（大人喝咖啡翻雜誌、沉浸美學空間）</span>
+                </div>
+              </div>
+            </li>
+
+            <!-- 17:15 - 18:45 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">17:15 - 18:45</span>
+              <span class="timeline-transit-badge">車程 3 分鐘</span>
+              <div class="timeline-content-title">福容大飯店 桃園 Check-in ＆ 親子玩水／露天三溫暖</div>
+              <div class="timeline-content-desc">
+                散步取車開車 3 分鐘抵達福容大飯店桃園店辦理入住並停妥車輛（週五平日憑券入住免加價）。帶女兒至戶外溫水游泳池玩水，或大人輪流體驗頂樓露天風呂三溫暖舒壓。
+              </div>
+              <div class="alt-options">
+                <div class="alt-row">
+                  <span class="badge-primary">住宿核心</span>
+                  <span><strong>福容大飯店 桃園</strong>（憑 ITF 聯合住宿券 1 張入住精緻客房，含 2 客早餐，週五免加價）</span>
+                  <a href="#place-fullon-ty" class="anchor-link">查看介紹</a>
+                </div>
+              </div>
+            </li>
+
+            <!-- 19:00 ~ -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">19:00 ~</span>
+              <span class="timeline-transit-badge">館內免開車</span>
+              <div class="timeline-content-title">慵懶晚餐：館內福粵樓道地櫻桃烤鴨</div>
+              <div class="timeline-content-desc">
+                完全無需再開車出門找車位，直接在飯店 2 樓福粵樓享用經典櫻桃片皮烤鴨與港式點心，大廳晚間享受現場音樂演奏度假氛圍。
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Day 2 -->
+        <div class="day-block">
+          <div class="day-heading">
+            <span>Day 2：11/21 (六) 公園滾輪溜滑梯大放電 → 77 藝文町日式木屋野餐下午茶 → 順暢返程</span>
+            <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">主要移動方式：自駕市區短程 ＋ 徒步慢遊</span>
+          </div>
+
+          <ul class="timeline-list">
+            <!-- 08:30 - 10:30 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">08:30 - 10:30</span>
+              <span class="timeline-transit-badge">悠閒晨光 11:00 退房</span>
+              <div class="timeline-content-title">飯店人氣早餐：現沖牛肉湯 ＆ 歐姆蛋</div>
+              <div class="timeline-content-desc">
+                週六早上睡到自然醒，享用福容口碑極高的自助早餐：現沖鮮甜牛肉湯、現煮熱騰騰擔擔麵與現做歐姆蛋，吃飽回房收拾行李於 11:00 準時退房。
+              </div>
+            </li>
+
+            <!-- 11:00 - 13:00 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">11:00 - 13:00</span>
+              <span class="timeline-transit-badge">車程約 10 分鐘</span>
+              <div class="timeline-content-title">風禾公園：挑戰全台最長 50 公尺滾輪溜滑梯</div>
+              <div class="timeline-content-desc">
+                開車前往風禾公園停妥於公有車格，挑戰超人氣 50 公尺滾輪溜滑梯、多重攀爬繩網與大草皮奔跑，微涼 11 月讓 6 歲孩童盡情放電 1.5～2 小時。
+              </div>
+              <div class="alt-options">
+                <div class="alt-row">
+                  <span class="badge-primary">放電首選</span>
+                  <span><strong>風禾公園共融遊戲場</strong>（50m滾輪溜滑梯、大沙坑、攀爬繩網、大草坪）</span>
+                  <a href="#place-fenghe" class="anchor-link">查看介紹</a>
+                </div>
+              </div>
+            </li>
+
+            <!-- 13:30 - 16:30 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">13:30 - 16:30</span>
+              <span class="timeline-transit-badge">車程約 10 分 文昌公園地下停車場</span>
+              <div class="timeline-content-title">桃園 77 藝文町：日式木屋散策 ＆ 成真咖啡舒芙蕾厚鬆餅</div>
+              <div class="timeline-content-desc">
+                日治時期警察宿舍改建的京都風文創園區，進駐「成真咖啡」，享用大人特調咖啡與小女生最愛的招牌澎鬆舒芙蕾厚鬆餅，逛逛週六漫慢文創市集。
+              </div>
+              <div class="alt-options">
+                <div class="alt-row">
+                  <span class="badge-primary">午後午茶</span>
+                  <span><strong>桃園 77 藝文町（成真咖啡）</strong>（日式木造官舍、草皮庭院、舒芙蕾下午茶）</span>
+                  <a href="#place-art77" class="anchor-link">查看介紹</a>
+                </div>
+              </div>
+            </li>
+
+            <!-- 17:00 - 19:30 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">17:00 - 19:30</span>
+              <span class="timeline-transit-badge">市區特色晚餐 ＆ 休憩</span>
+              <div class="timeline-content-title">桃園市區在地晚餐 ＆ 避開國道返程第一波高峰</div>
+              <div class="timeline-content-desc">
+                於桃園市區享用在地經典小吃或合菜，避開週六傍晚 17:30-18:30 國道北上尖峰，從容用餐。
+              </div>
+            </li>
+
+            <!-- 19:40 - 20:40 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">19:40 - 20:40</span>
+              <span class="timeline-transit-badge">返程車程約 50～60 分</span>
+              <div class="timeline-content-title">平順返程：返回台北信義區廣慈奉天宮</div>
+              <div class="timeline-content-desc">
+                晚間 19:40 上國道平穩開回台北廣慈完成還車（於 20:40 前順暢完成），孩子在後座舒服補眠小憩，回家洗澡安穩就寢。
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div> <!-- /#timeline-taoyuan -->
+    </section>
+
+    <!-- Chapter 2: Interactive Map -->
+    <section id="map-section">
+      <div class="section-header">
+        <div class="section-title">第二章：景點、住宿與餐飲動線地圖</div>
+        <div class="section-subtitle">點擊地圖節點可快速跳轉至下方地點詳細介紹</div>
+      </div>
+
+      <div id="map-container">
+        <!-- 方案 A 工具列 -->
+        <div class="map-toolbar plan-view active" id="toolbar-zhongli">
+          <span class="map-toolbar-label">中壢線聚焦：</span>
+          <button type="button" class="map-btn active" id="btn-zoom-all">🗺️ 桃園景點全覽 (中壢・龍岡・青埔)</button>
+          <button type="button" class="map-btn" id="btn-zoom-zhongli">🏘️ 中壢市區 (飯店與老街溪／新勢公園)</button>
+          <button type="button" class="map-btn" id="btn-zoom-qingpu">🐬 青埔特區 (Xpark ＆ 橫山書法公園)</button>
+          <button type="button" class="map-btn" id="btn-zoom-longgang">🍜 龍岡忠貞 (米干商圈與馬祖新村)</button>
+        </div>
+
+        <!-- 方案 B 工具列 -->
+        <div class="map-toolbar plan-view" id="toolbar-linkou">
+          <span class="map-toolbar-label">林口線聚焦：</span>
+          <button type="button" class="map-btn active" id="btn-zoom-linkou-all">🗺️ 林口景點全覽 (台北・三井・山豬城)</button>
+          <button type="button" class="map-btn" id="btn-zoom-linkou-city">🛍️ 林口核心 (徠旅飯店與三井 OUTLET)</button>
+          <button type="button" class="map-btn" id="btn-zoom-linkou-boar">🐗 台灣山豬城 (下福山區萌寵農莊)</button>
+          <button type="button" class="map-btn" id="btn-zoom-linkou-park">🐻 小熊特色公園 (共融溜滑梯沙坑)</button>
+        </div>
+
+        <!-- 方案 C 工具列 -->
+        <div class="map-toolbar plan-view" id="toolbar-taoyuan">
+          <span class="map-toolbar-label">桃園線聚焦：</span>
+          <button type="button" class="map-btn active" id="btn-zoom-ty-all">🗺️ 桃園景點全覽 (藝文・總圖・風禾・77町)</button>
+          <button type="button" class="map-btn" id="btn-zoom-ty-art">📚 藝文特區 (總圖與飯店)</button>
+          <button type="button" class="map-btn" id="btn-zoom-ty-park">🛝 風禾公園 (滾輪滑梯)</button>
+          <button type="button" class="map-btn" id="btn-zoom-ty-77">🍵 77 藝文町 (站前日式木屋)</button>
+        </div>
+
+        <div id="map"></div>
+        <div class="map-legend">
+          <div class="legend-item">
+            <span class="legend-dot" style="background: var(--color-accent-culture);"></span>
+            <span>歷史文化／藝文園區</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot" style="background: var(--color-accent-food);"></span>
+            <span>在地餐飲美食</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot" style="background: var(--color-accent-stay);"></span>
+            <span>飯店住宿基地</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot" style="background: var(--color-primary);"></span>
+            <span>生態水岸／公園綠地</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 3: Places Directory -->
+    <section id="places-section">
+      <div class="section-header">
+        <div class="section-title">第三章：精選造訪地點快速介紹</div>
+        <div class="section-subtitle">附開放時間、停車建議與官方/具公信力資訊連結</div>
+      </div>
+
+      <!-- 方案 A：中壢青埔地點清單 -->
+      <div class="place-grid plan-view active" id="places-zhongli">
+
+        <!-- 阿美米干 1981 -->
+        <article class="place-card" id="place-amei">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">阿美米干 1981 (龍岡旗艦)</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.2 <span class="rating-count">(9.1k+)</span></span>
+                <span class="place-category cat-food">餐飲首選</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              龍岡地區最具代表性的米干名店之一。以純米研磨蒸熟成條，搭配黑豬大骨、熟成香料與熬煮湯頭，加入滾燙肉片、豬肝與半熟蛋包。旗艦店內陳列異域孤軍歷史照片與文物。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>營業時間：</strong>06:00 - 21:00（每日營業）</li>
+              <li><strong>特色推薦：</strong>阿美米干（蛋肉豬肝綜合）、破酥包、涼拌米線</li>
+              <li><strong>停車資訊：</strong>周邊有忠貞市場公有收費停車場或雲南文化公園周邊停車格</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://travel.tycg.gov.tw/content/images/attractions/10435/480x360_image635836117891405838.jpg" alt="阿美米干招牌黑豬肉骨高湯米干" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>特色餐點：</strong>阿美米干招牌黑豬肉骨高湯，純米手工蒸製米干佐軟嫩肉片、豬肝與半熟蛋包。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=阿美米干1981" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">午餐首選</span>
+            </div>
+            <a href="https://travel.tycg.gov.tw/zh-tw/consume/detail/1004" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              桃園觀光導覽網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 國旗屋米干 -->
+        <article class="place-card" id="place-flag">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">國旗屋米干 (張老旺米干)</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.0 <span class="rating-count">(5.8k+)</span></span>
+                <span class="place-category cat-food">特色地標</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              店內店外懸掛上百面國旗的地標名店，充滿滇緬遺軍深厚愛國情懷與歷史記憶。米干湯頭以獨門醬色與香料調味，風味較為濃郁厚實，大薄片與涼拌碗豆粉亦為招牌。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>營業時間：</strong>05:00 - 15:00（週四公休）</li>
+              <li><strong>亮點：</strong>壯觀國旗海、酸辣大薄片、傳統火燒涼拌菜</li>
+              <li><strong>排隊注意：</strong>週末中午尖峰排隊人潮較長，建議 12 點前抵達</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://travel.tycg.gov.tw/content/images/attractions/83262/480x360_attractions-image-ap68yqgp2ugcygtocmkwgg.jpg" alt="國旗屋米干店滿天青天白日旗海" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>特色地標：</strong>龍岡國旗屋店內外懸掛滿天國旗之視覺奇觀，滿載滇緬孤軍眷村記憶。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=國旗屋米干店" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">午餐備選</span>
+            </div>
+            <a href="https://travel.tycg.gov.tw/zh-tw/consume/detail/1005" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              桃園觀光導覽網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 馬祖新村眷村文創園區 -->
+        <article class="place-card" id="place-matsu">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">馬祖新村眷村文創園區</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.2 <span class="rating-count">(8.6k+)</span></span>
+                <span class="place-category cat-culture">文化古蹟</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              享有「桃園將軍村」美譽，建於民國 46 年，為安置駐守馬祖的前線官兵眷屬而建。採棋盤式放射狀道路設計，磚造平房帶有紅白條紋門楣與星形窗花，進駐多家手作選物店與眷村故事展覽。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>開放時間：</strong>週二至週日 09:00 - 18:00（週一休園）</li>
+              <li><strong>門票費用：</strong>免費參觀入園</li>
+              <li><strong>停車資訊：</strong>園區正對面設有馬祖新村專用汽車收費停車場</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://travel.tycg.gov.tw/content/images/attractions/110269/1024x768_attractions-image-fisma2bu70mtxjo7bbjm2q.jpg" alt="馬祖新村將軍眷舍紅磚矮牆與八角涼亭" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>園區實景：</strong>馬祖新村「桃園將軍村」紅磚洋房、紅白大門與放射狀眷舍聚落保存風貌。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=馬祖新村眷村文創園區" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">停留 1.5 hr</span>
+            </div>
+            <a href="https://matsuvillage.tyccc.gov.tw/" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              馬祖新村官網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 福容徠旅中壢 -->
+        <article class="place-card" id="place-fullon">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">福容徠旅中壢 (Fullon Poshtel)</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.1 <span class="rating-count">(1.2k+)</span></span>
+                <span class="place-category cat-stay">住宿基地</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              福容大飯店旗下輕旅潮品牌，鄰近中壢火車站商圈。客房設計年輕俐落且機能完整，提供充足的地下/特約停車設施。位居中壢市中心核心樞紐，是市區歷史老宅散策最佳的中繼基點。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>入住 / 退房：</strong>15:00 入住 / 11:00 退房</li>
+              <li><strong>地利優勢：</strong>步行至中平路故事館 3 分、壢小森林 7 分、老街溪 10 分</li>
+              <li><strong>停車建議：</strong>入住登記車號享住宿期間折抵，車輛停妥免去市區尋位煩惱</li>
+              <li><strong>票券適用：</strong>二天一夜 1 張・閱旅客房（含 2 客早餐・原價 2.8 折）</li>
+              <li><strong>加價提醒：</strong>11/20（週五）屬平日，依券面規定每房每晚<strong>免加收大假日差額</strong>（憑 1 張券即可直接入住）</li>
+            </ul>
+
+            <!-- 住宿券憑證圖片與說明 -->
+            <div class="voucher-preview table-preview">
+              <img src="https://dsvhle85nnpqa.cloudfront.net/includes/UploadImg//images/2026ITF%20-%20%E8%A1%A8%E6%A0%BC_%E8%AA%AA%E6%98%8E%E6%9C%83_%E8%81%AF%E5%90%88%E4%BD%8F%E5%AE%BF%E5%88%B8.jpg" alt="福容大飯店 2026 ITF 聯合住宿券規格說明表" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>憑證方案核對：</strong>福容大飯店 2026 ITF 聯合住宿券官方規格表，本行程適用「徠旅中壢・二天一夜 1 張・閱旅客房（含 2 客早餐）・11/20 週五平日入住免加大假日加價」。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=福容徠旅中壢" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">住宿核心</span>
+            </div>
+            <a href="https://www.fullon-hotels.com.tw/kd/" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              福容徠旅中壢官網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 壢小故事森林 -->
+        <article class="place-card" id="place-forest">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">壢小故事森林</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.3 <span class="rating-count">(2.2k+)</span></span>
+                <span class="place-category cat-culture">繪本親子</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              百年中壢公學校教職員日式宿舍群修復而成。設有專為兒童規劃的「讀讀小茶屋繪本閱讀區」，榻榻米空間溫馨清爽，備有豐富童書繪本與親子互動角落。戶外綠蔭庭園平緩好走，非常適合大放電後靜態休憩看書。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>開放時間：</strong>週二至週日 10:30 - 19:00（週一公休）</li>
+              <li><strong>門票費用：</strong>全區免費參觀，繪本閱覽室自由入座</li>
+              <li><strong>親子友善：</strong>提供冷氣榻榻米童書區、無障礙平緩步道與乾淨親子洗手間</li>
+              <li><strong>步行時間：</strong>自老街溪或福容徠旅步行約 6～8 分鐘抵達</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://travel.tycg.gov.tw/content/images/attractions/63905/1024x768_attractions-image-n6wpvuygve6ms31wqwkdla.jpg" alt="壢小故事森林百年黑瓦日式教職員宿舍" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>園區實景：</strong>百年公學校教職員宿舍群，典雅日式黑瓦老屋內設有舒適繪本閱覽室與綠蔭庭園。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=壢小故事森林" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">繪本休憩</span>
+            </div>
+            <a href="https://www.facebook.com/LikoStoryForest/" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              官方粉專資訊 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 老街溪河川教育中心 -->
+        <article class="place-card" id="place-laojie">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">老街溪河川教育中心與親水步道</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.3 <span class="rating-count">(3.8k+)</span></span>
+                <span class="place-category cat-culture">溜滑梯放電</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              全台灣第一座河川整治主題生態園區。最受小朋友歡迎的是依山坡地形打造的「四座巨型彩繪水泥涵管溜滑梯」，安全好玩又吸睛。園區結合三合院紅磚古厝與平緩親水綠色廊道，可一路漫步至新勢公園。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>開放時間：</strong>館舍 09:00 - 17:00（週一休館）；涵管溜滑梯與戶外水岸步道全日開放</li>
+              <li><strong>必玩亮點：</strong>山坡巨型水泥彩繪涵管溜滑梯、河川生態故事模型展示</li>
+              <li><strong>動線提示：</strong>自福容徠旅步行約 10 分鐘，沿老街溪人行步道可直達新勢公園</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://travel.tycg.gov.tw/content/images/attractions/67736/1024x768_attractions-image-g_ta5gfnkegtzzc5f4tf6w.jpg" alt="老街溪河川教育中心彩繪涵管溜滑梯" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>戶外亮點：</strong>依傍地勢建造之彩色巨型水泥涵管溜滑梯與老街溪親水生態木棧道。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=老街溪河川教育中心" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">水管溜滑梯</span>
+            </div>
+            <a href="https://travel.tycg.gov.tw/zh-tw/travel/attraction/1018" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              桃園觀光導覽網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 新勢公園海洋風共融兒童遊戲場 -->
+        <article class="place-card" id="place-xinshi">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">新勢公園海洋風共融兒童遊戲場</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.4 <span class="rating-count">(3.5k+)</span></span>
+                <span class="place-category cat-culture">共融遊樂場</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              中壢市中心佔地最廣的旗艦級特色公園，以海洋冒險為主題，打造超大型海盜船山丘溜滑梯、多功能旋轉飛盤、360度共融鞦韆與大面積潔淨白沙坑。平整遼闊的草坪適合 6 歲孩童跑跳放電。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>開放時間：</strong>戶外遊戲場 24 小時全日開放（夜間設有景觀照明）</li>
+              <li><strong>遊具設施：</strong>海盜船複合滑梯、大沙坑、共融鳥巢鞦韆、攀爬繩網、陽光大草坪</li>
+              <li><strong>便利性：</strong>公園內設有完善親子洗手間與沖洗區，周邊有地下停車場</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://travel.tycg.gov.tw/content/images/attractions/110312/1024x768_attractions-image-omidnpv-i0i75-p8g3rtqa.jpg" alt="新勢公園海洋主題共融兒童遊戲場" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>放電天堂：</strong>海洋主題巨型海盜船共融遊戲丘、白沙坑與老街溪水岸綠地全景。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=新勢公園兒童遊戲場" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">旗艦放電</span>
+            </div>
+            <a href="https://travel.tycg.gov.tw/zh-tw/travel/attraction/1018" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              桃園觀光導覽網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- Xpark 都會型水生公園 -->
+        <article class="place-card" id="place-xpark">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">Xpark 都會型水生公園</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.3 <span class="rating-count">(34k+)</span></span>
+                <span class="place-category cat-culture">水族旗艦</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              日本橫濱八景島水族館海外首座旗艦分館，全程室內恆溫舒適。擁有超震撼四層樓高「福爾摩沙大水槽」、療癒奇幻的水母萬花筒光影秀、寒帶企鵝穿越隧道與潮間帶互動展區。館內 Xcafe 可邊用餐邊欣賞企鵝在頭頂透明水管滑翔。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>營業時間：</strong>週日至週五 10:00 - 18:00 / 週六 10:00 - 20:00</li>
+              <li><strong>門票建議：</strong>建議提前線上購票免現場排隊（成人約 600 元，4～11 歲兒童約 270 元）</li>
+              <li><strong>特色推薦：</strong>水母萬花筒打卡、企鵝隧道、Xcafe 企鵝咖啡拉花與點心</li>
+              <li><strong>停車優惠：</strong>置地廣場地下停車場憑門票享折抵</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://travel.tycg.gov.tw/content/images/Attractions/99413/1024x768_attractions-image-r1o5hul35uam8-i0lubdkw.jpg" alt="Xpark都會型水生公園夢幻水母水槽" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>水族亮點：</strong>日本八景島團隊打造之水母萬花筒光影水槽與無邊際海洋大水槽。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=Xpark都會型水生公園" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">Day 2 核心</span>
+            </div>
+            <a href="https://www.xpark.com.tw/" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              Xpark 官網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 橫山書法藝術公園與藝術館 -->
+        <article class="place-card" id="place-hengshan">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">橫山書法藝術公園與藝術館</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.4 <span class="rating-count">(4.6k+)</span></span>
+                <span class="place-category cat-culture">地景藝文</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              全台首座由官方營運的書法藝術主題展館。戶外大埤塘生態公園環湖木棧道平緩舒適，池中常有野鴨、鵝群與錦鯉游弋，岸邊大片綠草坪適合孩童吹泡泡與悠閒漫步。館舍建築獲台灣建築獎首獎，倒映湖面極為優雅。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>開館時間：</strong>09:30 - 17:00（週二休館）戶外環湖公園全日免費開放</li>
+              <li><strong>適合活動：</strong>環埤塘散步、木棧道看水鳥野鴨、湖畔大草皮休憩野餐</li>
+              <li><strong>周邊連結：</strong>距 Xpark 與置地廣場車程僅 3 分鐘，亦可悠閒步行直達</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://travel.tycg.gov.tw/content/images/attractions/110270/1024x768_attractions-image-hd13-udbwkegks-p5hqlrq.jpg" alt="橫山書法藝術館五方篆印建築倒映埤塘" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>水岸風光：</strong>五方篆印現代清水模建築倒映埤塘墨池，環湖平緩木棧道與親水綠地。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=橫山書法藝術館" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">湖畔漫步</span>
+            </div>
+            <a href="https://tmofa.tycg.gov.tw/" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              橫山書法藝術館官網 ↗
+            </a>
+          </div>
+        </article>
+
+      </div> <!-- /#places-zhongli -->
+
+      <!-- 方案 B：林口休閒地點清單 -->
+      <div class="place-grid plan-view" id="places-linkou">
+
+        <!-- 台灣山豬城 -->
+        <article class="place-card" id="place-boar">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">台灣山豬城（免門票萌寵農莊）</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.1 <span class="rating-count">(6.8k+)</span></span>
+                <span class="place-category cat-culture">萌寵生態</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              隱身林口下福山區的免費動物農莊，園區飼養台灣山豬、水牛、白鴕鳥、山羊、天鵝、白孔雀與錦鯉等十數種動物。小朋友可在福利社購買草料、紅蘿蔔親手餵食，親近大自然。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>入園門票：</strong>全區免費參觀，飼料每份約 20～30 元自由購買</li>
+              <li><strong>開放時間：</strong>11:00 - 21:00（戶外動物區建議於日落前參觀完畢）</li>
+              <li><strong>客觀用餐提醒：</strong>附設餐廳以大型傳統台式合菜為主，份量偏大較不適合 2 大 1 小；建議純粹餵動物踏青，午餐安排於林口市區</li>
+              <li><strong>停車資訊：</strong>附設大型免費停車場，開車前往便利（山區產業道路請慢速駕駛）</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Formosan_Wild_Boar_in_Shoushan_Zoo.jpg" alt="台灣山豬城園區山豬與動物放養生態" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>園區特色：</strong>林口下福山區之免門票特色動物園，備有草料供孩童近距離體驗餵食樂趣。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=台灣山豬城" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">萌寵放電</span>
+            </div>
+            <a href="http://www.boar.com.tw/" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              台灣山豬城官網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- MITSUI OUTLET PARK 林口 -->
+        <article class="place-card" id="place-mitsui">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">MITSUI OUTLET PARK 林口（一二館）</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.1 <span class="rating-count">(45k+)</span></span>
+                <span class="place-category cat-culture">美式暢貨</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              雙北最具規模的南洋渡假風複合購物休閒中心。一館匯聚國際時尚精品與排隊名店，新落成的二館則大幅強化親子生活品牌、知名餐飲與兒童主題遊樂天地。全區推車無障礙、空調涼爽，無日曬雨淋之憂。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>營業時間：</strong>週一至週四 11:00-21:30 / 週五及假日前夕 11:00-22:00 / 週末 10:30-22:00</li>
+              <li><strong>親子特色：</strong>二館大型親子休閒專區、母嬰親善育嬰室、多元各國兒童友善餐飲</li>
+              <li><strong>交通避塞提醒：</strong>週末下午周邊文化二／三路易壅塞，由飯店搭乘計程車約 8 分鐘直達商場大門，可省下約 40 分鐘排隊找車位時間。</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Mitsui_Outlet_Park_Linkou_1_2016_6.JPG" alt="MITSUI OUTLET PARK 林口商場外觀與渡假水景" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>商場景緻：</strong>南國渡假氛圍大型購物中心，一二館連通空橋提供全天候舒適散步與家庭餐飲。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=MITSUI+OUTLET+PARK+林口" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">全室內休閒</span>
+            </div>
+            <a href="https://www.mop.com.tw/linkou/te/index.html" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              三井 OUTLET 官網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 福容徠旅林口 -->
+        <article class="place-card" id="place-fullon-linkou">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">福容徠旅林口 (Fullon Poshtel Linkou)</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.2 <span class="rating-count">(850+)</span></span>
+                <span class="place-category cat-stay">住宿基地</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              福容大飯店旗下都會輕旅品牌，座落於龜山文二一街（林口長庚商圈），距三井 OUTLET 僅約 2.5 公里。客房風格活潑俐落、採光極佳，設有地下平面收費停車場（住宿折抵）與男女三溫暖水療設施。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>入住 / 退房：</strong>16:00 入住 / 11:00 退房</li>
+              <li><strong>地利優勢：</strong>車程至三井 OUTLET 約 8 分鐘、至小熊運動公園 5 分鐘、至國道一號林口交流道 4 分鐘</li>
+              <li><strong>票券適用：</strong>二天一夜 1 張聯合住宿券・閱旅客房（含 2 客早餐・原價超值折抵）</li>
+              <li><strong>加價規定：</strong>11/20（週五）屬平日，依券面規定每房每晚<strong>免加收大假日差額</strong>（憑 1 張券即可直接入住）</li>
+            </ul>
+
+            <div class="voucher-preview table-preview">
+              <img src="https://dsvhle85nnpqa.cloudfront.net/includes/UploadImg//images/2026ITF%20-%20%E8%A1%A8%E6%A0%BC_%E8%AA%AA%E6%98%8E%E6%9C%83_%E8%81%AF%E5%90%88%E4%BD%8F%E5%AE%BF%E5%88%B8.jpg" alt="福容大飯店 2026 ITF 聯合住宿券規格說明表" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>憑證方案核對：</strong>福容大飯店 2026 ITF 聯合住宿券官方規格表，本行程適用「徠旅林口・二天一夜 1 張・閱旅客房（含 2 客早餐）・11/20 週五平日入住免加大假日加價」。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=福容徠旅林口" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">住宿核心</span>
+            </div>
+            <a href="https://www.fullon-hotels.com.tw/fullon-poshtels/lk/tw/" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              福容徠旅林口官網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 林口小熊特色運動公園 -->
+        <article class="place-card" id="place-bear-park">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">林口小熊特色運動公園（社區運動公園）</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.3 <span class="rating-count">(2.6k+)</span></span>
+                <span class="place-category cat-culture">共融遊樂場</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              新北市極具指標性的全共融旗艦遊戲場，佔地廣大。園內以小熊為視覺主題，打造 2.9 公尺獨立磨石子滑梯、大型球體攀爬繩網、共融式鞦韆、跳樁與大面積潔淨白沙坑，地面採用自然樹皮與木屑鋪設，非常適合 6 歲孩童奔跑探險。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>開放時間：</strong>戶外特色遊戲場 24 小時全日開放，免費入園</li>
+              <li><strong>亮點設施：</strong>小熊磨石滑梯、沙坑附洗腳池、攀爬網、無障礙旋轉盤、大草皮</li>
+              <li><strong>周邊連結：</strong>距福容徠旅林口車程僅約 5 分鐘，附設親子廁所與停車格</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://images.unsplash.com/photo-1575783970733-1aaedde1db74?auto=format&fit=crop&w=1024&q=80" alt="特色運動公園兒童共融遊具與大沙坑" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>共融放電：</strong>新北市特色共融遊戲場大沙坑與安全地景鋪面，適合 6 歲孩童安心放電玩樂。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=林口社區運動公園小熊特色遊戲場" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">共融溜滑梯</span>
+            </div>
+            <a href="https://www.landscaping.ntpc.gov.tw/cht/index.php?code=list&ids=67" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              新北景觀處資訊 ↗
+            </a>
+          </div>
+        </article>
+
+      </div> <!-- /#places-linkou -->
+
+      <!-- 方案 C：桃園藝文美學地點清單 -->
+      <div class="place-grid plan-view" id="places-taoyuan">
+
+        <!-- 桃園市立圖書館總館 -->
+        <article class="place-card" id="place-ty-library">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">桃園市立圖書館總館（生命樹綠建築）</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.6 <span class="rating-count">(7.2k+)</span></span>
+                <span class="place-category cat-culture">藝文地標</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              全台最美綠建築圖書館，以「生命樹」為核心設計概念。館內設有極為寬敞舒適的兒童閱覽區、分齡繪本與立體玩具租借空間，1 樓並有日本蔦屋書店 (TSUTAYA BOOKSTORE) 與星巴克進駐，是親子共讀與美學薰陶的旗艦空間。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>開館時間：</strong>週二至週六 08:30 - 21:00，週日 08:30 - 17:00（週一及國定假日休館）</li>
+              <li><strong>親子亮點：</strong>3 樓親子閱覽區、立體童書與繪本區、小巨幕視聽區、無障礙推車動線完善</li>
+              <li><strong>停車資訊：</strong>圖書館設有地下收費停車場（汽車平日 30 元/時、假日 40 元/時），或停放鄰近中茂新天地地下停車場</li>
+              <li><strong>步行時間：</strong>自中茂新天地徒步約 2 分鐘即可抵達</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://travel.tycg.gov.tw/content/images/attractions/82843/1024x768_attractions-image-gjd5ja_k-0c64f_0hudmaw.jpg" alt="桃園市立圖書館總館外觀與藝文廣場" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>建築實景：</strong>以生命樹螺旋環保節能意象打造之全台旗艦級圖書館總館。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=桃園市立圖書館總館" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">童書繪本</span>
+            </div>
+            <a href="https://travel.tycg.gov.tw/zh-tw/travel/attraction/1656" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              桃園觀光導覽網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 福容大飯店 桃園 -->
+        <article class="place-card" id="place-fullon-ty">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">福容大飯店 桃園（藝文特區旁）</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.0 <span class="rating-count">(4.8k+)</span></span>
+                <span class="place-category cat-hotel">住宿基地</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              座落於桃園市大興西路精華地段，鄰近藝文特區與圖書館總館。飯店設有頂樓露天風呂三溫暖與戶外溫水游泳池，2 樓「福粵樓」櫻桃烤鴨與港式點心廣受好評，館內設施完善，是極具度假感的住宿首選。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>入退時間：</strong>當日 15:00 後入住，隔日 11:00 前退房</li>
+              <li><strong>票券適用性：</strong>憑「2026 ITF 聯合住宿券」<strong>1 張</strong>，即可平日（週日至週五）入住精緻客房一晚，含自助早餐 2 客，週五入住無需額外加價（符合週五出發條件）</li>
+              <li><strong>停車資訊：</strong>房客享有每房 1 台免費停車位（平面與地下機械混合，採先到先停制）</li>
+              <li><strong>美食提醒：</strong>2 樓福粵樓櫻桃片皮鴨為人氣招牌，建議於訂房時或出發前一週預先電話訂鴨</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://dsvhle85nnpqa.cloudfront.net/includes/UploadImg//images/2026ITF%20-%20%E8%A1%A8%E6%A0%BC_%E8%AA%AA%E6%98%8E%E6%9C%83_%E8%81%AF%E5%90%88%E4%BD%8F%E5%AE%BF%E5%88%B8.jpg" alt="2026 ITF 聯合住宿券使用規範表格（福容大飯店桃園平日 1 張入住）" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>票券官方規章：</strong>福容大飯店桃園店平日憑券 1 張入住精緻客房含 2 客早餐（週五不加價）。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=福容大飯店桃園" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">住宿休閒</span>
+            </div>
+            <a href="https://www.fullon-hotels.com.tw/ty/tw/" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              福容大飯店桃園官網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 風禾公園 -->
+        <article class="place-card" id="place-fenghe">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">風禾公園（50 米滾輪滑梯遊戲場）</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.3 <span class="rating-count">(8.1k+)</span></span>
+                <span class="place-category cat-water">特色共融公園</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              結合防災滯洪功能的都會綠意共融公園，擁有全台最長達 50 公尺的滾輪滑梯，另有磨石子高速滑梯、大型攀爬繩網、白沙坑與廣闊草坪，是讓 6 歲孩童充分享受速度感與大動作肌力放電的戶外勝地。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>開放時間：</strong>24 小時全日開放（滾輪滑梯夜間 22:00 熄燈）</li>
+              <li><strong>門票費用：</strong>全區公共開放空間，免費遊玩</li>
+              <li><strong>孩童提醒：</strong>滾輪溜滑梯可自備或現場使用軟式滑草坐墊保護褲子與臀部；園區較空曠，秋冬建議穿著防風外套並備防蚊液</li>
+              <li><strong>停車資訊：</strong>慈文路與文平路周邊設有公有路邊收費停車格及「風禾公園停車場」</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://travel.tycg.gov.tw/content/images/Attractions/59889/1024x768_attractions-image-qxqo_-7yk0s01zzd0htkmw.jpg" alt="風禾公園全景與滾輪溜滑梯設施" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>公園實景：</strong>結合水塘滯洪池與 50 公尺滾輪溜滑梯之旗艦特色遊戲場。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=風禾公園" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">戶外大放電</span>
+            </div>
+            <a href="https://travel.tycg.gov.tw/zh-tw/travel/attraction/1532" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              桃園觀光導覽網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 桃園 77 藝文町 -->
+        <article class="place-card" id="place-art77">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">桃園 77 藝文町（日式老宅與成真咖啡）</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.2 <span class="rating-count">(4.5k+)</span></span>
+                <span class="place-category cat-culture">日式老宅園區</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              日治時期桃園警察局日式宿舍群修復而成的歷史建築文創園區，充滿木造京都風情。園區進駐著名「成真咖啡」，提供招牌蓬鬆舒芙蕾厚鬆餅、特調咖啡與手作點心，週六並有手作市集，環境優雅舒適。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>開園時間：</strong>園區 10:00 - 22:00（成真咖啡營業至 21:00，週一全區休園）</li>
+              <li><strong>參觀門票：</strong>園區免費入園參觀；成真咖啡採每人低消一杯飲品或餐點</li>
+              <li><strong>親子美味：</strong>招牌現烤舒芙蕾厚鬆餅（如莓麗時光、熔岩焦糖），口感鬆軟綿密，深受孩童喜愛</li>
+              <li><strong>停車建議：</strong>市區道路狹窄不宜路邊臨停，建議停放「文昌公園地下停車場」，步行約 3～4 分鐘抵達園區</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://travel.tycg.gov.tw/content/images/attractions/44256/1024x768_attractions-image-tp133dgm6kwfzndhbebb1w.jpg" alt="桃園 77 藝文町成真咖啡日式木屋門面與庭園" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>老宅實景：</strong>日治時期警察官舍歷史建築，綠意庭院與日式木屋成真咖啡館。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=桃園77藝文町" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">午茶散策</span>
+            </div>
+            <a href="https://travel.tycg.gov.tw/zh-tw/travel/attraction/1424" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              桃園觀光導覽網 ↗
+            </a>
+          </div>
+        </article>
+
+      </div> <!-- /#places-taoyuan -->
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>北部二日親子自駕慢活建議行程（中壢・林口・桃園三大方案 ｜ 11/20 13:00 - 11/21 20:40）</p>
+      <p style="margin-top: 0.25rem;">交通數據參考 Google Maps 常態路況預估 ｜ 出發前請即時查詢高速公路 1968 App 最新路況</p>
+    </div>
+  </footer>
+
+  <script>
+    // Leaflet Map & Interactive Switcher
+    document.addEventListener("DOMContentLoaded", function() {
+      // 方案 A：中壢青埔座標點位
+      const placesZhongli = [
+        {
+          id: "place-amei",
+          title: "阿美米干 1981",
+          shortTitle: "🍜 阿美米干",
+          desc: "龍岡滇緬米干第一指標，附文物展區",
+          lat: 24.9318,
+          lng: 121.2582,
+          color: "#d97706",
+          type: "美食",
+          rating: "4.2 (9.1k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=阿美米干1981"
+        },
+        {
+          id: "place-flag",
+          title: "國旗屋米干",
+          shortTitle: "🚩 國旗屋",
+          desc: "滿天國旗特色老屋，濃郁眷村米干風味",
+          lat: 24.9331,
+          lng: 121.2570,
+          color: "#d97706",
+          type: "美食",
+          rating: "4.0 (5.8k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=國旗屋米干店"
+        },
+        {
+          id: "place-matsu",
+          title: "馬祖新村眷村文創園區",
+          shortTitle: "🏡 馬祖新村",
+          desc: "桃園將軍村，文創選物與紅磚歷史建築",
+          lat: 24.9366,
+          lng: 121.2368,
+          color: "#0d9488",
+          type: "文化景點",
+          rating: "4.2 (8.6k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=馬祖新村眷村文創園區"
+        },
+        {
+          id: "place-fullon",
+          title: "福容徠旅中壢",
+          shortTitle: "🏨 福容徠旅中壢",
+          desc: "市區落腳基地，停車後全程步行散策",
+          lat: 24.9535,
+          lng: 121.2268,
+          color: "#7c3aed",
+          type: "住宿基地",
+          rating: "4.1 (1.2k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=福容徠旅中壢"
+        },
+        {
+          id: "place-forest",
+          title: "壢小故事森林",
+          shortTitle: "📚 壢小繪本館",
+          desc: "日式黑瓦老宅，榻榻米童書繪本共讀空間",
+          lat: 24.9575,
+          lng: 121.2223,
+          color: "#0d9488",
+          type: "繪本館舍",
+          rating: "4.3 (2.2k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=壢小故事森林"
+        },
+        {
+          id: "place-laojie",
+          title: "老街溪河川教育中心",
+          shortTitle: "🛝 老街溪溜滑梯",
+          desc: "彩色水泥涵管溜滑梯與親水生態步道",
+          lat: 24.9583,
+          lng: 121.2147,
+          color: "#2563eb",
+          type: "溜滑梯放電",
+          rating: "4.3 (3.8k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=老街溪河川教育中心"
+        },
+        {
+          id: "place-xinshi",
+          title: "新勢公園海洋共融遊戲場",
+          shortTitle: "🎠 新勢共融公園",
+          desc: "海盜船地景滑梯、旋轉鞦韆與白沙坑大草坪",
+          lat: 24.9538,
+          lng: 121.2195,
+          color: "#0d9488",
+          type: "親子遊戲場",
+          rating: "4.4 (3.5k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=新勢公園兒童遊戲場"
+        },
+        {
+          id: "place-xpark",
+          title: "Xpark 都會型水生公園",
+          shortTitle: "🐬 Xpark 水族館",
+          desc: "日本八景島水族館、水母光影與企鵝咖啡館",
+          lat: 25.0183,
+          lng: 121.2144,
+          color: "#2563eb",
+          type: "水族旗艦",
+          rating: "4.3 (34k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=Xpark都會型水生公園"
+        },
+        {
+          id: "place-hengshan",
+          title: "橫山書法藝術公園與藝術館",
+          shortTitle: "🎨 橫山書藝公園",
+          desc: "埤塘水岸木棧道、湖畔餵魚賞鴨與大草坪",
+          lat: 25.0195,
+          lng: 121.2065,
+          color: "#0d9488",
+          type: "地景藝文",
+          rating: "4.4 (4.6k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=橫山書法藝術館"
+        }
+      ];
+
+      // 方案 B：林口休閒座標點位
+      const placesLinkou = [
+        {
+          id: "place-boar",
+          title: "台灣山豬城",
+          shortTitle: "🐗 台灣山豬城",
+          desc: "免門票近距離餵水牛、鴕鳥、山豬與水鳥池",
+          lat: 25.1051,
+          lng: 121.3090,
+          color: "#d97706",
+          type: "萌寵生態",
+          rating: "4.1 (6.8k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=台灣山豬城"
+        },
+        {
+          id: "place-fullon-linkou",
+          title: "福容徠旅林口 (Fullon Poshtel)",
+          shortTitle: "🏨 福容徠旅林口",
+          desc: "長庚與文化二路生活圈，距三井僅 2.5 公里",
+          lat: 25.0577,
+          lng: 121.3653,
+          color: "#7c3aed",
+          type: "住宿基地",
+          rating: "4.2 (850+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=福容徠旅林口"
+        },
+        {
+          id: "place-mitsui",
+          title: "MITSUI OUTLET PARK 林口 (一二館)",
+          shortTitle: "🛍️ 三井 OUTLET",
+          desc: "雙館全室內購物、精選美食與兒童主題天地",
+          lat: 25.0705,
+          lng: 121.3668,
+          color: "#2563eb",
+          type: "美式暢貨",
+          rating: "4.1 (45k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=MITSUI+OUTLET+PARK+林口"
+        },
+        {
+          id: "place-bear-park",
+          title: "林口小熊特色運動公園",
+          shortTitle: "🐻 小熊特色公園",
+          desc: "全共融旗艦遊樂場、小熊磨石滑梯與大白沙坑",
+          lat: 25.0792,
+          lng: 121.3855,
+          color: "#0d9488",
+          type: "共融遊樂場",
+          rating: "4.3 (2.6k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=林口社區運動公園小熊特色遊戲場"
+        }
+      ];
+
+      // 方案 C：桃園藝文美學座標點位
+      const placesTaoyuan = [
+        {
+          id: "place-ty-library",
+          title: "桃園市立圖書館總館",
+          shortTitle: "📚 桃園總圖",
+          desc: "生命樹綠建築、童書繪本區與蔦屋書店",
+          lat: 25.0163,
+          lng: 121.2988,
+          color: "#0d9488",
+          type: "藝文旗艦",
+          rating: "4.6 (7.2k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=桃園市立圖書館總館"
+        },
+        {
+          id: "place-fullon-ty",
+          title: "福容大飯店 桃園",
+          shortTitle: "🏨 福容飯店桃園",
+          desc: "藝文特區旁基地，露天風呂與福粵樓烤鴨",
+          lat: 25.0105,
+          lng: 121.3005,
+          color: "#7c3aed",
+          type: "住宿基地",
+          rating: "4.0 (4.8k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=福容大飯店桃園"
+        },
+        {
+          id: "place-fenghe",
+          title: "風禾公園",
+          shortTitle: "🛝 風禾滾輪滑梯",
+          desc: "全台最長 50 米滾輪滑梯與共融攀爬網草坪",
+          lat: 24.9995,
+          lng: 121.2889,
+          color: "#2563eb",
+          type: "特色公園",
+          rating: "4.3 (8.1k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=風禾公園"
+        },
+        {
+          id: "place-art77",
+          title: "桃園 77 藝文町",
+          shortTitle: "🍵 77 藝文町",
+          desc: "日式木造警察宿舍群與成真咖啡舒芙蕾",
+          lat: 24.9904,
+          lng: 121.3122,
+          color: "#d97706",
+          type: "日式老宅",
+          rating: "4.2 (4.5k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=桃園77藝文町"
+        }
+      ];
+
+      // Init map
+      const map = L.map('map', {
+        scrollWheelZoom: false
+      });
+
+      // 1. 內政部國土測繪中心 臺灣通用電子地圖
+      const nlscLayer = L.tileLayer('https://wmts.nlsc.gov.tw/wmts/EMAP/default/GoogleMapsCompatible/{z}/{y}/{x}', {
+        attribution: '&copy; <a href="https://maps.nlsc.gov.tw/" target="_blank">內政部國土測繪中心</a> 臺灣通用電子地圖',
+        maxZoom: 19
+      });
+
+      // 2. Esri World Street Map (備用開放街道圖資)
+      const esriLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; <a href="https://www.esri.com/" target="_blank">Esri</a>',
+        maxZoom: 19
+      });
+
+      nlscLayer.addTo(map);
+
+      const baseMaps = {
+        "臺灣通用電子地圖 (推薦)": nlscLayer,
+        "Esri 全球街道圖": esriLayer
+      };
+      L.control.layers(baseMaps, null, { position: 'topright' }).addTo(map);
+
+      // 圖標圖層群組
+      const markersGroup = L.layerGroup().addTo(map);
+      let currentMarkerList = [];
+
+      function createPins(placesArray) {
+        markersGroup.clearLayers();
+        currentMarkerList = [];
+
+        placesArray.forEach(p => {
+          const customIcon = L.divIcon({
+            className: 'custom-map-pin-container',
+            html: `
+              <div class="map-badge-pin" style="--pin-color: ${p.color};">
+                <span class="pin-dot"></span>
+                <span>${p.shortTitle}</span>
+              </div>
+            `,
+            iconSize: [0, 0],
+            iconAnchor: [0, 0]
+          });
+
+          const popupContent = `
+            <div class="custom-popup">
+              <h4>${p.title}</h4>
+              <div style="margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.35rem;">
+                <span class="rating-badge" style="font-size: 0.72rem; padding: 0.1rem 0.35rem;"><span class="rating-star">★</span> ${p.rating}</span>
+                <span style="font-size: 0.72rem; color: var(--text-muted);">${p.type}</span>
+              </div>
+              <p>${p.desc}</p>
+              <div style="display: flex; gap: 0.75rem; align-items: center; margin-top: 0.45rem;">
+                <a href="#${p.id}">查看卡片 ↗</a>
+                <a href="${p.gmaps}" target="_blank" rel="noopener noreferrer" style="color: oklch(35% 0.12 150);">Google 地圖 ↗</a>
+              </div>
+            </div>
+          `;
+
+          const m = L.marker([p.lat, p.lng], { icon: customIcon })
+            .bindPopup(popupContent);
+          
+          markersGroup.addLayer(m);
+          currentMarkerList.push(m);
+        });
+
+        if (currentMarkerList.length > 0) {
+          const featGroup = L.featureGroup(currentMarkerList);
+          map.fitBounds(featGroup.getBounds().pad(0.14));
+        }
+      }
+
+      // 預設載入中壢方案標記
+      createPins(placesZhongli);
+
+      // 中壢快速聚焦按鈕邏輯
+      const btnAll = document.getElementById('btn-zoom-all');
+      const btnZhongli = document.getElementById('btn-zoom-zhongli');
+      const btnQingpu = document.getElementById('btn-zoom-qingpu');
+      const btnLonggang = document.getElementById('btn-zoom-longgang');
+      const zhongliBtns = [btnAll, btnZhongli, btnQingpu, btnLonggang];
+
+      function setZhongliActive(target) {
+        zhongliBtns.forEach(b => b.classList.remove('active'));
+        if (target) target.classList.add('active');
+      }
+
+      btnAll.addEventListener('click', () => {
+        setZhongliActive(btnAll);
+        const group = L.featureGroup(currentMarkerList);
+        map.fitBounds(group.getBounds().pad(0.12));
+      });
+
+      btnZhongli.addEventListener('click', () => {
+        setZhongliActive(btnZhongli);
+        map.setView([24.956, 121.221], 15);
+      });
+
+      btnQingpu.addEventListener('click', () => {
+        setZhongliActive(btnQingpu);
+        map.setView([25.019, 121.210], 15);
+      });
+
+      btnLonggang.addEventListener('click', () => {
+        setZhongliActive(btnLonggang);
+        map.setView([24.934, 121.248], 15);
+      });
+
+      // 林口快速聚焦按鈕邏輯
+      const btnLinkouAll = document.getElementById('btn-zoom-linkou-all');
+      const btnLinkouCity = document.getElementById('btn-zoom-linkou-city');
+      const btnLinkouBoar = document.getElementById('btn-zoom-linkou-boar');
+      const btnLinkouPark = document.getElementById('btn-zoom-linkou-park');
+      const linkouBtns = [btnLinkouAll, btnLinkouCity, btnLinkouBoar, btnLinkouPark];
+
+      function setLinkouActive(target) {
+        linkouBtns.forEach(b => b.classList.remove('active'));
+        if (target) target.classList.add('active');
+      }
+
+      btnLinkouAll.addEventListener('click', () => {
+        setLinkouActive(btnLinkouAll);
+        const group = L.featureGroup(currentMarkerList);
+        map.fitBounds(group.getBounds().pad(0.14));
+      });
+
+      btnLinkouCity.addEventListener('click', () => {
+        setLinkouActive(btnLinkouCity);
+        map.setView([25.064, 121.366], 15);
+      });
+
+      btnLinkouBoar.addEventListener('click', () => {
+        setLinkouActive(btnLinkouBoar);
+        map.setView([25.1051, 121.3090], 15);
+      });
+
+      btnLinkouPark.addEventListener('click', () => {
+        setLinkouActive(btnLinkouPark);
+        map.setView([25.0792, 121.3855], 16);
+      });
+
+      // 桃園快速聚焦按鈕邏輯
+      const btnTyAll = document.getElementById('btn-zoom-ty-all');
+      const btnTyArt = document.getElementById('btn-zoom-ty-art');
+      const btnTyPark = document.getElementById('btn-zoom-ty-park');
+      const btnTy77 = document.getElementById('btn-zoom-ty-77');
+      const tyBtns = [btnTyAll, btnTyArt, btnTyPark, btnTy77];
+
+      function setTyActive(target) {
+        tyBtns.forEach(b => b.classList.remove('active'));
+        if (target) target.classList.add('active');
+      }
+
+      btnTyAll.addEventListener('click', () => {
+        setTyActive(btnTyAll);
+        const group = L.featureGroup(currentMarkerList);
+        map.fitBounds(group.getBounds().pad(0.14));
+      });
+
+      btnTyArt.addEventListener('click', () => {
+        setTyActive(btnTyArt);
+        map.setView([25.0135, 121.2995], 16);
+      });
+
+      btnTyPark.addEventListener('click', () => {
+        setTyActive(btnTyPark);
+        map.setView([24.9995, 121.2889], 16);
+      });
+
+      btnTy77.addEventListener('click', () => {
+        setTyActive(btnTy77);
+        map.setView([24.9904, 121.3122], 16);
+      });
+
+      // 方案切換 Tab 邏輯
+      const tabZhongli = document.getElementById('tab-zhongli');
+      const tabLinkou = document.getElementById('tab-linkou');
+      const tabTaoyuan = document.getElementById('tab-taoyuan');
+
+      function switchPlan(plan) {
+        const isZhongli = plan === 'zhongli';
+        const isLinkou = plan === 'linkou';
+        const isTaoyuan = plan === 'taoyuan';
+
+        tabZhongli.classList.toggle('active', isZhongli);
+        tabZhongli.setAttribute('aria-selected', isZhongli ? 'true' : 'false');
+        tabLinkou.classList.toggle('active', isLinkou);
+        tabLinkou.setAttribute('aria-selected', isLinkou ? 'true' : 'false');
+        tabTaoyuan.classList.toggle('active', isTaoyuan);
+        tabTaoyuan.setAttribute('aria-selected', isTaoyuan ? 'true' : 'false');
+
+        // 切換各章節可見性
+        document.querySelectorAll('#notice-zhongli, #timeline-zhongli, #toolbar-zhongli, #places-zhongli').forEach(el => {
+          el.classList.toggle('active', isZhongli);
+        });
+        document.querySelectorAll('#notice-linkou, #timeline-linkou, #toolbar-linkou, #places-linkou').forEach(el => {
+          el.classList.toggle('active', isLinkou);
+        });
+        document.querySelectorAll('#notice-taoyuan, #timeline-taoyuan, #toolbar-taoyuan, #places-taoyuan').forEach(el => {
+          el.classList.toggle('active', isTaoyuan);
+        });
+
+        // 重新繪製地圖標記與縮放視角
+        if (isZhongli) {
+          createPins(placesZhongli);
+          setZhongliActive(btnAll);
+        } else if (isLinkou) {
+          createPins(placesLinkou);
+          setLinkouActive(btnLinkouAll);
+        } else if (isTaoyuan) {
+          createPins(placesTaoyuan);
+          setTyActive(btnTyAll);
+        }
+
+        setTimeout(() => {
+          map.invalidateSize();
+        }, 150);
+      }
+
+      tabZhongli.addEventListener('click', () => switchPlan('zhongli'));
+      tabLinkou.addEventListener('click', () => switchPlan('linkou'));
+      tabTaoyuan.addEventListener('click', () => switchPlan('taoyuan'));
+
+      // Lightbox 點擊放大邏輯 (採用委派，支援所有方案動態圖片)
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-target-img');
+      const lightboxClose = document.getElementById('lightbox-close');
+
+      function openLightbox(src, alt) {
+        lightboxImg.src = src;
+        lightboxImg.alt = alt || '放大檢視';
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      document.addEventListener('click', function(e) {
+        const img = e.target.closest('.zoomable-image');
+        if (img) {
+          openLightbox(img.src, img.alt);
+        }
+      });
+
+      lightbox.addEventListener('click', closeLightbox);
+      lightboxClose.addEventListener('click', closeLightbox);
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+          closeLightbox();
+        }
+      });
+    });
+  </script>
+
+  <!-- Lightbox Modal Overlay -->
+  <div id="lightbox" class="lightbox-modal" role="dialog" aria-modal="true" aria-label="放大圖片檢視">
+    <div class="lightbox-content-wrapper" onclick="event.stopPropagation()">
+      <button type="button" class="lightbox-close-btn" id="lightbox-close" aria-label="關閉放大檢視">&times;</button>
+      <img id="lightbox-target-img" class="lightbox-img" src="" alt="放大檢視">
+      <div class="lightbox-hint">點擊背景任一處或按鍵盤 ESC 即可關閉</div>
+    </div>
+  </div>
+</body>
+</html>
