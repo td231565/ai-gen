@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>滴答時鐘</title>
+  <style>
+    @layer reset, base, theme, components, utilities;
+
+    @layer reset {
+      html, body, main, header, section, div, span, button, svg {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      button {
+        font: inherit;
+        color: inherit;
+        background: none;
+        border: none;
+        cursor: pointer;
+      }
+    }
+
+    @layer theme {
+      :root {
+        /* 戶外天空與地景動態變數（由 JS 依 24 小時連續插值更新） */
+        --sky-top: rgb(122, 184, 238);
+        --sky-mid: rgb(176, 218, 248);
+        --sky-horizon: rgb(232, 244, 252);
+        --cloud-color: rgba(255, 252, 245, 0.82);
+        --hill-far: rgb(146, 198, 166);
+        --hill-near: rgb(116, 178, 138);
+        --meadow-fg: rgb(96, 162, 120);
+        --star-opacity: 0;
+
+        /* 教學色碼系統 (OKLCH) */
+        --color-hour: oklch(0.58 0.185 24);
+        --color-hour-soft: oklch(0.93 0.045 24);
+        --color-minute: oklch(0.53 0.145 236);
+        --color-minute-soft: oklch(0.93 0.04 236);
+        --color-second: oklch(0.68 0.155 75);
+
+        /* 鐘面與可愛外框色票 */
+        --dial-surface: oklch(0.985 0.012 85);
+        --dial-inner-ring: oklch(0.955 0.022 80);
+        --frame-pink-deep: oklch(0.75 0.11 16);
+
+        /* UI 面板與文字色票 */
+        --panel-bg: oklch(0.985 0.012 85 / 0.94);
+        --panel-border: oklch(0.86 0.055 20);
+        --text-ink: oklch(0.30 0.03 260);
+        --text-muted: oklch(0.50 0.03 260);
+        --control-bg: oklch(0.96 0.02 80);
+        --control-active-bg: oklch(0.62 0.15 350);
+        --control-active-text: oklch(0.99 0.005 85);
+
+        --font-rounded: "Rounded Mplus 1c", "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", "Nunito", "Quicksand", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+      }
+    }
+
+    @layer base {
+      html, body {
+        block-size: 100%;
+        overflow: hidden;
+        font-family: var(--font-rounded);
+        color: var(--text-ink);
+        background-color: var(--sky-top);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      button:focus-visible {
+        outline: 3px solid var(--color-minute);
+        outline-offset: 3px;
+      }
+    }
+
+    @layer components {
+      /* 全螢幕舞台與簡單戶外背景 */
+      .stage {
+        position: relative;
+        inline-size: 100dvw;
+        block-size: 100dvh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        padding-block: clamp(0.6rem, 2dvh, 1.4rem);
+        padding-inline: 1rem;
+        background: linear-gradient(
+          to bottom,
+          var(--sky-top) 0%,
+          var(--sky-mid) 58%,
+          var(--sky-horizon) 100%
+        );
+        isolation: isolate;
+      }
+
+      .outdoor-backdrop {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .outdoor-svg {
+        inline-size: 100%;
+        block-size: 100%;
+        display: block;
+      }
+
+      .stars-group {
+        opacity: var(--star-opacity);
+      }
+
+      .celestial-body {
+        will-change: transform, opacity;
+      }
+
+      .cloud-item {
+        fill: var(--cloud-color);
+        will-change: transform;
+      }
+
+      .hill-far {
+        fill: var(--hill-far);
+      }
+
+      .hill-near {
+        fill: var(--hill-near);
+      }
+
+      .meadow-fg {
+        fill: var(--meadow-fg);
+      }
+
+      /* 上方：數位時間看板（12h / 24h 單一顯示與切換） */
+      .top-bar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.45rem;
+        z-index: 2;
+      }
+
+      .digital-card {
+        display: flex;
+        align-items: center;
+        gap: clamp(0.65rem, 2vw, 1.1rem);
+        background: var(--panel-bg);
+        border: 3px solid var(--panel-border);
+        border-radius: 999px;
+        padding-block: 0.45rem;
+        padding-inline: clamp(0.85rem, 2.5vw, 1.35rem);
+        box-shadow: 0 8px 20px oklch(0.25 0.04 250 / 0.12);
+      }
+
+      .digital-readout {
+        display: inline-flex;
+        align-items: baseline;
+        justify-content: center;
+        font-variant-numeric: tabular-nums;
+        font-weight: 800;
+        font-size: clamp(1.55rem, 4.2dvh, 2.35rem);
+        letter-spacing: 0.03em;
+        line-height: 1.1;
+        min-inline-size: 8.6ch;
+        text-align: center;
+      }
+
+      .d-hour {
+        color: var(--color-hour);
+      }
+
+      .d-colon {
+        color: var(--text-muted);
+        margin-inline: 0.04em;
+      }
+
+      .d-minute {
+        color: var(--color-minute);
+      }
+
+      .d-second {
+        color: var(--color-second);
+        font-size: 0.82em;
+      }
+
+      .d-ampm {
+        margin-inline-start: 0.28em;
+        font-size: 0.62em;
+        font-weight: 800;
+        color: var(--text-ink);
+        letter-spacing: 0.04em;
+      }
+
+      .d-ampm[hidden] {
+        display: none;
+      }
+
+      /* 12h / 24h 格式切換器 */
+      .format-switch {
+        display: inline-flex;
+        background: var(--control-bg);
+        border: 2px solid var(--panel-border);
+        border-radius: 999px;
+        padding: 0.18rem;
+        gap: 0.18rem;
+      }
+
+      .format-btn {
+        min-block-size: 34px;
+        min-inline-size: 46px;
+        padding-inline: 0.65rem;
+        border-radius: 999px;
+        font-size: 0.92rem;
+        font-weight: 800;
+        color: var(--text-muted);
+        transition: background-color 160ms cubic-bezier(0.22, 1, 0.36, 1),
+                    color 160ms cubic-bezier(0.22, 1, 0.36, 1),
+                    transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .format-btn:hover:not([aria-pressed="true"]) {
+        color: var(--text-ink);
+      }
+
+      .format-btn[aria-pressed="true"] {
+        background: var(--control-active-bg);
+        color: var(--control-active-text);
+      }
+
+      /* 中央：教學時鐘（1.15x 放大配置） */
+      .clock-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1 1 auto;
+        inline-size: 100%;
+        max-inline-size: min(85dvh, 96dvw);
+        max-block-size: min(78dvh, 96dvw);
+        z-index: 2;
+      }
+
+      .clock-svg {
+        inline-size: 100%;
+        block-size: 100%;
+        max-inline-size: 575px;
+        max-block-size: 562px;
+        filter: drop-shadow(0 14px 28px oklch(0.22 0.04 250 / 0.18));
+        overflow: visible;
+      }
+
+      .minute-num {
+        font-size: 13.5px;
+        font-weight: 800;
+        fill: var(--color-minute);
+        text-anchor: middle;
+        dominant-baseline: central;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .hour-num {
+        font-size: 25px;
+        font-weight: 900;
+        fill: var(--color-hour);
+        text-anchor: middle;
+        dominant-baseline: central;
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* 下方：快轉、倒退控制台 */
+      .controls-bar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        background: var(--panel-bg);
+        border: 3px solid var(--panel-border);
+        border-radius: 999px;
+        padding-block: 0.45rem;
+        padding-inline: 0.75rem;
+        box-shadow: 0 8px 20px oklch(0.25 0.04 250 / 0.12);
+        z-index: 2;
+      }
+
+      .speed-btn {
+        min-block-size: 44px;
+        min-inline-size: 56px;
+        padding-inline: 0.8rem;
+        border-radius: 999px;
+        background: var(--control-bg);
+        border: 2px solid var(--panel-border);
+        font-size: clamp(0.88rem, 1.9dvh, 1rem);
+        font-weight: 800;
+        color: var(--text-ink);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.25rem;
+        transition: transform 150ms cubic-bezier(0.22, 1, 0.36, 1),
+                    background-color 150ms cubic-bezier(0.22, 1, 0.36, 1),
+                    color 150ms cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .speed-btn:hover:not([aria-pressed="true"]) {
+        transform: translateY(-2px);
+        background: oklch(0.93 0.035 18);
+      }
+
+      .speed-btn:active {
+        transform: translateY(0);
+      }
+
+      .speed-btn[aria-pressed="true"] {
+        background: var(--control-active-bg);
+        border-color: var(--control-active-bg);
+        color: var(--control-active-text);
+      }
+
+      @media (pointer: coarse) {
+        .speed-btn {
+          min-block-size: 48px;
+          min-inline-size: 62px;
+        }
+        .format-btn {
+          min-block-size: 40px;
+          min-inline-size: 52px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .format-btn,
+        .speed-btn {
+          transition: none;
+        }
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="stage" aria-label="兒童認鐘互動畫面">
+    <!-- 背景：簡單柔和的戶外與日月星辰軌跡 -->
+    <div class="outdoor-backdrop" aria-hidden="true">
+      <svg class="outdoor-svg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgb(255, 246, 196)" stop-opacity="1" />
+            <stop offset="55%" stop-color="rgb(255, 214, 102)" stop-opacity="0.65" />
+            <stop offset="100%" stop-color="rgb(255, 190, 80)" stop-opacity="0" />
+          </radialGradient>
+          <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgb(255, 250, 220)" stop-opacity="0.9" />
+            <stop offset="60%" stop-color="rgb(210, 228, 255)" stop-opacity="0.35" />
+            <stop offset="100%" stop-color="rgb(210, 228, 255)" stop-opacity="0" />
+          </radialGradient>
+          <!-- 月亮彎月遮罩 -->
+          <mask id="crescentMask">
+            <rect x="-60" y="-60" width="120" height="120" fill="white" />
+            <circle cx="14" cy="-10" r="26" fill="black" />
+          </mask>
+        </defs>
+
+        <!-- 夜空繁星（隨夜晚時間平滑浮現） -->
+        <g class="stars-group" id="starsGroup">
+          <circle cx="140" cy="95" r="2.5" fill="#fff9d6" />
+          <circle cx="260" cy="160" r="1.8" fill="#fff9d6" />
+          <circle cx="390" cy="80" r="3" fill="#fff9d6" />
+          <circle cx="520" cy="130" r="2" fill="#fff9d6" />
+          <circle cx="680" cy="75" r="2.6" fill="#fff9d6" />
+          <circle cx="830" cy="140" r="2.2" fill="#fff9d6" />
+          <circle cx="960" cy="88" r="3" fill="#fff9d6" />
+          <circle cx="1080" cy="165" r="2" fill="#fff9d6" />
+          <circle cx="195" cy="240" r="2.2" fill="#fff9d6" />
+          <circle cx="1020" cy="245" r="2.4" fill="#fff9d6" />
+          <!-- 四角星點綴 -->
+          <path d="M 310 110 L 313 118 L 321 121 L 313 124 L 310 132 L 307 124 L 299 121 L 307 118 Z" fill="#fff5c0" />
+          <path d="M 890 95 L 893 103 L 901 106 L 893 109 L 890 117 L 887 109 L 879 106 L 887 103 Z" fill="#fff5c0" />
+        </g>
+
+        <!-- 太陽（沿天空圓弧平滑升降） -->
+        <g id="sunBody" class="celestial-body" transform="translate(600, 120)">
+          <circle cx="0" cy="0" r="72" fill="url(#sunGlow)" />
+          <circle cx="0" cy="0" r="34" fill="#ffdf5d" />
+        </g>
+
+        <!-- 月亮（沿天空圓弧平滑升降） -->
+        <g id="moonBody" class="celestial-body" transform="translate(600, 900)">
+          <circle cx="0" cy="0" r="64" fill="url(#moonGlow)" />
+          <circle cx="0" cy="0" r="28" fill="#fff5be" mask="url(#crescentMask)" />
+        </g>
+
+        <!-- 柔和雲朵 -->
+        <g id="cloud1" class="cloud-item" transform="translate(150, 165)">
+          <path d="M 0 30 Q 0 10 22 10 Q 32 -8 56 -6 Q 80 -4 86 14 Q 108 14 108 32 Q 108 48 88 48 L 18 48 Q 0 48 0 30 Z" />
+        </g>
+        <g id="cloud2" class="cloud-item" transform="translate(880, 130) scale(1.15)">
+          <path d="M 0 30 Q 0 10 22 10 Q 32 -8 56 -6 Q 80 -4 86 14 Q 108 14 108 32 Q 108 48 88 48 L 18 48 Q 0 48 0 30 Z" />
+        </g>
+        <g id="cloud3" class="cloud-item" transform="translate(480, 210) scale(0.85)">
+          <path d="M 0 30 Q 0 10 22 10 Q 32 -8 56 -6 Q 80 -4 86 14 Q 108 14 108 32 Q 108 48 88 48 L 18 48 Q 0 48 0 30 Z" />
+        </g>
+
+        <!-- 遠景柔和山丘與草坡（不搶主角時鐘焦點） -->
+        <path class="hill-far" d="M -50 800 L -50 610 Q 260 515 620 600 T 1250 580 L 1250 800 Z" />
+        <path class="hill-near" d="M -50 800 L -50 660 Q 380 575 760 655 T 1250 640 L 1250 800 Z" />
+        <path class="meadow-fg" d="M -50 800 L -50 715 Q 600 665 1250 715 L 1250 800 Z" />
+      </svg>
+    </div>
+
+    <!-- 上方：阿拉伯數字時間（切換顯示 12h 或 24h） -->
+    <header class="top-bar">
+      <div class="digital-card" role="region" aria-label="數位時間與格式切換">
+        <div class="digital-readout" aria-live="off">
+          <span class="d-hour" id="digitalHour">09</span><span class="d-colon">:</span><span class="d-minute" id="digitalMinute">00</span><span class="d-colon">:</span><span class="d-second" id="digitalSecond">00</span><span class="d-ampm" id="digitalAmPm">am</span>
+        </div>
+        <div class="format-switch" role="group" aria-label="12h與24h切換">
+          <button type="button" class="format-btn" id="btn12h" aria-pressed="true">12h</button>
+          <button type="button" class="format-btn" id="btn24h" aria-pressed="false">24h</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 中央：雙圈刻度（1~12 時 & 0~60 分）與三針時鐘 -->
+    <section class="clock-wrapper" aria-label="指針時鐘">
+      <svg class="clock-svg" viewBox="0 0 440 430" role="img" aria-label="包含時針、分針、秒針與內外圈刻度的時鐘">
+        <!-- 時鐘小腳座 -->
+        <ellipse cx="132" cy="394" rx="26" ry="14" transform="rotate(-20 132 394)" fill="var(--frame-pink-deep)" />
+        <ellipse cx="308" cy="394" rx="26" ry="14" transform="rotate(20 308 394)" fill="var(--frame-pink-deep)" />
+
+        <!-- 鐘面主體 (中心點 cx=220, cy=206，總外徑維持 r=196，粉紅外框縮減為 3px) -->
+        <g transform="translate(220, 206)">
+          <!-- 暖奶油白鐘盤底與 3px 粉紅外框 -->
+          <circle cx="0" cy="0" r="196" fill="var(--dial-surface)" stroke="var(--frame-pink-deep)" stroke-width="3" />
+
+          <!-- 外圈（分針軌道淡藍底環） -->
+          <circle cx="0" cy="0" r="172" fill="none" stroke="var(--color-minute-soft)" stroke-width="30" />
+
+          <!-- 內圈（時針軌道淡珊瑚色引導環與柔和底盤） -->
+          <circle cx="0" cy="0" r="122" fill="var(--dial-inner-ring)" stroke="var(--color-hour-soft)" stroke-width="3" />
+
+          <!-- 動態產生之 0~60 分鐘刻度與數字、1~12 小時數字 -->
+          <g id="minuteTicksGroup"></g>
+          <g id="minuteNumbersGroup"></g>
+          <g id="hourNumbersGroup"></g>
+
+          <!-- 時針（短粗，與 1~12 數字同色，指向內圈） -->
+          <g id="hourHand" transform="rotate(0)">
+            <line x1="0" y1="14" x2="0" y2="-91" stroke="var(--color-hour)" stroke-width="13" stroke-linecap="round" />
+            <polygon points="0,-106 -9,-85 9,-85" fill="var(--color-hour)" />
+          </g>
+
+          <!-- 分針（細長，與 0~60 分鐘數字同色，指向外圈） -->
+          <g id="minuteHand" transform="rotate(0)">
+            <line x1="0" y1="18" x2="0" y2="-142" stroke="var(--color-minute)" stroke-width="8.5" stroke-linecap="round" />
+            <polygon points="0,-155 -6.5,-136 6.5,-136" fill="var(--color-minute)" />
+          </g>
+
+          <!-- 秒針（纖細琥珀金，附小圓點尾端） -->
+          <g id="secondHand" transform="rotate(0)">
+            <line x1="0" y1="26" x2="0" y2="-158" stroke="var(--color-second)" stroke-width="3.2" stroke-linecap="round" />
+            <circle cx="0" cy="-130" r="4.5" fill="var(--color-second)" />
+            <circle cx="0" cy="22" r="5" fill="var(--color-second)" />
+          </g>
+
+          <!-- 中心軸扣 -->
+          <circle cx="0" cy="0" r="10.5" fill="var(--frame-pink-deep)" />
+          <circle cx="0" cy="0" r="5.5" fill="var(--dial-surface)" />
+        </g>
+      </svg>
+    </section>
+
+    <!-- 下方：快轉與倒退倍速控制列 -->
+    <footer class="controls-bar" role="group" aria-label="時間快轉與倒退控制">
+      <button type="button" class="speed-btn" data-speed="-1200" aria-pressed="false">
+        <span aria-hidden="true">⏪</span><span>-1200x</span>
+      </button>
+      <button type="button" class="speed-btn" data-speed="-300" aria-pressed="false">
+        <span aria-hidden="true">⏪</span><span>-300x</span>
+      </button>
+      <button type="button" class="speed-btn" data-speed="-60" aria-pressed="false">
+        <span aria-hidden="true">⏪</span><span>-60x</span>
+      </button>
+      <button type="button" class="speed-btn" data-speed="-10" aria-pressed="false">
+        <span aria-hidden="true">◀</span><span>-10x</span>
+      </button>
+      <button type="button" class="speed-btn" id="btnPlayPause" aria-pressed="true" aria-label="暫停">
+        <span id="playPauseIcon" aria-hidden="true">⏸</span>
+      </button>
+      <button type="button" class="speed-btn" data-speed="10" aria-pressed="false">
+        <span aria-hidden="true">▶</span><span>+10x</span>
+      </button>
+      <button type="button" class="speed-btn" data-speed="60" aria-pressed="false">
+        <span aria-hidden="true">⏩</span><span>+60x</span>
+      </button>
+      <button type="button" class="speed-btn" data-speed="300" aria-pressed="false">
+        <span aria-hidden="true">⏩</span><span>+300x</span>
+      </button>
+      <button type="button" class="speed-btn" data-speed="1200" aria-pressed="false">
+        <span aria-hidden="true">⏩</span><span>+1200x</span>
+      </button>
+      <button type="button" class="speed-btn" id="btnNow">
+        <span aria-hidden="true">🕒</span><span>現在</span>
+      </button>
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      const SVG_NS = "http://www.w3.org/2000/svg";
+      const SECONDS_PER_DAY = 86400;
+
+      // 1. 建立鐘面刻度：外圈 0~60 分鐘刻度與數字 + 內圈 1~12 小時數字
+      const minuteTicksGroup = document.getElementById("minuteTicksGroup");
+      const minuteNumbersGroup = document.getElementById("minuteNumbersGroup");
+      const hourNumbersGroup = document.getElementById("hourNumbersGroup");
+
+      for (let m = 0; m < 60; m++) {
+        const angleDeg = m * 6;
+        const angleRad = ((angleDeg - 90) * Math.PI) / 180;
+        const isMajor = m % 5 === 0;
+
+        // 外圈 60 個分鐘刻度點
+        const dotRadius = 149;
+        const dotX = Math.cos(angleRad) * dotRadius;
+        const dotY = Math.sin(angleRad) * dotRadius;
+        const dot = document.createElementNS(SVG_NS, "circle");
+        dot.setAttribute("cx", dotX.toFixed(2));
+        dot.setAttribute("cy", dotY.toFixed(2));
+        dot.setAttribute("r", isMajor ? "3.4" : "1.8");
+        dot.setAttribute("fill", isMajor ? "var(--color-minute)" : "oklch(0.70 0.08 236)");
+        minuteTicksGroup.appendChild(dot);
+
+        // 外圈每 5 分鐘顯示 0~60 數字 (12點方向標示 0/60，其餘 5~55)
+        if (isMajor) {
+          const numRadius = 172;
+          const numX = Math.cos(angleRad) * numRadius;
+          const numY = Math.sin(angleRad) * numRadius;
+          const text = document.createElementNS(SVG_NS, "text");
+          text.setAttribute("x", numX.toFixed(2));
+          text.setAttribute("y", numY.toFixed(2));
+          text.setAttribute("class", "minute-num");
+          text.textContent = m === 0 ? "0/60" : String(m);
+          minuteNumbersGroup.appendChild(text);
+        }
+      }
+
+      for (let h = 1; h <= 12; h++) {
+        const angleDeg = h * 30;
+        const angleRad = ((angleDeg - 90) * Math.PI) / 180;
+        const hourRadius = 102;
+        const hx = Math.cos(angleRad) * hourRadius;
+        const hy = Math.sin(angleRad) * hourRadius;
+
+        const text = document.createElementNS(SVG_NS, "text");
+        text.setAttribute("x", hx.toFixed(2));
+        text.setAttribute("y", hy.toFixed(2));
+        text.setAttribute("class", "hour-num");
+        text.textContent = String(h);
+        hourNumbersGroup.appendChild(text);
+      }
+
+      // 2. 24 小時全天候平滑漸變色票錨點 (凌晨、破曉、早晨、正午、下午、傍晚、入夜、午夜)
+      const SKY_KEYFRAMES = [
+        {
+          hour: 0.0, // 午夜
+          skyTop: [18, 26, 62],
+          skyMid: [34, 46, 94],
+          skyHorizon: [54, 68, 122],
+          hillFar: [38, 58, 86],
+          hillNear: [28, 46, 72],
+          meadowFg: [22, 38, 60],
+          cloud: [140, 155, 195, 0.28],
+          stars: 1.0
+        },
+        {
+          hour: 4.5, // 凌晨微光
+          skyTop: [36, 42, 92],
+          skyMid: [78, 72, 132],
+          skyHorizon: [138, 106, 154],
+          hillFar: [58, 72, 102],
+          hillNear: [44, 58, 86],
+          meadowFg: [34, 48, 72],
+          cloud: [190, 175, 210, 0.42],
+          stars: 0.65
+        },
+        {
+          hour: 6.0, // 破曉日出
+          skyTop: [96, 142, 206],
+          skyMid: [226, 166, 178],
+          skyHorizon: [252, 206, 162],
+          hillFar: [118, 148, 142],
+          hillNear: [94, 128, 118],
+          meadowFg: [76, 112, 102],
+          cloud: [255, 226, 210, 0.78],
+          stars: 0.08
+        },
+        {
+          hour: 8.5, // 晨間上午
+          skyTop: [116, 184, 240],
+          skyMid: [176, 220, 250],
+          skyHorizon: [232, 246, 252],
+          hillFar: [144, 202, 168],
+          hillNear: [114, 182, 140],
+          meadowFg: [92, 164, 120],
+          cloud: [255, 253, 248, 0.85],
+          stars: 0.0
+        },
+        {
+          hour: 12.0, // 正中午
+          skyTop: [88, 172, 242],
+          skyMid: [156, 214, 252],
+          skyHorizon: [224, 245, 255],
+          hillFar: [136, 206, 162],
+          hillNear: [104, 186, 132],
+          meadowFg: [82, 168, 112],
+          cloud: [255, 255, 255, 0.90],
+          stars: 0.0
+        },
+        {
+          hour: 15.5, // 溫暖下午
+          skyTop: [108, 176, 234],
+          skyMid: [182, 218, 242],
+          skyHorizon: [246, 238, 214],
+          hillFar: [148, 196, 152],
+          hillNear: [122, 174, 124],
+          meadowFg: [98, 154, 104],
+          cloud: [255, 250, 236, 0.86],
+          stars: 0.0
+        },
+        {
+          hour: 17.75, // 傍晚夕陽
+          skyTop: [92, 104, 176],
+          skyMid: [218, 134, 148],
+          skyHorizon: [250, 178, 126],
+          hillFar: [116, 118, 134],
+          hillNear: [90, 96, 112],
+          meadowFg: [70, 78, 94],
+          cloud: [255, 196, 168, 0.78],
+          stars: 0.18
+        },
+        {
+          hour: 19.25, // 入夜暮色
+          skyTop: [34, 44, 92],
+          skyMid: [64, 72, 126],
+          skyHorizon: [106, 98, 146],
+          hillFar: [52, 70, 98],
+          hillNear: [38, 56, 82],
+          meadowFg: [30, 46, 68],
+          cloud: [165, 172, 208, 0.38],
+          stars: 0.82
+        },
+        {
+          hour: 24.0, // 銜接午夜
+          skyTop: [18, 26, 62],
+          skyMid: [34, 46, 94],
+          skyHorizon: [54, 68, 122],
+          hillFar: [38, 58, 86],
+          hillNear: [28, 46, 72],
+          meadowFg: [22, 38, 60],
+          cloud: [140, 155, 195, 0.28],
+          stars: 1.0
+        }
+      ];
+
+      const lerp = (a, b, t) => a + (b - a) * t;
+      const lerpRgb = (c1, c2, t) =>
+        `rgb(${Math.round(lerp(c1[0], c2[0], t))}, ${Math.round(lerp(c1[1], c2[1], t))}, ${Math.round(lerp(c1[2], c2[2], t))})`;
+      const lerpRgba = (c1, c2, t) =>
+        `rgba(${Math.round(lerp(c1[0], c2[0], t))}, ${Math.round(lerp(c1[1], c2[1], t))}, ${Math.round(lerp(c1[2], c2[2], t))}, ${lerp(c1[3], c2[3], t).toFixed(3)})`;
+
+      // 3. 狀態與 DOM 參照
+      const rootStyle = document.documentElement.style;
+      const digitalHour = document.getElementById("digitalHour");
+      const digitalMinute = document.getElementById("digitalMinute");
+      const digitalSecond = document.getElementById("digitalSecond");
+      const digitalAmPm = document.getElementById("digitalAmPm");
+      const btn12h = document.getElementById("btn12h");
+      const btn24h = document.getElementById("btn24h");
+      const hourHand = document.getElementById("hourHand");
+      const minuteHand = document.getElementById("minuteHand");
+      const secondHand = document.getElementById("secondHand");
+      const sunBody = document.getElementById("sunBody");
+      const moonBody = document.getElementById("moonBody");
+      const cloud1 = document.getElementById("cloud1");
+      const cloud2 = document.getElementById("cloud2");
+      const cloud3 = document.getElementById("cloud3");
+      const speedButtons = document.querySelectorAll(".speed-btn[data-speed]");
+      const btnPlayPause = document.getElementById("btnPlayPause");
+      const playPauseIcon = document.getElementById("playPauseIcon");
+      const btnNow = document.getElementById("btnNow");
+
+      const getRealSecondsOfDay = () => {
+        const d = new Date();
+        return (
+          d.getHours() * 3600 +
+          d.getMinutes() * 60 +
+          d.getSeconds() +
+          d.getMilliseconds() / 1000
+        );
+      };
+
+      // 以目前本地時間初始化當日秒數
+      let currentSecondsOfDay = getRealSecondsOfDay();
+
+      let speedMultiplier = 1;
+      let is24HourFormat = false; // 預設 12h 制，可切換為 24h 制
+      let cloudPhase = 0;
+
+      // 12h / 24h 切換事件
+      const setFormat = (use24h) => {
+        is24HourFormat = use24h;
+        btn12h.setAttribute("aria-pressed", String(!use24h));
+        btn24h.setAttribute("aria-pressed", String(use24h));
+        renderClock(currentSecondsOfDay);
+      };
+
+      btn12h.addEventListener("click", () => setFormat(false));
+      btn24h.addEventListener("click", () => setFormat(true));
+
+      const syncControlState = () => {
+        const isPaused = speedMultiplier === 0;
+        const isCenterActive = speedMultiplier === 0 || speedMultiplier === 1;
+        playPauseIcon.textContent = isPaused ? "▶" : "⏸";
+        btnPlayPause.setAttribute("aria-label", isPaused ? "正常播放" : "暫停");
+        btnPlayPause.setAttribute("aria-pressed", String(isCenterActive));
+        speedButtons.forEach((b) =>
+          b.setAttribute("aria-pressed", String(Number(b.dataset.speed) === speedMultiplier))
+        );
+      };
+
+      // 0x 暫停與 1x 正常播放切換按鈕事件
+      btnPlayPause.addEventListener("click", () => {
+        speedMultiplier = speedMultiplier === 0 ? 1 : 0;
+        syncControlState();
+      });
+
+      // 快轉与倒退按鈕事件
+      speedButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          speedMultiplier = Number(btn.dataset.speed);
+          syncControlState();
+        });
+      });
+
+      // 校準回目前真實時間並恢復 1x 正常走時
+      btnNow.addEventListener("click", () => {
+        currentSecondsOfDay = getRealSecondsOfDay();
+        speedMultiplier = 1;
+        syncControlState();
+        renderClock(currentSecondsOfDay);
+      });
+
+      const pad2 = (n) => String(n).padStart(2, "0");
+
+      function updateOutdoorScene(hourFloat) {
+        // 尋找所屬區間並線性插值
+        let k0 = SKY_KEYFRAMES[0];
+        let k1 = SKY_KEYFRAMES[1];
+        for (let i = 0; i < SKY_KEYFRAMES.length - 1; i++) {
+          if (hourFloat >= SKY_KEYFRAMES[i].hour && hourFloat <= SKY_KEYFRAMES[i + 1].hour) {
+            k0 = SKY_KEYFRAMES[i];
+            k1 = SKY_KEYFRAMES[i + 1];
+            break;
+          }
+        }
+        const span = k1.hour - k0.hour || 1;
+        const t = Math.min(1, Math.max(0, (hourFloat - k0.hour) / span));
+
+        rootStyle.setProperty("--sky-top", lerpRgb(k0.skyTop, k1.skyTop, t));
+        rootStyle.setProperty("--sky-mid", lerpRgb(k0.skyMid, k1.skyMid, t));
+        rootStyle.setProperty("--sky-horizon", lerpRgb(k0.skyHorizon, k1.skyHorizon, t));
+        rootStyle.setProperty("--hill-far", lerpRgb(k0.hillFar, k1.hillFar, t));
+        rootStyle.setProperty("--hill-near", lerpRgb(k0.hillNear, k1.hillNear, t));
+        rootStyle.setProperty("--meadow-fg", lerpRgb(k0.meadowFg, k1.meadowFg, t));
+        rootStyle.setProperty("--cloud-color", lerpRgba(k0.cloud, k1.cloud, t));
+        rootStyle.setProperty("--star-opacity", lerp(k0.stars, k1.stars, t).toFixed(3));
+
+        // 太陽軌跡：12:00 在正上方 (-90度)，00:00 在地平線下 (+90度)
+        const sunAngle = ((hourFloat - 12) / 24) * Math.PI * 2 - Math.PI / 2;
+        const sunX = 600 + Math.cos(sunAngle) * 470;
+        const sunY = 630 + Math.sin(sunAngle) * 510;
+        sunBody.setAttribute("transform", `translate(${sunX.toFixed(1)}, ${sunY.toFixed(1)})`);
+
+        // 月亮軌跡：与太陽相差 12 小時（00:00 在正上方）
+        const moonAngle = sunAngle + Math.PI;
+        const moonX = 600 + Math.cos(moonAngle) * 470;
+        const moonY = 630 + Math.sin(moonAngle) * 510;
+        moonBody.setAttribute("transform", `translate(${moonX.toFixed(1)}, ${moonY.toFixed(1)})`);
+      }
+
+      function renderClock(totalSeconds) {
+        const normalizedSec =
+          ((totalSeconds % SECONDS_PER_DAY) + SECONDS_PER_DAY) % SECONDS_PER_DAY;
+        const hourFloat = normalizedSec / 3600;
+
+        // 計算整數時、分、秒供上方阿拉伯數字面板顯示
+        const wholeSeconds = Math.floor(normalizedSec);
+        const hours24 = Math.floor(wholeSeconds / 3600) % 24;
+        const minutes = Math.floor((wholeSeconds % 3600) / 60);
+        const seconds = wholeSeconds % 60;
+
+        if (is24HourFormat) {
+          // 24h 制：僅顯示 HH:MM:ss，不顯示中文或 am/pm
+          digitalHour.textContent = pad2(hours24);
+          digitalMinute.textContent = pad2(minutes);
+          digitalSecond.textContent = pad2(seconds);
+          digitalAmPm.hidden = true;
+        } else {
+          // 12h 制：僅顯示 hh:mm:ss am/pm，不顯示中文
+          const hours12 = hours24 % 12 === 0 ? 12 : hours24 % 12;
+          const period = hours24 < 12 ? "am" : "pm";
+          digitalHour.textContent = pad2(hours12);
+          digitalMinute.textContent = pad2(minutes);
+          digitalSecond.textContent = pad2(seconds);
+          digitalAmPm.textContent = period;
+          digitalAmPm.hidden = false;
+        }
+
+        // 指針角度（平滑連續轉動）
+        const secondDeg = (normalizedSec % 60) * 6;
+        const minuteDeg = ((normalizedSec / 60) % 60) * 6;
+        const hourDeg = ((normalizedSec / 3600) % 12) * 30;
+
+        hourHand.setAttribute("transform", `rotate(${hourDeg.toFixed(2)})`);
+        minuteHand.setAttribute("transform", `rotate(${minuteDeg.toFixed(2)})`);
+        secondHand.setAttribute("transform", `rotate(${secondDeg.toFixed(2)})`);
+
+        updateOutdoorScene(hourFloat);
+      }
+
+      // 4. 動畫主迴圈
+      let lastTimestamp = performance.now();
+      function tick(nowTs) {
+        const dtSeconds = Math.min(0.1, (nowTs - lastTimestamp) / 1000);
+        lastTimestamp = nowTs;
+
+        if (speedMultiplier !== 0) {
+          currentSecondsOfDay =
+            (((currentSecondsOfDay + dtSeconds * speedMultiplier) % SECONDS_PER_DAY) +
+              SECONDS_PER_DAY) %
+            SECONDS_PER_DAY;
+
+          // 雲朵水平位移與時間倍率連動，0x 時完全靜止
+          cloudPhase =
+            (cloudPhase +
+              dtSeconds *
+                (4 + Math.min(40, Math.abs(speedMultiplier) * 0.25)) *
+                Math.sign(speedMultiplier) +
+              1400) %
+            1400;
+          const c1x = ((150 + cloudPhase) % 1400) - 120;
+          const c2x = ((880 + cloudPhase * 0.7) % 1400) - 120;
+          const c3x = ((480 + cloudPhase * 0.5) % 1400) - 120;
+          cloud1.setAttribute("transform", `translate(${c1x.toFixed(1)}, 165)`);
+          cloud2.setAttribute("transform", `translate(${c2x.toFixed(1)}, 130) scale(1.15)`);
+          cloud3.setAttribute("transform", `translate(${c3x.toFixed(1)}, 210) scale(0.85)`);
+
+          renderClock(currentSecondsOfDay);
+        }
+
+        requestAnimationFrame(tick);
+      }
+
+      renderClock(currentSecondsOfDay);
+      requestAnimationFrame(tick);
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>桃園中壢青埔二日自駕步行提案 (11/14 - 11/15)</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <style>
+    :root {
+      --bg-base: oklch(98.5% 0.008 85);
+      --bg-surface: oklch(100% 0 0);
+      --bg-subtle: oklch(96% 0.012 85);
+      --border-subtle: oklch(91% 0.015 85);
+      --border-strong: oklch(82% 0.02 85);
+      
+      --text-main: oklch(22% 0.02 260);
+      --text-muted: oklch(48% 0.02 260);
+      --text-light: oklch(62% 0.015 260);
+
+      --color-primary: oklch(45% 0.12 250);
+      --color-primary-bg: oklch(94% 0.03 250);
+      
+      --color-accent-food: oklch(52% 0.15 45);
+      --color-accent-food-bg: oklch(95% 0.04 45);
+      
+      --color-accent-culture: oklch(48% 0.13 180);
+      --color-accent-culture-bg: oklch(94% 0.03 180);
+
+      --color-accent-stay: oklch(42% 0.12 290);
+      --color-accent-stay-bg: oklch(94% 0.03 290);
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang TC", "Microsoft JhengHei", sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      background-color: var(--bg-surface);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    header h1 {
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 68ch;
+      margin: 0 auto;
+    }
+
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.25rem;
+      font-size: 0.85rem;
+    }
+
+    .meta-pill {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+    }
+
+    .meta-pill strong {
+      color: var(--text-main);
+    }
+
+    main {
+      padding: 2.5rem 0 4rem;
+    }
+
+    section {
+      margin-bottom: 3.5rem;
+    }
+
+    .section-header {
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Traffic Note Box */
+    .notice-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+    }
+
+    .notice-box h3 {
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+      color: var(--text-main);
+    }
+
+    .notice-box ul {
+      padding-left: 1.2rem;
+      color: var(--text-muted);
+    }
+
+    .notice-box li {
+      margin-bottom: 0.35rem;
+    }
+
+    /* Timeline Section */
+    .day-block {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .day-heading {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--color-primary);
+    }
+
+    .timeline-list {
+      list-style: none;
+      position: relative;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 2.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: 7px;
+      top: 6px;
+      bottom: -1.75rem;
+      width: 2px;
+      background: var(--border-subtle);
+    }
+
+    .timeline-item:last-child::before {
+      display: none;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 0;
+      top: 5px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+      border: 3px solid var(--color-primary);
+    }
+
+    .timeline-time {
+      font-size: 0.825rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+      display: inline-block;
+    }
+
+    .timeline-transit-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius-sm);
+      margin-left: 0.5rem;
+    }
+
+    .timeline-content-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .timeline-content-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .alt-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: 0.6rem;
+      background: var(--bg-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+    }
+
+    .alt-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+    }
+
+    .badge-primary {
+      font-size: 0.7rem;
+      font-weight: 700;
+      background: var(--color-primary-bg);
+      color: var(--color-primary);
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .badge-secondary {
+      font-size: 0.7rem;
+      font-weight: 600;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .anchor-link {
+      color: var(--color-primary);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .anchor-link:hover {
+      color: var(--text-main);
+    }
+
+    /* Map Section */
+    #map-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .map-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .map-toolbar-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .map-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 0.25rem 0.65rem;
+      font-size: 0.775rem;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .map-btn:hover {
+      background: var(--bg-subtle);
+      border-color: var(--border-strong);
+    }
+
+    .map-btn.active {
+      background: var(--color-primary-bg);
+      color: var(--color-primary);
+      border-color: var(--color-primary);
+      font-weight: 700;
+    }
+
+    #map {
+      height: 520px;
+      width: 100%;
+      border-radius: var(--radius-md);
+      z-index: 1;
+    }
+
+    /* 底圖降噪淡化：抑制複雜線條與過度飽和色塊，大幅凸顯自訂景點圖標 */
+    .leaflet-tile-pane {
+      filter: grayscale(45%) contrast(0.92) opacity(0.82);
+    }
+
+    /* 升級醒目實體圖釘標籤 (Badge Pin) */
+    .map-badge-pin {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: #ffffff;
+      color: #0f172a;
+      padding: 0.25rem 0.55rem;
+      border-radius: 9999px;
+      font-size: 0.775rem;
+      font-weight: 700;
+      white-space: nowrap;
+      border: 2px solid var(--pin-color, #2563eb);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .map-badge-pin:hover {
+      transform: translate(-50%, -50%) scale(1.12);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.35);
+      z-index: 9999 !important;
+    }
+
+    .map-badge-pin .pin-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--pin-color, #2563eb);
+      flex-shrink: 0;
+    }
+
+    .map-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.8rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--text-muted);
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    /* Directory / Places Section */
+    .place-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .place-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      scroll-margin-top: 2rem;
+      transition: border-color 0.2s ease;
+    }
+
+    .place-card:target {
+      border: 2px solid var(--color-primary);
+      background-color: oklch(99.5% 0.01 250);
+    }
+
+    .place-top {
+      margin-bottom: 0.75rem;
+    }
+
+    .place-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .place-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .place-category {
+      font-size: 0.75rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+    }
+
+    .cat-culture {
+      background: var(--color-accent-culture-bg);
+      color: var(--color-accent-culture);
+    }
+
+    .cat-food {
+      background: var(--color-accent-food-bg);
+      color: var(--color-accent-food);
+    }
+
+    .cat-stay {
+      background: var(--color-accent-stay-bg);
+      color: var(--color-accent-stay);
+    }
+
+    .cat-transit {
+      background: var(--bg-subtle);
+      color: var(--text-muted);
+    }
+
+    .place-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 0.75rem;
+    }
+
+    .place-info-list {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      list-style: none;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 0.6rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .place-info-list li {
+      margin-bottom: 0.25rem;
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .place-info-list strong {
+      color: var(--text-main);
+      white-space: nowrap;
+    }
+
+    .place-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 0.75rem;
+      font-size: 0.8rem;
+    }
+
+    .voucher-preview {
+      margin: 0.85rem 0 0.5rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: var(--bg-subtle);
+    }
+
+    .voucher-preview img {
+      width: 100%;
+      height: auto;
+      display: block;
+      cursor: zoom-in;
+      transition: opacity 0.15s ease;
+    }
+
+    .voucher-preview img:hover {
+      opacity: 0.92;
+    }
+
+    .voucher-caption {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      padding: 0.4rem 0.6rem;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-subtle);
+      line-height: 1.4;
+    }
+
+    /* Lightbox Modal */
+    .lightbox-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(4px);
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      cursor: zoom-out;
+    }
+
+    .lightbox-modal.active {
+      display: flex;
+    }
+
+    .lightbox-content-wrapper {
+      position: relative;
+      max-width: 95vw;
+      max-height: 90vh;
+      background: var(--bg-surface);
+      border-radius: var(--radius-md);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25);
+      padding: 0.85rem;
+      cursor: default;
+    }
+
+    .lightbox-img {
+      max-width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+      display: block;
+      border-radius: var(--radius-sm);
+    }
+
+    .lightbox-close-btn {
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      width: 34px;
+      height: 34px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 50%;
+      font-size: 1.25rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-main);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .lightbox-hint {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+
+    .place-ext-link {
+      color: var(--color-primary);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .place-ext-link:hover {
+      text-decoration: underline;
+    }
+
+    .place-gmaps-link {
+      color: oklch(35% 0.12 150);
+      background: oklch(96% 0.03 150);
+      border: 1px solid oklch(88% 0.05 150);
+      border-radius: var(--radius-sm);
+      padding: 0.2rem 0.55rem;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.775rem;
+    }
+
+    .place-gmaps-link:hover {
+      background: oklch(92% 0.05 150);
+    }
+
+    .rating-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: oklch(46% 0.16 65);
+      background: oklch(96% 0.04 65);
+      border: 1px solid oklch(88% 0.06 65);
+      padding: 0.15rem 0.45rem;
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+    }
+
+    .rating-star {
+      color: oklch(62% 0.19 75);
+    }
+
+    .rating-count {
+      font-size: 0.7rem;
+      font-weight: normal;
+      color: var(--text-muted);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    /* Popup styling in Leaflet */
+    .leaflet-popup-content-wrapper {
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-md);
+      font-family: inherit;
+    }
+
+    .custom-popup h4 {
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+      color: var(--text-main);
+    }
+
+    .custom-popup p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .custom-popup a {
+      font-size: 0.8rem;
+      color: var(--color-primary);
+      font-weight: 700;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <h1>桃園中壢青埔二日自駕與步行動線提案</h1>
+      <p>廣慈站出發・國三台66南下・中壢市區三部曲老宅步行漫遊・青埔水岸書法地景</p>
+      <div class="meta-bar">
+        <div class="meta-pill">出發時間：<strong>2026/11/14 (六) 11:00</strong></div>
+        <div class="meta-pill">返抵時間：<strong>2026/11/15 (日) 20:00</strong></div>
+        <div class="meta-pill">起訖點：<strong>信義區捷運廣慈/奉天宮站周邊</strong></div>
+        <div class="meta-pill">模式：<strong>自駕快速切入 + 核心景點徒步</strong></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 交通預估與路況提示 -->
+    <div class="notice-box">
+      <h3>路況與交通節奏注意事項（依週末車流預估）</h3>
+      <ul>
+        <li><strong>去程 (11/14 六 11:00 出發)</strong>：避開了清晨出遊最高峰，經信義快接國三南下車流趨穩；但下大溪交流道轉台 66 線至平鎮端時，近午時段車流較多，Google Maps 預估約需 45～60 分鐘。</li>
+        <li><strong>市區停車策略</strong>：週六下午中壢市區停車格極為緊張，強烈建議午餐後先行駛至<strong>福容徠旅中壢</strong>停妥車輛，後續市區三大老宅景點全程步行（單程僅 5～10 分鐘）。</li>
+        <li><strong>回程 (11/15 日 18:45-20:00)</strong>：週日傍晚北返國道二號接國三三鶯、土城路段常有週日收假車流，預估返程車程約 50～65 分鐘，建議最晚於 18:45 由大竹交流道上國道，確保 20:00 前完成還車。</li>
+      </ul>
+    </div>
+
+    <!-- Chapter 1: Timeline -->
+    <section id="timeline-section">
+      <div class="section-header">
+        <div class="section-title">第一章：行程時間軸與交通時程</div>
+        <div class="section-subtitle">提供首選與順路備選，供當日彈性調整</div>
+      </div>
+
+      <!-- Day 1 -->
+      <div class="day-block">
+        <div class="day-heading">
+          <span>Day 1：2026/11/14 (六) 廣慈取車 → 龍岡美食 → 馬祖新村 → 中壢市區老宅漫步</span>
+          <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">主要移動方式：自駕 + 徒步</span>
+        </div>
+
+        <ul class="timeline-list">
+          <!-- 11:00 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">11:00</span>
+            <span class="timeline-transit-badge">出發前置 15 分</span>
+            <div class="timeline-content-title">廣慈博愛園區取車出發</div>
+            <div class="timeline-content-desc">
+              於廣慈地下停車場或周邊路邊租還據點（iRent / 格上 Go Smart）完成取車與驗車。
+            </div>
+            <div class="alt-options">
+              <div class="alt-row">
+                <span class="badge-primary">首選</span>
+                <span>廣慈園區地下停車場（共享汽車）</span>
+                <a href="#place-guangci" class="anchor-link">查看介紹</a>
+              </div>
+              <div class="alt-row">
+                <span class="badge-secondary">備選</span>
+                <span>南港昆陽周邊實體門市（若租借傳統車隊車輛，可搭乘板南線一站取車）</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 11:15 - 12:15 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">11:15 - 12:15</span>
+            <span class="timeline-transit-badge">高速與快速道路 50～60 分</span>
+            <div class="timeline-content-title">行車動線：廣慈 → 信義快 → 國三 → 大溪交流道 → 台 66 線 → 平鎮/龍岡</div>
+            <div class="timeline-content-desc">
+              走信義快速道路直上國三南下，至大溪交流道轉台 66 快速道路往平鎮，避開國一林口坡常態回堵。
+            </div>
+          </li>
+
+          <!-- 12:15 - 13:30 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">12:15 - 13:30</span>
+            <span class="timeline-transit-badge">車程 5 分至停車場</span>
+            <div class="timeline-content-title">午餐時段：龍岡忠貞異國米干商圈</div>
+            <div class="timeline-content-desc">
+              感受滇緬泰交融的眷村特色飲食，鄰近多座收費停車場（如忠貞市場公有停車場）。
+            </div>
+            <div class="alt-options">
+              <div class="alt-row">
+                <span class="badge-primary">首選順路</span>
+                <span><strong>阿美米干 1981</strong>（環境寬敞、附設文物展區、出餐動線穩定）</span>
+                <a href="#place-amei" class="anchor-link">查看介紹</a>
+              </div>
+              <div class="alt-row">
+                <span class="badge-secondary">排隊名店</span>
+                <span><strong>國旗屋米干</strong>（滿滿國旗拍照地標，米干湯頭濃郁，假日人潮多）</span>
+                <a href="#place-flag" class="anchor-link">查看介紹</a>
+              </div>
+              <div class="alt-row">
+                <span class="badge-secondary">舒適備選</span>
+                <span><strong>大漢饌雲南拉麵</strong> 或 忠貞市場內無名米干（若阿美排隊過長之備案）</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 13:45 - 15:30 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">13:45 - 15:30</span>
+            <span class="timeline-transit-badge">車程 8 分 / 2.3 公里</span>
+            <div class="timeline-content-title">午後景點：馬祖新村眷村文創園區</div>
+            <div class="timeline-content-desc">
+              桃園三大眷村文創聚落之一，保存完整的將軍眷舍、紅磚矮牆、文創手作工坊與光影電影館。
+            </div>
+            <div class="alt-options">
+              <div class="alt-row">
+                <span class="badge-primary">首選推薦</span>
+                <span><strong>馬祖新村文創園區</strong>（停留約 1.5 小時，園區對面有大型公有停車場）</span>
+                <a href="#place-matsu" class="anchor-link">查看介紹</a>
+              </div>
+              <div class="alt-row">
+                <span class="badge-secondary">文化古蹟備選</span>
+                <span><strong>李騰芳古宅</strong>（若去程大溪交流道下後先前往，但需回程繞行約 20 分鐘）</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 15:45 - 16:15 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">15:45 - 16:15</span>
+            <span class="timeline-transit-badge">車程 15～20 分鐘</span>
+            <div class="timeline-content-title">飯店入住與停妥車輛：福容徠旅中壢</div>
+            <div class="timeline-content-desc">
+              至飯店辦理 Check-in，將車輛停入特約/地下停車場。自此轉換為<strong>完全徒步模式</strong>。
+            </div>
+            <div class="alt-options">
+              <div class="alt-row">
+                <span class="badge-primary">基地首選</span>
+                <span><strong>福容徠旅中壢</strong>（近中壢火車站與日式古蹟群，步行即達各景點）</span>
+                <a href="#place-fullon" class="anchor-link">查看介紹</a>
+              </div>
+            </div>
+          </li>
+
+          <!-- 16:30 - 18:30 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">16:30 - 18:30</span>
+            <span class="timeline-transit-badge">全程徒步 單段步行 5～10 分</span>
+            <div class="timeline-content-title">市區步行三部曲：中壢歷史建築群巡禮</div>
+            <div class="timeline-content-desc">
+              由近而遠順遊三大日式與近代官舍修復空間，沉浸於昭和至戰後生活軌跡。
+            </div>
+            <div class="alt-options">
+              <div class="alt-row">
+                <span class="badge-primary">站點 1 (最近)</span>
+                <span><strong>中平路故事館</strong>（步行 3 分，公務員雙拼日式宿舍，榻榻米生活感）</span>
+                <a href="#place-zhongping" class="anchor-link">查看介紹</a>
+              </div>
+              <div class="alt-row">
+                <span class="badge-primary">站點 2 (核心)</span>
+                <span><strong>壢小故事森林</strong>（步行 7 分，百年公學校教職員宿舍，綠蔭與繪本文學）</span>
+                <a href="#place-forest" class="anchor-link">查看介紹</a>
+              </div>
+              <div class="alt-row">
+                <span class="badge-primary">站點 3 (延伸)</span>
+                <span><strong>壢景町</strong>（步行 8 分，中壢郡役所警察官吏派出所，中壢事件歷史地標）</span>
+                <a href="#place-lijing" class="anchor-link">查看介紹</a>
+              </div>
+            </div>
+          </li>
+
+          <!-- 18:30 - 20:30 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">18:30 - 20:30</span>
+            <span class="timeline-transit-badge">步行 15 分 或 YouBike 5 分</span>
+            <div class="timeline-content-title">晚餐與夜晚彈性時光</div>
+            <div class="timeline-content-desc">
+              市區徒步覓食，享受中壢在地老字號美食或夜市小吃。
+            </div>
+            <div class="alt-options">
+              <div class="alt-row">
+                <span class="badge-primary">夜市首選</span>
+                <span><strong>中壢觀光夜市</strong>（新明夜市，小吃雲集，從飯店步行約 15 分鐘）</span>
+              </div>
+              <div class="alt-row">
+                <span class="badge-secondary">在地老店備選</span>
+                <span><strong>永川牛肉麵 / 新明牛肉麵</strong> 或 站前商圈在地客家小館</span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Day 2 -->
+      <div class="day-block">
+        <div class="day-heading">
+          <span>Day 2：2026/11/15 (日) 老街溪生態水岸 → 青埔書法藝術館 → 傍晚國道返程廣慈</span>
+          <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">主要移動方式：步行 + 自駕回程</span>
+        </div>
+
+        <ul class="timeline-list">
+          <!-- 09:30 - 10:00 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">09:30 - 10:00</span>
+            <span class="timeline-transit-badge">退房與開車 5 分鐘</span>
+            <div class="timeline-content-title">飯店退房，前往老街溪親水綠帶</div>
+            <div class="timeline-content-desc">
+              整裝退房取車，開車約 5 分鐘（亦可直接自飯店步行 10 分鐘，將車暫留飯店）。
+            </div>
+          </li>
+
+          <!-- 10:00 - 11:45 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">10:00 - 11:45</span>
+            <span class="timeline-transit-badge">步行動線 1.5 小時</span>
+            <div class="timeline-content-title">上午生態散策：老街溪河川教育中心與步道</div>
+            <div class="timeline-content-desc">
+              走訪全台第一座河川水質生態教育中心，體驗大型涵管水管滑梯，漫步於整頓有成的老街溪水岸。
+            </div>
+            <div class="alt-options">
+              <div class="alt-row">
+                <span class="badge-primary">首選順路</span>
+                <span><strong>老街溪河川教育中心與親水步道</strong>（寓教於樂、自然景觀與水岸微風）</span>
+                <a href="#place-laojie" class="anchor-link">查看介紹</a>
+              </div>
+              <div class="alt-row">
+                <span class="badge-secondary">綠地串聯</span>
+                <span><strong>新勢公園</strong>（步道直接貫通，擁有大草坪與戶外攀爬設施）</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 12:00 - 13:30 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">12:00 - 13:30</span>
+            <span class="timeline-transit-badge">駕車 20～25 分鐘</span>
+            <div class="timeline-content-title">中壢移師青埔：午餐與街區轉換</div>
+            <div class="timeline-content-desc">
+              經台 31 線或中正路往青埔高鐵特區，安排舒適的早午餐或特色日式料理。
+            </div>
+            <div class="alt-options">
+              <div class="alt-row">
+                <span class="badge-primary">首選推薦</span>
+                <span><strong>橫山書法公園旁風格咖啡廳／早午餐</strong>（如樸食竺林、不挑食等，步行即達藝術館）</span>
+              </div>
+              <div class="alt-row">
+                <span class="badge-secondary">便利商圈備選</span>
+                <span><strong>華泰名品城 GLORIA OUTLETS 美食街</strong>（品牌齊全、停車位充裕）</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 13:30 - 16:30 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">13:30 - 16:30</span>
+            <span class="timeline-transit-badge">青埔園區內散步</span>
+            <div class="timeline-content-title">午後重點：橫山書法藝術公園與藝術館</div>
+            <div class="timeline-content-desc">
+              以硯台與墨池為意象的當代地景建築，館內常設書法現代藝術展，公園環埤塘步道極其開闊愜意。
+            </div>
+            <div class="alt-options">
+              <div class="alt-row">
+                <span class="badge-primary">核心景點</span>
+                <span><strong>橫山書法藝術館與公園</strong>（建築美學、湖畔綠蔭、文創展覽，建議停留 2 小時）</span>
+                <a href="#place-hengshan" class="anchor-link">查看介紹</a>
+              </div>
+              <div class="alt-row">
+                <span class="badge-secondary">順遊備選 A</span>
+                <span><strong>青塘園生態公園</strong>（桃園市立美術館旁，雙塔斜張橋與白鷺鷥生態）</span>
+              </div>
+              <div class="alt-row">
+                <span class="badge-secondary">順遊備選 B</span>
+                <span><strong>Xpark 都會型水生公園</strong>（若天候不佳想轉為室內大型水族展覽時之方案）</span>
+              </div>
+            </div>
+          </li>
+
+          <!-- 16:45 - 18:30 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">16:45 - 18:30</span>
+            <span class="timeline-transit-badge">自由休閒 / 早晚餐</span>
+            <div class="timeline-content-title">傍晚緩衝時段：青埔慢遊或提早用膳</div>
+            <div class="timeline-content-desc">
+              在回程前避開國道 17:30-18:30 的第一波高峰，可於青埔悠閒用餐或在華泰名品城漫步補給。
+            </div>
+          </li>
+
+          <!-- 18:45 - 20:00 -->
+          <li class="timeline-item">
+            <div class="timeline-dot"></div>
+            <span class="timeline-time">18:45 - 20:00</span>
+            <span class="timeline-transit-badge">國道返程預估 50～65 分</span>
+            <div class="timeline-content-title">返程歸途：青埔 → 國二大竹交流道 → 國三 → 信義快 → 廣慈還車</div>
+            <div class="timeline-content-desc">
+              由大竹交流道上國道二號往東，於鶯歌系統轉國道三號北上，經木柵轉國三甲至信義快速道路，下信義路返回廣慈站完成還車。
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Chapter 2: Interactive Map -->
+    <section id="map-section">
+      <div class="section-header">
+        <div class="section-title">第二章：景點、住宿與餐飲動線地圖</div>
+        <div class="section-subtitle">點擊地圖節點可快速跳轉至下方地點詳細介紹</div>
+      </div>
+
+      <div id="map-container">
+        <div class="map-toolbar">
+          <span class="map-toolbar-label">快速聚焦區域：</span>
+          <button type="button" class="map-btn active" id="btn-zoom-all">🗺️ 全覽 (台北廣慈 ↔ 桃園中壢)</button>
+          <button type="button" class="map-btn" id="btn-zoom-zhongli">🏘️ 中壢市區 (飯店與日式老宅步行動線)</button>
+          <button type="button" class="map-btn" id="btn-zoom-qingpu">🖼️ 青埔特區 (橫山書法公園與水岸)</button>
+          <button type="button" class="map-btn" id="btn-zoom-longgang">🍜 龍岡忠貞 (米干商圈與馬祖新村)</button>
+        </div>
+        <div id="map"></div>
+        <div class="map-legend">
+          <div class="legend-item">
+            <span class="legend-dot" style="background: var(--color-accent-culture);"></span>
+            <span>歷史文化／藝文園區</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot" style="background: var(--color-accent-food);"></span>
+            <span>在地餐飲美食</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot" style="background: var(--color-accent-stay);"></span>
+            <span>飯店住宿基地</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot" style="background: var(--color-primary);"></span>
+            <span>生態水岸／公園綠地</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot" style="background: var(--text-muted);"></span>
+            <span>起訖取還車點</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 3: Places Directory -->
+    <section id="places-section">
+      <div class="section-header">
+        <div class="section-title">第三章：精選造訪地點快速介紹</div>
+        <div class="section-subtitle">附開放時間、停車建議與官方/具公信力資訊連結</div>
+      </div>
+
+      <div class="place-grid">
+
+        <!-- 廣慈博愛園區 -->
+        <article class="place-card" id="place-guangci">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">廣慈博愛園區取還車點</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.3 <span class="rating-count">(320+)</span></span>
+                <span class="place-category cat-transit">交通樞紐</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              信義區現代化社福與公共生活園區，周邊擁有大型地下智慧收費停車場，並配置多組 iRent / 格上 Go Smart 共享汽機車路邊租還與定點借還服務。銜接信義快速道路僅需 3～5 分鐘。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>建議模式：</strong>提前預約園區地下室或周邊共享自駕車輛</li>
+              <li><strong>替代方案：</strong>捷運昆陽站周邊傳統租車門市（忠孝東路六段一帶）</li>
+              <li><strong>高速銜接：</strong>福德街 → 大道路/林口街 → 信義路五段 → 信義快速道路</li>
+            </ul>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=廣慈博愛園區" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">起點／終點</span>
+            </div>
+            <a href="https://tcgwww.taipei.gov.tw/" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              臺北市政府資訊 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 阿美米干 1981 -->
+        <article class="place-card" id="place-amei">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">阿美米干 1981 (龍岡旗艦)</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.2 <span class="rating-count">(9.1k+)</span></span>
+                <span class="place-category cat-food">餐飲首選</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              龍岡地區最具代表性的米干名店之一。以純米研磨蒸熟成條，搭配黑豬大骨、熟成香料與熬煮湯頭，加入滾燙肉片、豬肝與半熟蛋包。旗艦店內陳列異域孤軍歷史照片與文物。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>營業時間：</strong>06:00 - 21:00（每日營業）</li>
+              <li><strong>特色推薦：</strong>阿美米干（蛋肉豬肝綜合）、破酥包、涼拌米線</li>
+              <li><strong>停車資訊：</strong>周邊有忠貞市場公有收費停車場或雲南文化公園周邊停車格</li>
+            </ul>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=阿美米干1981" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">午餐首選</span>
+            </div>
+            <a href="https://travel.tycg.gov.tw/zh-tw/consume/detail/1004" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              桃園觀光導覽網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 國旗屋米干 -->
+        <article class="place-card" id="place-flag">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">國旗屋米干 (張老旺米干)</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.0 <span class="rating-count">(5.8k+)</span></span>
+                <span class="place-category cat-food">特色地標</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              店內店外懸掛上百面國旗的地標名店，充滿滇緬遺軍深厚愛國情懷與歷史記憶。米干湯頭以獨門醬色與香料調味，風味較為濃郁厚實，大薄片與涼拌碗豆粉亦為招牌。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>營業時間：</strong>05:00 - 15:00（週四公休）</li>
+              <li><strong>亮點：</strong>壯觀國旗海、酸辣大薄片、傳統火燒涼拌菜</li>
+              <li><strong>排隊注意：</strong>週末中午尖峰排隊人潮較長，建議 12 點前抵達</li>
+            </ul>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=國旗屋米干店" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">午餐備選</span>
+            </div>
+            <a href="https://travel.tycg.gov.tw/zh-tw/consume/detail/1005" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              桃園觀光導覽網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 馬祖新村眷村文創園區 -->
+        <article class="place-card" id="place-matsu">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">馬祖新村眷村文創園區</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.2 <span class="rating-count">(8.6k+)</span></span>
+                <span class="place-category cat-culture">文化古蹟</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              享有「桃園將軍村」美譽，建於民國 46 年，為安置駐守馬祖的前線官兵眷屬而建。採棋盤式放射狀道路設計，磚造平房帶有紅白條紋門楣與星形窗花，進駐多家手作選物店與眷村故事展覽。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>開放時間：</strong>週二至週日 09:00 - 18:00（週一休園）</li>
+              <li><strong>門票費用：</strong>免費參觀入園</li>
+              <li><strong>停車資訊：</strong>園區正對面設有馬祖新村專用汽車收費停車場</li>
+            </ul>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=馬祖新村眷村文創園區" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">停留 1.5 hr</span>
+            </div>
+            <a href="https://matsuvillage.tyccc.gov.tw/" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              馬祖新村官網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 福容徠旅中壢 -->
+        <article class="place-card" id="place-fullon">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">福容徠旅中壢 (Fullon Poshtel)</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.1 <span class="rating-count">(1.2k+)</span></span>
+                <span class="place-category cat-stay">住宿基地</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              福容大飯店旗下輕旅潮品牌，鄰近中壢火車站商圈。客房設計年輕俐落且機能完整，提供充足的地下/特約停車設施。位居中壢市中心核心樞紐，是市區歷史老宅散策最佳的中繼基點。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>入住 / 退房：</strong>15:00 入住 / 11:00 退房</li>
+              <li><strong>地利優勢：</strong>步行至中平路故事館 3 分、壢小森林 7 分、老街溪 10 分</li>
+              <li><strong>停車建議：</strong>入住登記車號享住宿期間折抵，車輛停妥免去市區尋位煩惱</li>
+              <li><strong>票券適用：</strong>二天一夜 1 張・閱旅客房（含 2 客早餐・原價 2.8 折）</li>
+              <li><strong>加價提醒：</strong>11/14（週六）屬大假日，依券面規定每房每晚需現場加價 $500</li>
+            </ul>
+
+            <!-- 住宿券憑證圖片與說明 -->
+            <div class="voucher-preview">
+              <img src="https://dsvhle85nnpqa.cloudfront.net/includes/UploadImg//images/2026ITF%20-%20%E8%A1%A8%E6%A0%BC_%E8%AA%AA%E6%98%8E%E6%9C%83_%E8%81%AF%E5%90%88%E4%BD%8F%E5%AE%BF%E5%88%B8.jpg" alt="福容大飯店 2026 ITF 聯合住宿券規格說明表" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>憑證方案核對：</strong>福容大飯店 2026 ITF 聯合住宿券官方規格表，本行程適用「徠旅中壢・二天一夜 1 張・閱旅客房（含 2 客早餐）・11/14 週六大假日每房加價 $500」。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=福容徠旅中壢" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">住宿核心</span>
+            </div>
+            <a href="https://www.fullon-hotels.com.tw/kd/" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              福容徠旅中壢官網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 中平路故事館 -->
+        <article class="place-card" id="place-zhongping">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">中平路故事館</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.3 <span class="rating-count">(1.6k+)</span></span>
+                <span class="place-category cat-culture">日式老宅</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              建於 1930 年代，原為日治時期山林課公務官員之雙拼日式宿舍。木造建築完整保存了玄關、居間、炊事場與日式庭園，展示一甲子以來公務人員家庭在此生活的一磚一瓦與舊時代物件。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>開放時間：</strong>週三至週日 10:00 - 17:00（週一、週二休館）</li>
+              <li><strong>門票費用：</strong>免費參觀（入內需脫鞋著襪）</li>
+              <li><strong>動線提示：</strong>自福容徠旅步行僅約 200 公尺（約 3 分鐘）</li>
+            </ul>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=中平路故事館" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">老宅三部曲 (1)</span>
+            </div>
+            <a href="https://travel.tycg.gov.tw/zh-tw/travel/attraction/1045" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              桃園觀光導覽網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 壢小故事森林 -->
+        <article class="place-card" id="place-forest">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">壢小故事森林</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.3 <span class="rating-count">(2.2k+)</span></span>
+                <span class="place-category cat-culture">教育文創</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              前身為 1917 年興建的中壢公學校（現中壢國小）教職員日式宿舍群。修復後保留珍貴黑瓦屋頂與雨淋板結構，園區結合生態綠蔭、歷史體驗與繪本展覽，散發悠閒靜謐的書香氣息。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>開放時間：</strong>週二至週日 10:30 - 19:00（週一公休）</li>
+              <li><strong>亮點：</strong>老樹綠蔭庭園、百年黑瓦建築、日式常設故事展館</li>
+              <li><strong>步行時間：</strong>自中平路故事館步行約 5 分鐘抵達</li>
+            </ul>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=壢小故事森林" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">老宅三部曲 (2)</span>
+            </div>
+            <a href="https://www.facebook.com/LikoStoryForest/" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              官方粉專資訊 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 壢景町 -->
+        <article class="place-card" id="place-lijing">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">壢景町 (中壢保甲事務所)</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.3 <span class="rating-count">(1.1k+)</span></span>
+                <span class="place-category cat-culture">近代史蹟</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              1941 年興建的中壢郡役所警察官吏派出所宿舍，也是 1977 年台灣民主發展重要轉折「中壢事件」的歷史見證地。園區包含和洋折衷式的磚木混合宿舍，常設歷史民主特展與生活展。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>開放時間：</strong>週二至週日 10:00 - 18:00（週一休館）</li>
+              <li><strong>門票費用：</strong>免費參觀</li>
+              <li><strong>步行時間：</strong>自壢小故事森林步行約 5 分鐘即可抵達</li>
+            </ul>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=壢景町" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">老宅三部曲 (3)</span>
+            </div>
+            <a href="https://travel.tycg.gov.tw/zh-tw/travel/attraction/1529" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              桃園觀光導覽網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 老街溪河川教育中心 -->
+        <article class="place-card" id="place-laojie">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">老街溪河川教育中心與親水步道</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.3 <span class="rating-count">(3.8k+)</span></span>
+                <span class="place-category cat-culture">生態親水</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              全台灣第一座以河川整治為主題的環保教育中心，見證老街溪由加蓋商場轉型為生態親水步道的歷史歷程。園區內保留傳統三合院公學校建築，並設有吸睛的巨型水泥彩繪涵管溜滑梯。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>開放時間：</strong>週二至週日 09:00 - 17:00（週一休館）戶外步道全日開放</li>
+              <li><strong>適合客群：</strong>散步、慢跑、親子水管溜滑梯體驗、生態觀測</li>
+              <li><strong>動線提示：</strong>可沿著河岸步道直通新勢公園生態綠帶</li>
+            </ul>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=老街溪河川教育中心" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">Day 2 散步</span>
+            </div>
+            <a href="https://travel.tycg.gov.tw/zh-tw/travel/attraction/1018" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              桃園觀光導覽網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 橫山書法藝術公園與藝術館 -->
+        <article class="place-card" id="place-hengshan">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">橫山書法藝術公園與藝術館</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.4 <span class="rating-count">(4.6k+)</span></span>
+                <span class="place-category cat-culture">地景藝文</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              全台首座由官方營運的書法藝術主題展館。建築獲台灣建築獎首獎，以「五方篆印」為概念錯落於埤塘水岸邊，將地景水塘化為墨池。環湖步道視野寬廣，兼具當代前衛與東方沉靜氣質。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>開館時間：</strong>09:30 - 17:00（週二休館）戶外公園全日開放</li>
+              <li><strong>全票票價：</strong>全票 100 元 / 優待票 50 元（公園戶外免費）</li>
+              <li><strong>周邊連結：</strong>鄰近華泰名品城、新光影城與大江購物中心，銜接大竹交流道僅 10 分</li>
+            </ul>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=橫山書法藝術館" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">Day 2 焦點</span>
+            </div>
+            <a href="https://tmofa.tycg.gov.tw/" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              橫山書法藝術館官網 ↗
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>桃園中壢・青埔自駕步行二日建議行程 ｜ 交通數據參考週末 Google Maps 常態離峰與收假預估</p>
+      <p style="margin-top: 0.25rem;">建議出發前即時查詢高速公路 1968 App 最新路況</p>
+    </div>
+  </footer>
+
+  <script>
+    // Leaflet Map Initialization
+    document.addEventListener("DOMContentLoaded", function() {
+      // Coordinates
+      const places = [
+        {
+          id: "place-guangci",
+          title: "廣慈博愛園區 (取還車點)",
+          shortTitle: "🚗 廣慈取還車",
+          desc: "信義快速道路起點，租車與還車基地",
+          lat: 25.0382,
+          lng: 121.5835,
+          color: "#475569",
+          type: "起訖點",
+          rating: "4.3 (320+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=廣慈博愛園區"
+        },
+        {
+          id: "place-amei",
+          title: "阿美米干 1981",
+          shortTitle: "🍜 阿美米干",
+          desc: "龍岡滇緬米干第一指標，附文物展區",
+          lat: 24.9318,
+          lng: 121.2582,
+          color: "#d97706",
+          type: "美食",
+          rating: "4.2 (9.1k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=阿美米干1981"
+        },
+        {
+          id: "place-flag",
+          title: "國旗屋米干",
+          shortTitle: "🚩 國旗屋",
+          desc: "滿天國旗特色老屋，濃郁眷村米干風味",
+          lat: 24.9331,
+          lng: 121.2570,
+          color: "#d97706",
+          type: "美食",
+          rating: "4.0 (5.8k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=國旗屋米干店"
+        },
+        {
+          id: "place-matsu",
+          title: "馬祖新村眷村文創園區",
+          shortTitle: "🏡 馬祖新村",
+          desc: "桃園將軍村，文創選物與紅磚歷史建築",
+          lat: 24.9366,
+          lng: 121.2368,
+          color: "#0d9488",
+          type: "文化景點",
+          rating: "4.2 (8.6k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=馬祖新村眷村文創園區"
+        },
+        {
+          id: "place-fullon",
+          title: "福容徠旅中壢",
+          shortTitle: "🏨 福容徠旅",
+          desc: "市區落腳基地，停車後全程步行散策",
+          lat: 24.9535,
+          lng: 121.2268,
+          color: "#7c3aed",
+          type: "住宿基地",
+          rating: "4.1 (1.2k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=福容徠旅中壢"
+        },
+        {
+          id: "place-zhongping",
+          title: "中平路故事館",
+          shortTitle: "🏮 中平路老宅",
+          desc: "昭和時代日式雙拼公務員宿舍",
+          lat: 24.9546,
+          lng: 121.2255,
+          color: "#0d9488",
+          type: "老宅景點",
+          rating: "4.3 (1.6k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=中平路故事館"
+        },
+        {
+          id: "place-forest",
+          title: "壢小故事森林",
+          shortTitle: "🌳 壢小森林",
+          desc: "公學校百年黑瓦教職員宿舍群與綠蔭",
+          lat: 24.9575,
+          lng: 121.2223,
+          color: "#0d9488",
+          type: "老宅景點",
+          rating: "4.3 (2.2k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=壢小故事森林"
+        },
+        {
+          id: "place-lijing",
+          title: "壢景町",
+          shortTitle: "🏛️ 壢景町",
+          desc: "日治警察官吏派出所，中壢事件歷史地標",
+          lat: 24.9592,
+          lng: 121.2198,
+          color: "#0d9488",
+          type: "老宅景點",
+          rating: "4.3 (1.1k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=壢景町"
+        },
+        {
+          id: "place-laojie",
+          title: "老街溪河川教育中心",
+          shortTitle: "🌊 老街溪步道",
+          desc: "水管溜滑梯與生態親水復育步道",
+          lat: 24.9583,
+          lng: 121.2147,
+          color: "#2563eb",
+          type: "生態親水",
+          rating: "4.3 (3.8k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=老街溪河川教育中心"
+        },
+        {
+          id: "place-hengshan",
+          title: "橫山書法藝術公園與藝術館",
+          shortTitle: "🎨 橫山書藝館",
+          desc: "埤塘墨池意象，當代建築與書法展覽",
+          lat: 25.0195,
+          lng: 121.2065,
+          color: "#0d9488",
+          type: "地景藝文",
+          rating: "4.4 (4.6k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=橫山書法藝術館"
+        }
+      ];
+
+      // Init map
+      const map = L.map('map', {
+        scrollWheelZoom: false
+      });
+
+      // 1. 內政部國土測繪中心 臺灣通用電子地圖 (開放公用、免 API Key、不限制本機 file:// 瀏覽，具最完整的繁體中文地標與道路)
+      const nlscLayer = L.tileLayer('https://wmts.nlsc.gov.tw/wmts/EMAP/default/GoogleMapsCompatible/{z}/{y}/{x}', {
+        attribution: '&copy; <a href="https://maps.nlsc.gov.tw/" target="_blank">內政部國土測繪中心</a> 臺灣通用電子地圖',
+        maxZoom: 19
+      });
+
+      // 2. Esri World Street Map (備用開放街道圖資，無 Referer 與本機檔案存取限制)
+      const esriLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; <a href="https://www.esri.com/" target="_blank">Esri</a>',
+        maxZoom: 19
+      });
+
+      // 預設載入台灣通用電子地圖
+      nlscLayer.addTo(map);
+
+      // 提供圖層切換控制器
+      const baseMaps = {
+        "臺灣通用電子地圖 (推薦)": nlscLayer,
+        "Esri 全球街道圖": esriLayer
+      };
+      L.control.layers(baseMaps, null, { position: 'topright' }).addTo(map);
+
+      const markerList = [];
+
+      // Add pins with prominent badge-labels
+      places.forEach(p => {
+        const customIcon = L.divIcon({
+          className: 'custom-map-pin-container',
+          html: `
+            <div class="map-badge-pin" style="--pin-color: ${p.color};">
+              <span class="pin-dot"></span>
+              <span>${p.shortTitle}</span>
+            </div>
+          `,
+          iconSize: [0, 0],
+          iconAnchor: [0, 0]
+        });
+
+        const popupContent = `
+          <div class="custom-popup">
+            <h4>${p.title}</h4>
+            <div style="margin-bottom: 0.35rem; display: flex; align-items: center; gap: 0.35rem;">
+              <span class="rating-badge" style="font-size: 0.72rem; padding: 0.1rem 0.35rem;"><span class="rating-star">★</span> ${p.rating}</span>
+              <span style="font-size: 0.72rem; color: var(--text-muted);">${p.type}</span>
+            </div>
+            <p>${p.desc}</p>
+            <div style="display: flex; gap: 0.75rem; align-items: center; margin-top: 0.45rem;">
+              <a href="#${p.id}">查看卡片 ↗</a>
+              <a href="${p.gmaps}" target="_blank" rel="noopener noreferrer" style="color: oklch(35% 0.12 150);">Google 地圖 ↗</a>
+            </div>
+          </div>
+        `;
+
+        const m = L.marker([p.lat, p.lng], { icon: customIcon })
+          .addTo(map)
+          .bindPopup(popupContent);
+        
+        markerList.push(m);
+      });
+
+      // 自動縮放視野以涵蓋台北廣慈與桃園中壢青埔所有點位
+      const group = L.featureGroup(markerList);
+      map.fitBounds(group.getBounds().pad(0.12));
+
+      // 快速視野聚焦按鈕邏輯
+      const btnAll = document.getElementById('btn-zoom-all');
+      const btnZhongli = document.getElementById('btn-zoom-zhongli');
+      const btnQingpu = document.getElementById('btn-zoom-qingpu');
+      const btnLonggang = document.getElementById('btn-zoom-longgang');
+      const allBtns = [btnAll, btnZhongli, btnQingpu, btnLonggang];
+
+      function setActiveBtn(target) {
+        allBtns.forEach(b => b.classList.remove('active'));
+        if (target) target.classList.add('active');
+      }
+
+      btnAll.addEventListener('click', () => {
+        setActiveBtn(btnAll);
+        map.fitBounds(group.getBounds().pad(0.12));
+      });
+
+      btnZhongli.addEventListener('click', () => {
+        setActiveBtn(btnZhongli);
+        map.setView([24.956, 121.222], 16);
+      });
+
+      btnQingpu.addEventListener('click', () => {
+        setActiveBtn(btnQingpu);
+        map.setView([25.0195, 121.2065], 15);
+      });
+
+      btnLonggang.addEventListener('click', () => {
+        setActiveBtn(btnLonggang);
+        map.setView([24.934, 121.248], 15);
+      });
+
+      // Lightbox 點擊放大邏輯
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-target-img');
+      const lightboxClose = document.getElementById('lightbox-close');
+
+      function openLightbox(src, alt) {
+        lightboxImg.src = src;
+        lightboxImg.alt = alt || '放大檢視';
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      document.querySelectorAll('.zoomable-image').forEach(img => {
+        img.addEventListener('click', () => openLightbox(img.src, img.alt));
+      });
+
+      lightbox.addEventListener('click', closeLightbox);
+      lightboxClose.addEventListener('click', closeLightbox);
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+          closeLightbox();
+        }
+      });
+    });
+  </script>
+
+  <!-- Lightbox Modal Overlay -->
+  <div id="lightbox" class="lightbox-modal" role="dialog" aria-modal="true" aria-label="放大圖片檢視">
+    <div class="lightbox-content-wrapper" onclick="event.stopPropagation()">
+      <button type="button" class="lightbox-close-btn" id="lightbox-close" aria-label="關閉放大檢視">&times;</button>
+      <img id="lightbox-target-img" class="lightbox-img" src="" alt="放大檢視">
+      <div class="lightbox-hint">點擊背景任一處或按鍵盤 ESC 即可關閉</div>
+    </div>
+  </div>
+</body>
+</html>
