@@ -528,10 +528,16 @@
 
     .voucher-preview img {
       width: 100%;
-      height: auto;
+      height: 190px;
+      object-fit: cover;
       display: block;
       cursor: zoom-in;
       transition: opacity 0.15s ease;
+    }
+
+    .voucher-preview.table-preview img {
+      height: auto;
+      object-fit: contain;
     }
 
     .voucher-preview img:hover {
@@ -754,8 +760,7 @@
             <div class="alt-options">
               <div class="alt-row">
                 <span class="badge-primary">首選</span>
-                <span>廣慈園區地下停車場（共享汽車）</span>
-                <a href="#place-guangci" class="anchor-link">查看介紹</a>
+                <span>廣慈園區地下停車場（共享汽車，如 iRent / 格上 Go Smart）</span>
               </div>
               <div class="alt-row">
                 <span class="badge-secondary">備選</span>
@@ -1016,7 +1021,7 @@
       <div id="map-container">
         <div class="map-toolbar">
           <span class="map-toolbar-label">快速聚焦區域：</span>
-          <button type="button" class="map-btn active" id="btn-zoom-all">🗺️ 全覽 (台北廣慈 ↔ 桃園中壢)</button>
+          <button type="button" class="map-btn active" id="btn-zoom-all">🗺️ 桃園景點全覽 (中壢・龍岡・青埔)</button>
           <button type="button" class="map-btn" id="btn-zoom-zhongli">🏘️ 中壢市區 (飯店與日式老宅步行動線)</button>
           <button type="button" class="map-btn" id="btn-zoom-qingpu">🖼️ 青埔特區 (橫山書法公園與水岸)</button>
           <button type="button" class="map-btn" id="btn-zoom-longgang">🍜 龍岡忠貞 (米干商圈與馬祖新村)</button>
@@ -1039,10 +1044,6 @@
             <span class="legend-dot" style="background: var(--color-primary);"></span>
             <span>生態水岸／公園綠地</span>
           </div>
-          <div class="legend-item">
-            <span class="legend-dot" style="background: var(--text-muted);"></span>
-            <span>起訖取還車點</span>
-          </div>
         </div>
       </div>
     </section>
@@ -1055,38 +1056,6 @@
       </div>
 
       <div class="place-grid">
-
-        <!-- 廣慈博愛園區 -->
-        <article class="place-card" id="place-guangci">
-          <div class="place-top">
-            <div class="place-header-row">
-              <h3 class="place-title">廣慈博愛園區取還車點</h3>
-              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
-                <span class="rating-badge"><span class="rating-star">★</span> 4.3 <span class="rating-count">(320+)</span></span>
-                <span class="place-category cat-transit">交通樞紐</span>
-              </div>
-            </div>
-            <p class="place-desc">
-              信義區現代化社福與公共生活園區，周邊擁有大型地下智慧收費停車場，並配置多組 iRent / 格上 Go Smart 共享汽機車路邊租還與定點借還服務。銜接信義快速道路僅需 3～5 分鐘。
-            </p>
-            <ul class="place-info-list">
-              <li><strong>建議模式：</strong>提前預約園區地下室或周邊共享自駕車輛</li>
-              <li><strong>替代方案：</strong>捷運昆陽站周邊傳統租車門市（忠孝東路六段一帶）</li>
-              <li><strong>高速銜接：</strong>福德街 → 大道路/林口街 → 信義路五段 → 信義快速道路</li>
-            </ul>
-          </div>
-          <div class="place-footer">
-            <div style="display: flex; gap: 0.5rem; align-items: center;">
-              <a href="https://www.google.com/maps/search/?api=1&query=廣慈博愛園區" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
-                📍 Google 地圖 ↗
-              </a>
-              <span style="font-size: 0.75rem; color: var(--text-light);">起點／終點</span>
-            </div>
-            <a href="https://tcgwww.taipei.gov.tw/" target="_blank" rel="noopener noreferrer" class="place-ext-link">
-              臺北市政府資訊 ↗
-            </a>
-          </div>
-        </article>
 
         <!-- 阿美米干 1981 -->
         <article class="place-card" id="place-amei">
@@ -1106,6 +1075,14 @@
               <li><strong>特色推薦：</strong>阿美米干（蛋肉豬肝綜合）、破酥包、涼拌米線</li>
               <li><strong>停車資訊：</strong>周邊有忠貞市場公有收費停車場或雲南文化公園周邊停車格</li>
             </ul>
+
+            <div class="voucher-preview">
+              <img src="https://travel.tycg.gov.tw/content/images/attractions/10435/480x360_image635836117891405838.jpg" alt="阿美米干招牌黑豬肉骨高湯米干" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>特色餐點：</strong>阿美米干招牌黑豬肉骨高湯，純米手工蒸製米干佐軟嫩肉片、豬肝與半熟蛋包。
+              </div>
+            </div>
           </div>
           <div class="place-footer">
             <div style="display: flex; gap: 0.5rem; align-items: center;">
@@ -1138,6 +1115,14 @@
               <li><strong>亮點：</strong>壯觀國旗海、酸辣大薄片、傳統火燒涼拌菜</li>
               <li><strong>排隊注意：</strong>週末中午尖峰排隊人潮較長，建議 12 點前抵達</li>
             </ul>
+
+            <div class="voucher-preview">
+              <img src="https://travel.tycg.gov.tw/content/images/attractions/83262/480x360_attractions-image-ap68yqgp2ugcygtocmkwgg.jpg" alt="國旗屋米干店滿天青天白日旗海" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>特色地標：</strong>龍岡國旗屋店內外懸掛滿天國旗之視覺奇觀，滿載滇緬孤軍眷村記憶。
+              </div>
+            </div>
           </div>
           <div class="place-footer">
             <div style="display: flex; gap: 0.5rem; align-items: center;">
@@ -1170,6 +1155,14 @@
               <li><strong>門票費用：</strong>免費參觀入園</li>
               <li><strong>停車資訊：</strong>園區正對面設有馬祖新村專用汽車收費停車場</li>
             </ul>
+
+            <div class="voucher-preview">
+              <img src="https://travel.tycg.gov.tw/content/images/attractions/110269/1024x768_attractions-image-fisma2bu70mtxjo7bbjm2q.jpg" alt="馬祖新村將軍眷舍紅磚矮牆與八角涼亭" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>園區實景：</strong>馬祖新村「桃園將軍村」紅磚洋房、紅白大門與放射狀眷舍聚落保存風貌。
+              </div>
+            </div>
           </div>
           <div class="place-footer">
             <div style="display: flex; gap: 0.5rem; align-items: center;">
@@ -1206,7 +1199,7 @@
             </ul>
 
             <!-- 住宿券憑證圖片與說明 -->
-            <div class="voucher-preview">
+            <div class="voucher-preview table-preview">
               <img src="https://dsvhle85nnpqa.cloudfront.net/includes/UploadImg//images/2026ITF%20-%20%E8%A1%A8%E6%A0%BC_%E8%AA%AA%E6%98%8E%E6%9C%83_%E8%81%AF%E5%90%88%E4%BD%8F%E5%AE%BF%E5%88%B8.jpg" alt="福容大飯店 2026 ITF 聯合住宿券規格說明表" class="zoomable-image" title="點擊放大檢視">
               <div class="voucher-caption">
                 <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
@@ -1245,6 +1238,14 @@
               <li><strong>門票費用：</strong>免費參觀（入內需脫鞋著襪）</li>
               <li><strong>動線提示：</strong>自福容徠旅步行僅約 200 公尺（約 3 分鐘）</li>
             </ul>
+
+            <div class="voucher-preview">
+              <img src="https://travel.tycg.gov.tw/content/images/attractions/82614/1024x768_attractions-image-gqwjtfwewue17qtwcrzddg.jpg" alt="中平路故事館昭和時代日式雙拼宿舍外觀" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>老宅實景：</strong>1930 年代雙拼公務員日式宿舍，保留完整木造雨淋板、玄關與昭和常民生活器物。
+              </div>
+            </div>
           </div>
           <div class="place-footer">
             <div style="display: flex; gap: 0.5rem; align-items: center;">
@@ -1277,6 +1278,14 @@
               <li><strong>亮點：</strong>老樹綠蔭庭園、百年黑瓦建築、日式常設故事展館</li>
               <li><strong>步行時間：</strong>自中平路故事館步行約 5 分鐘抵達</li>
             </ul>
+
+            <div class="voucher-preview">
+              <img src="https://travel.tycg.gov.tw/content/images/attractions/63905/1024x768_attractions-image-n6wpvuygve6ms31wqwkdla.jpg" alt="壢小故事森林百年黑瓦日式教職員宿舍" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>園區實景：</strong>百年公學校教職員宿舍群，典雅日式黑瓦、雨淋板老屋與林蔭庭園交織之文化綠洲。
+              </div>
+            </div>
           </div>
           <div class="place-footer">
             <div style="display: flex; gap: 0.5rem; align-items: center;">
@@ -1309,6 +1318,14 @@
               <li><strong>門票費用：</strong>免費參觀</li>
               <li><strong>步行時間：</strong>自壢小故事森林步行約 5 分鐘即可抵達</li>
             </ul>
+
+            <div class="voucher-preview">
+              <img src="https://travel.tycg.gov.tw/content/images/attractions/63907/1024x768_attractions-image-crxkx4xbwkck3surzv6ztw.jpg" alt="壢景町中壢郡役所警察官吏派出所官舍" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>歷史現地：</strong>1941 年中壢郡役所官舍，見證中壢事件歷史脈絡之和洋折衷磚木宿舍群。
+              </div>
+            </div>
           </div>
           <div class="place-footer">
             <div style="display: flex; gap: 0.5rem; align-items: center;">
@@ -1317,7 +1334,7 @@
               </a>
               <span style="font-size: 0.75rem; color: var(--text-light);">老宅三部曲 (3)</span>
             </div>
-            <a href="https://travel.tycg.gov.tw/zh-tw/travel/attraction/1529" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+            <a href="https://travel.tycg.gov.tw/zh-tw/Travel/Attraction/1572" target="_blank" rel="noopener noreferrer" class="place-ext-link">
               桃園觀光導覽網 ↗
             </a>
           </div>
@@ -1341,6 +1358,14 @@
               <li><strong>適合客群：</strong>散步、慢跑、親子水管溜滑梯體驗、生態觀測</li>
               <li><strong>動線提示：</strong>可沿著河岸步道直通新勢公園生態綠帶</li>
             </ul>
+
+            <div class="voucher-preview">
+              <img src="https://travel.tycg.gov.tw/content/images/attractions/67736/1024x768_attractions-image-g_ta5gfnkegtzzc5f4tf6w.jpg" alt="老街溪河川教育中心彩繪涵管溜滑梯" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>水岸亮點：</strong>傳統客家三合院改建之河川教育園區與招牌彩繪巨型水泥涵管溜滑梯。
+              </div>
+            </div>
           </div>
           <div class="place-footer">
             <div style="display: flex; gap: 0.5rem; align-items: center;">
@@ -1373,6 +1398,14 @@
               <li><strong>全票票價：</strong>全票 100 元 / 優待票 50 元（公園戶外免費）</li>
               <li><strong>周邊連結：</strong>鄰近華泰名品城、新光影城與大江購物中心，銜接大竹交流道僅 10 分</li>
             </ul>
+
+            <div class="voucher-preview">
+              <img src="https://travel.tycg.gov.tw/content/images/attractions/110270/1024x768_attractions-image-hd13-udbwkegks-p5hqlrq.jpg" alt="橫山書法藝術館五方篆印建築倒映埤塘" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>建築美學：</strong>以「公園為硯、埤塘為墨」之五方篆印現代清水模建築，獲得台灣建築獎首獎肯定。
+              </div>
+            </div>
           </div>
           <div class="place-footer">
             <div style="display: flex; gap: 0.5rem; align-items: center;">
@@ -1404,18 +1437,6 @@
     document.addEventListener("DOMContentLoaded", function() {
       // Coordinates
       const places = [
-        {
-          id: "place-guangci",
-          title: "廣慈博愛園區 (取還車點)",
-          shortTitle: "🚗 廣慈取還車",
-          desc: "信義快速道路起點，租車與還車基地",
-          lat: 25.0382,
-          lng: 121.5835,
-          color: "#475569",
-          type: "起訖點",
-          rating: "4.3 (320+)",
-          gmaps: "https://www.google.com/maps/search/?api=1&query=廣慈博愛園區"
-        },
         {
           id: "place-amei",
           title: "阿美米干 1981",
