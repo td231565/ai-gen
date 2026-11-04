@@ -55,7 +55,7 @@
     header {
       background-color: var(--bg-surface);
       border-bottom: 1px solid var(--border-subtle);
-      padding: 2.5rem 1.5rem 2rem;
+      padding: 1.25rem 1.5rem 1rem;
       text-align: center;
     }
 
@@ -70,7 +70,7 @@
       font-weight: 700;
       color: var(--text-main);
       letter-spacing: -0.02em;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.25rem;
     }
 
     header p {
@@ -85,7 +85,7 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 1rem;
-      margin-top: 1.25rem;
+      margin-top: 0.5rem;
       font-size: 0.85rem;
     }
 
@@ -102,7 +102,7 @@
     }
 
     main {
-      padding: 2.5rem 0 4rem;
+      padding: 1.25rem 0 3.5rem;
     }
 
     section {
@@ -808,39 +808,42 @@
     <!-- 方案切換器 -->
     <div class="plan-switcher-wrap">
       <div class="plan-switcher" role="tablist" aria-label="行程方案切換">
-        <button type="button" class="plan-tab active" id="tab-zhongli" role="tab" aria-selected="true" aria-controls="view-zhongli">
-          <span class="plan-badge">方案 A</span>
-          <span class="plan-tab-title">中壢青埔線（Xpark 水族館 ＆ 老街溪／新勢公園）</span>
-          <span class="plan-tab-meta">住福容徠旅中壢 ｜ 水母企鵝・涵管滑梯・海盜船放電・繪本老宅</span>
+        <button type="button" class="plan-tab active" id="tab-taoyuan" role="tab" aria-selected="true" aria-controls="view-taoyuan">
+          <span class="plan-badge">方案 A（首選）</span>
+          <span class="plan-tab-title">桃園六福淺山線（土地公文化館 ＆ 虎頭山樹屋 ＆ 六福村野炊）</span>
+          <span class="plan-tab-meta">確認入住：福容大飯店桃園 ｜ 免費古裝布袋戲・奧爾樹屋溜滑梯・烤鴨三溫暖・控窯烤地瓜・竹餐具DIY・六福莊免費動物散步</span>
         </button>
         <button type="button" class="plan-tab" id="tab-linkou" role="tab" aria-selected="false" aria-controls="view-linkou">
-          <span class="plan-badge">方案 B</span>
+          <span class="plan-badge">方案 B（備選）</span>
           <span class="plan-tab-title">林口休閒線（台灣山豬城餵動物 ＆ 三井 OUTLET 雙館）</span>
           <span class="plan-tab-meta">住福容徠旅林口 ｜ 萌寵互動・美式商場・小熊磨石溜滑梯沙坑</span>
         </button>
-        <button type="button" class="plan-tab" id="tab-taoyuan" role="tab" aria-selected="false" aria-controls="view-taoyuan">
-          <span class="plan-badge">方案 C</span>
-          <span class="plan-tab-title">桃園藝文線（最美圖書館 ＆ 風禾滾輪滑梯・77 藝文町）</span>
-          <span class="plan-tab-meta">住福容大飯店桃園 ｜ 生命樹總圖・烤鴨三溫暖・50米滾輪溜滑梯・日式舒芙蕾</span>
+        <button type="button" class="plan-tab" id="tab-zhongli" role="tab" aria-selected="false" aria-controls="view-zhongli">
+          <span class="plan-badge">方案 C（備選）</span>
+          <span class="plan-tab-title">中壢青埔線（Xpark 水族館 ＆ 老街溪／新勢公園）</span>
+          <span class="plan-tab-meta">住福容徠旅中壢 ｜ 水母企鵝・涵管滑梯・海盜船放電・繪本老宅</span>
         </button>
       </div>
     </div>
 
-    <!-- 方案 A 注意事項 -->
-    <div class="notice-box plan-view active" id="notice-zhongli">
-      <h3>方案 A（中壢青埔線）路況節奏與注意事項</h3>
+    <!-- 方案 A（首選：桃園六福淺山線）注意事項 -->
+    <div class="notice-box plan-view active" id="notice-taoyuan">
+      <h3>方案 A（首選・桃園六福淺山農場線）路況節奏與備忘錄</h3>
       <ul>
-        <li><strong>親子不趕行程原則</strong>：每日上下午僅安排「單一核心主題場域」，避免頻繁上下車與換點。Day 1 下午停妥飯店後全程步行放電，Day 2 車停置地廣場後全程室內水族與步道悠遊。</li>
-        <li><strong>去程 (11/20 五 13:00 出發)</strong>：13:00 自信義區廣慈取車出發，走信義快接國三南下避開晨間尖峰；下大溪交流道轉台 66 線至平鎮龍岡，Google Maps 預估約 50～60 分鐘。阿美米干午後無休，適合 14:15 抵達悠閒用餐。</li>
-        <li><strong>市區停車策略</strong>：午餐後先至<strong>福容徠旅中壢</strong>停妥車輛，後續水管溜滑梯、新勢公園與壢小森林全程步行（單程僅 5～10 分鐘），徹底免去中壢市區尋找車位的困擾。</li>
-        <li><strong>回程 (11/21 六 19:30-20:40)</strong>：青埔大竹交流道上國二轉國三返台北，週六晚間北返預估需 50～60 分鐘，建議於 19:30-19:40 啟程，確保 20:40 前順利完成還車。</li>
-        <li><strong>住宿券平日規範</strong>：11/20（週五）依福容聯合住宿券規章屬平日，憑券 1 張入住閱旅客房<strong>免加大假日差額 $500</strong>。</li>
+        <li><strong>住宿確認與平日票券規範</strong>：確定入住「福容大飯店 桃園」（桃園區大興西路一段）。適用 2026 ITF 聯合住宿券 1 張入住精緻客房含 2 客早餐，11/20 (五) 屬平日免加大假日差額。</li>
+        <li><strong>Day 1 廣慈出發與晴天雙核心（土地公文化館 ＋ 虎頭山公園）</strong>：週五 13:00 自台北信義區廣慈出發，行駛國一南下轉春日路直達桃園「土地公文化館」（車程約 35～45 分鐘，車停地下室免曬淋雨）。13:45～15:00 在 2 樓兒童文化館免費穿戴傳統戲服/古裝拍照、操作布袋戲偶與體驗多媒體體感互動；15:00 驅車僅 4～5 分鐘（1.5 公里）轉往「虎頭山公園奧爾森林學堂」，漫步空中樹冠步道與樹屋，並在兒童遊戲場溜滑梯大肢體放電至 16:45。</li>
+        <li><strong>雨天靈活備案</strong>：若週五下午遇降雨，可將行程改為全室內組合：土地公文化館（室內 1.5 小時）＋ 車程 10 分鐘之「桃園市立圖書館總館（生命樹綠建築）」共讀繪本與享受蔦屋咖啡，兩館皆有地下專屬停車場直達。</li>
+        <li><strong>銜接福容桃園與烤鴨預約</strong>：16:45 啟程前往「福容大飯店 桃園」（市區平面僅約 3.8 公里，車程僅 10～12 分鐘，極為順暢）。飯店房客享免費停車（先到先停），停妥車後入住即可充分享用頂樓露天三溫暖與戶外溫水泳池；晚間 19:00 館內 2 樓福粵樓櫻桃片皮烤鴨請務必提前預訂。</li>
+        <li><strong>Day 2 六福淺山農場 10:30 場次 (關鍵時程)</strong>：活動已鎖定 <strong>11/21 (六) 上午 10:30 場次</strong>，農場要求最晚提前 20 分鐘（<strong>10:10</strong>）報到。自福容桃園開車至關西六福村淺山農場（約 32 公里），走國二轉國三車程約 40～45 分鐘。建議 <strong>08:15～09:15</strong> 享用飯店自助早餐，<strong>09:20 準時退房出發</strong>，可於 10:05 順利抵達農場報到。</li>
+        <li><strong>下午六福莊免費活動登記策略</strong>：野炊活動約於 13:00 告一段落，品嚐完出爐地瓜後步行至隔壁六福莊。請先至<strong>六福莊大廳服務櫃檯</strong>，憑野炊活動證明登記當日<strong>「免費 LRG 活動」（首選 15:30 青青草原動物放風散步，近距離接觸超萌羊駝）</strong>，並索取當日免費生態導覽與非洲秀場次表，享受免額外付費的豐富生態行程。</li>
+        <li><strong>農場活動裝備提醒</strong>：挖窯、撿樹枝、採收當季地瓜/南瓜與鋸竹子製作竹餐具皆走入泥土田園，現場友善環保不提供一次性工具及手套。建議自備工作手套、防蚊液、防風薄外套，並穿著耐髒長褲與運動布鞋。生火環節由農場大農夫執行，兼顧安全與探索樂趣。</li>
+        <li><strong>週六晚間順暢返北還車 (11/21 六 19:15-20:30)</strong>：關西至台北信義區廣慈博愛園區約 68 公里，傍晚於關西老街或六福莊悠閒享用客家晚餐後，於 <strong>19:15 啟程北返</strong>，車程約 65～75 分鐘，可從容於 20:30 前抵達完成還車（20:40 前）。</li>
       </ul>
     </div>
 
-    <!-- 方案 B 注意事項 -->
+    <!-- 方案 B（備選：林口休閒線）注意事項 -->
     <div class="notice-box plan-view" id="notice-linkou">
-      <h3>方案 B（林口休閒線）路況節奏與客觀提醒</h3>
+      <h3>方案 B（備選・林口休閒線）路況節奏與客觀提醒</h3>
       <ul>
         <li><strong>出發與山豬城踏青 (11/20 五 13:00 出發)</strong>：13:00 自廣慈出發走國一北上往林口，車程約 35～45 分鐘。午後直接前往下福山區台灣山豬城親近餵動物，傍晚返回市區入住福容徠旅林口。山路狹窄需注意行車與防暈車。</li>
         <li><strong>三井 Outlet 避塞車策略</strong>：週末下午 14:00-18:00 文化二／三路商場停車場常態大排長龍。因入住<strong>福容徠旅林口</strong>距三井僅 2.5 公里，強烈建議將車輛停放飯店，改搭短程計程車（約 8 分鐘、車資約 110 元）前往，免去排隊找車位煩惱。</li>
@@ -849,16 +852,15 @@
       </ul>
     </div>
 
-    <!-- 方案 C 注意事項 -->
-    <div class="notice-box plan-view" id="notice-taoyuan">
-      <h3>方案 C（桃園藝文線）路況節奏與應援備忘錄</h3>
+    <!-- 方案 C（備選：中壢青埔線）注意事項 -->
+    <div class="notice-box plan-view" id="notice-zhongli">
+      <h3>方案 C（備選・中壢青埔線）路況節奏與注意事項</h3>
       <ul>
-        <li><strong>週五出發與交通時程</strong>：11/20 (五) 13:00 自信義區廣慈出發，正好避開午間尖峰，國道南下一高行經林口/南崁路段車流平穩，Google Maps 車程預估約 45～50 分鐘可順抵藝文特區中茂新天地。</li>
-        <li><strong>福容飯店停車須知</strong>：福容大飯店桃園店（大興西路一段）房客每房享一台免費停車。因車位為機械與平面混合且採先到先得，強烈建議第一天 17:15 辦理入住後即將車停妥，晚間改採散步（至藝文特區約 10 分鐘）或短程計程車，徹底避開週五晚間藝文特區周邊尋找車位的困擾。</li>
-        <li><strong>福粵樓烤鴨預約</strong>：飯店 2 樓福粵樓之櫻桃片皮鴨為高人氣料理，若確定週五晚餐於館內享用，務必於訂房時或出發前一週致電餐廳預訂。</li>
-        <li><strong>公園保暖與防風</strong>：11 月底受東北季風影響，風禾公園地形空曠風勢稍大，午後女兒體驗滾輪溜滑梯時，請攜帶防風薄外套與防蚊液。</li>
-        <li><strong>週六晚間順暢還車 (11/21 六 19:40-20:40)</strong>：週六在市區享用晚餐至 19:30，19:40 上國道返回台北廣慈奉天宮，車程約 50 分鐘，輕鬆於 20:40 前抵達完成還車手續。</li>
-        <li><strong>聯合住宿券規定</strong>：本方案適用「福容大飯店 桃園」1 張聯合住宿券入住精緻客房（含 2 客早餐），週五屬平日免加大假日差額（實際規定以票券及現場公告為準）。</li>
+        <li><strong>親子不趕行程原則</strong>：每日上下午僅安排「單一核心主題場域」，避免頻繁上下車與換點。Day 1 下午停妥飯店後全程步行放電，Day 2 車停置地廣場後全程室內水族與步道悠遊。</li>
+        <li><strong>去程 (11/20 五 13:00 出發)</strong>：13:00 自信義區廣慈取車出發，走信義快接國三南下避開晨間尖峰；下大溪交流道轉台 66 線至平鎮龍岡，Google Maps 預估約 50～60 分鐘。阿美米干午後無休，適合 14:15 抵達悠閒用餐。</li>
+        <li><strong>市區停車策略</strong>：午餐後先至<strong>福容徠旅中壢</strong>停妥車輛，後續水管溜滑梯、新勢公園與壢小森林全程步行（單程僅 5～10 分鐘），徹底免去中壢市區尋找車位的困擾。</li>
+        <li><strong>回程 (11/21 六 19:30-20:40)</strong>：青埔大竹交流道上國二轉國三返台北，週六晚間北返預估需 50～60 分鐘，建議於 19:30-19:40 啟程，確保 20:40 前順利完成還車。</li>
+        <li><strong>住宿券平日規範</strong>：11/20（週五）依福容聯合住宿券規章屬平日，憑券 1 張入住閱旅客房<strong>免加大假日差額 $500</strong>。</li>
       </ul>
     </div>
 
@@ -869,8 +871,425 @@
         <div class="section-subtitle">提供首選與順路備選，供當日彈性調整</div>
       </div>
 
-      <!-- 方案 A：中壢青埔時間軸 -->
-      <div class="plan-view active" id="timeline-zhongli">
+      <!-- 方案 A（首選）：桃園六福淺山農場時間軸 -->
+      <div class="plan-view active" id="timeline-taoyuan">
+        <!-- Day 1 -->
+        <div class="day-block">
+          <div class="day-heading">
+            <span>Day 1：11/20 (五) 廣慈出發 → 土地公文化館（免費古裝/布袋戲互動） → 虎頭山奧爾森林學堂（樹屋＆滑梯放電） → 福容大飯店桃園入住 ＆ 泡湯放鬆 → 福粵樓櫻桃烤鴨晚餐</span>
+            <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">主要移動方式：自駕順向直達 ＋ 文化互動與森林樹屋漫遊</span>
+          </div>
+
+          <ul class="timeline-list">
+            <!-- 13:00 - 13:45 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">13:00 - 13:45</span>
+              <span class="timeline-transit-badge">車程約 35～45 分</span>
+              <div class="timeline-content-title">廣慈博愛園區取車出發、順暢南下桃園</div>
+              <div class="timeline-content-desc">
+                從台北信義區廣慈出發，週五午後出發避開晨昏尖峰，行駛信義快接國道一號南下，轉國二大湳交流道或經國路直達桃園市中心之土地公文化館。
+              </div>
+            </li>
+
+            <!-- 13:45 - 15:00 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">13:45 - 15:00</span>
+              <span class="timeline-transit-badge">全室內 1.25 小時・免門票・車停地下室</span>
+              <div class="timeline-content-title">桃園市土地公文化館：2 樓兒童文化館免費古裝試穿、布袋戲台與體感互動</div>
+              <div class="timeline-content-desc">
+                車輛直接開入館內地下停車場（免曬太陽淋雨、電梯直達展廳）。直奔 2 樓兒童文化館，體驗全免費提供之兒童歌仔戲服與傳統古裝試穿變裝拍照；讓孩子在布袋戲小戲台動手操作布袋戲偶、體驗土地公體感闖關遊戲與求籤詩互動機，兼具民俗童趣與舒適室內環境。
+              </div>
+              <div class="alt-options">
+                <div class="alt-row">
+                  <span class="badge-primary">變裝戲曲</span>
+                  <span><strong>免費兒童古裝／戲服體驗 ＆ 布袋戲操偶小舞台</strong>（多套童服自由更換拍照）</span>
+                  <a href="#place-tudigong-hall" class="anchor-link">查看介紹</a>
+                </div>
+                <div class="alt-row">
+                  <span class="badge-primary">數位體感</span>
+                  <span><strong>土地公體感闖關 ＆ 籤詩多媒體互動</strong>（互動趣味小知識、繪本閱讀角）</span>
+                </div>
+              </div>
+            </li>
+
+            <!-- 15:00 - 15:05 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">15:00 - 15:05</span>
+              <span class="timeline-transit-badge">超短接駁 車程僅 4～5 分鐘</span>
+              <div class="timeline-content-title">超近順遊轉場：土地公文化館 → 虎頭山公園奧爾森林學堂</div>
+              <div class="timeline-content-desc">
+                兩處景點相距僅約 1.5 公里，沿成功路直行過南崁溪上山，開車 4～5 分鐘即可抵達虎頭山公園停車場，無縫銜接戶外森林放電。
+              </div>
+            </li>
+
+            <!-- 15:05 - 16:45 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">15:05 - 16:45</span>
+              <span class="timeline-transit-badge">戶外自然探索 1.75 小時・免門票</span>
+              <div class="timeline-content-title">虎頭山公園（奧爾森林學堂）：貓頭鷹樹屋群與全齡遊戲場大放電</div>
+              <div class="timeline-content-desc">
+                車輛停妥於虎頭山公園或孔廟旁停車場。走入綠蔭蓊鬱的奧爾森林學堂，沿著高架空中松鼠木棧道穿梭樹冠，探索三座特色活樹屋（讀樹教室、咕咕屋、綠野方舟）與尋找隱藏的貓頭鷹陶雕；兒童遊戲區配置雙色大型水管溜滑梯、多組磨石溜滑梯、攀爬網與盪鞦韆，大樹茂密遮蔭，充分享受大肢體運動放電。
+              </div>
+              <div class="alt-options">
+                <div class="alt-row">
+                  <span class="badge-primary">樹屋步道</span>
+                  <span><strong>奧爾森林學堂樹屋群 ＆ 空中松鼠木棧道</strong>（高架樹冠步道、近距離觀察森林生態）</span>
+                  <a href="#place-hutoushan-park" class="anchor-link">查看介紹</a>
+                </div>
+                <div class="alt-row">
+                  <span class="badge-primary">遊具放電</span>
+                  <span><strong>水管溜滑梯 ＆ 森林遊戲區</strong>（雙色旋轉水管滑梯、鞦韆與攀爬設施）</span>
+                </div>
+                <div class="alt-row">
+                  <span class="badge-secondary">雨天備案</span>
+                  <span><strong>桃園市立圖書館總館（生命樹綠建築）</strong>（車程 10 分鐘，繪本閱覽室與蔦屋書店）</span>
+                  <a href="#place-ty-library" class="anchor-link">查看總圖</a>
+                </div>
+              </div>
+            </li>
+
+            <!-- 16:45 - 17:00 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">16:45 - 17:00</span>
+              <span class="timeline-transit-badge">市區車程僅 10～12 分鐘</span>
+              <div class="timeline-content-title">順暢接駁：虎頭山公園 → 福容大飯店 桃園</div>
+              <div class="timeline-content-desc">
+                結束森林放電後輕鬆取車，行駛三民路與大興西路直達住宿基地（平面距離僅約 3.8 公里，無高速公路跨區塞車困擾），直接駛入飯店地下或平面停車場。
+              </div>
+            </li>
+
+            <!-- 17:00 - 18:45 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">17:00 - 18:45</span>
+              <span class="timeline-transit-badge">館內放鬆享受</span>
+              <div class="timeline-content-title">福容大飯店 桃園 Check-in ＆ 親子玩水／頂樓露天三溫暖</div>
+              <div class="timeline-content-desc">
+                辦理入住進房整理（週五平日憑 ITF 聯合住宿券 1 張入住免加價）。帶女兒至戶外溫水游泳池戲水，或大人輪流前往頂樓享受露天風呂三溫暖徹底舒壓，洗滌整天疲勞。
+              </div>
+              <div class="alt-options">
+                <div class="alt-row">
+                  <span class="badge-primary">住宿核心</span>
+                  <span><strong>福容大飯店 桃園</strong>（憑 ITF 聯合住宿券 1 張入住精緻客房，含 2 客早餐，週五免加價）</span>
+                  <a href="#place-fullon-ty" class="anchor-link">查看介紹</a>
+                </div>
+              </div>
+            </li>
+
+            <!-- 19:00 ~ -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">19:00 ~</span>
+              <span class="timeline-transit-badge">館內免開車</span>
+              <div class="timeline-content-title">慵懶晚餐：館內 2 樓福粵樓道地櫻桃烤鴨</div>
+              <div class="timeline-content-desc">
+                完全無需再開車出門找車位，直接在飯店 2 樓福粵樓享用預訂之經典櫻桃片皮烤鴨與港式點心，晚間在大廳享受音樂演奏沉浸式度假氛圍。
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Day 2 -->
+        <div class="day-block">
+          <div class="day-heading">
+            <span>Day 2：11/21 (六) 飯店自助早餐 → 關西六福村淺山農場野炊小農夫 (10:30場次) → 六福莊登記免費活動 ＆ 動物巡禮 → 順暢返程</span>
+            <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">主要移動方式：自駕國三南下關西 ＋ 田園野炊與生態度假區漫步</span>
+          </div>
+
+          <ul class="timeline-list">
+            <!-- 08:15 - 09:15 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">08:15 - 09:15</span>
+              <span class="timeline-transit-badge">晨光美食 09:20 退房</span>
+              <div class="timeline-content-title">飯店人氣早餐：現沖牛肉湯 ＆ 擔擔麵歐姆蛋</div>
+              <div class="timeline-content-desc">
+                週六早晨於福容享用口碑自助早餐：大人品嚐鮮甜現沖牛肉湯與現煮擔擔麵，幫小孩拿現煎熱騰騰歐姆蛋。吃飽後回房整裝，於 09:20 準時辦理退房出發。
+              </div>
+            </li>
+
+            <!-- 09:20 - 10:10 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">09:20 - 10:10</span>
+              <span class="timeline-transit-badge">車程約 40～45 分 提早20分報到</span>
+              <div class="timeline-content-title">順暢南下：福容桃園 → 國二轉國三 → 關西六福淺山農場報到</div>
+              <div class="timeline-content-desc">
+                自飯店出發由南桃園交流道上國二轉國三南下，下關西交流道直達六福村淺山農場（約 32 公里）。週六早晨南下避開尖峰，於 10:05 前順利抵達（符合農場最晚提前 20 分鐘報到規定）。
+              </div>
+            </li>
+
+            <!-- 10:30 - 13:00 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">10:30 - 13:00</span>
+              <span class="timeline-transit-badge">核心體驗 2.5 小時</span>
+              <div class="timeline-content-title">全日焦點：六福村野炊小農夫經典雙系列體驗 (10:30 場次)</div>
+              <div class="timeline-content-desc">
+                野炊小達人 × 淺山小農夫一次完成！跟著大農夫走進友善有機農場，帶 6 歲女兒親手觸摸泥土、採收當季地瓜/南瓜，親自拾枝挖土造窯，並學習整理竹子、親手鋸竹打磨竹製水杯與竹筷。
+              </div>
+              <div class="alt-options">
+                <div class="alt-row">
+                  <span class="badge-primary">雙系列內容</span>
+                  <span><strong>有機導覽 ＋ 當季採收 ＋ 挖土造窯烤瓜 ＋ 鋸竹製作專屬竹餐具</strong></span>
+                  <a href="#place-leofoo-farm" class="anchor-link">查看農場介紹</a>
+                </div>
+                <div class="alt-row">
+                  <span class="badge-primary">小農夫收穫</span>
+                  <span><strong>每位小農夫可親自帶回 1 斤有機地瓜或 1 顆有機南瓜，以及親手製作打磨的竹水杯與竹筷</strong></span>
+                </div>
+              </div>
+            </li>
+
+            <!-- 13:00 - 13:45 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">13:00 - 13:45</span>
+              <span class="timeline-transit-badge">產地到餐桌午餐</span>
+              <div class="timeline-content-title">田園品嚐出爐窯燒作物 ＆ 悠閒輕食午餐</div>
+              <div class="timeline-content-desc">
+                親手開窯品嚐香噴噴的天然有機烤地瓜/南瓜，搭配自備輕食或於園區休息區享用點心，在自然微風中舒緩休息。
+              </div>
+            </li>
+
+            <!-- 13:45 - 17:15 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">13:45 - 17:15</span>
+              <span class="timeline-transit-badge">六福莊免費活動 ＆ 生態巡禮</span>
+              <div class="timeline-content-title">六福莊登記免費活動 ＆ 動物放風散步／中庭生態木棧道</div>
+              <div class="timeline-content-desc">
+                步入相鄰的六福莊生態度假區，先至大廳服務櫃檯憑野炊活動證明登記當日「免費 LRG 活動」（首選 15:30 青青草原動物放風散步），並索取館內精選免費活動時刻表（自由參加非洲音樂秀、飛翔精靈鸚鵡見面會），悠閒漫步木棧道近距離欣賞長頸鹿、白犀牛與斑馬。
+              </div>
+              <div class="alt-options">
+                <div class="alt-row">
+                  <span class="badge-primary">免費登記</span>
+                  <span><strong>青青草原動物散步（15:30-16:00 與羊駝、黑皮羊草坪漫步拍照互動）</strong></span>
+                  <a href="#place-leofoo-resort" class="anchor-link">查看渡假區介紹</a>
+                </div>
+                <div class="alt-row">
+                  <span class="badge-secondary">自由參加</span>
+                  <span><strong>生態木棧道動物巡禮、飛翔精靈鸚鵡飛行秀、非洲部落迎賓音樂會</strong></span>
+                </div>
+              </div>
+            </li>
+
+            <!-- 17:15 - 19:00 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">17:15 - 19:00</span>
+              <span class="timeline-transit-badge">關西特色客家合菜</span>
+              <div class="timeline-content-title">關西市區客家特色晚餐 ＆ 避開國三首波北上尖峰</div>
+              <div class="timeline-content-desc">
+                於關西老街或周邊享用在地特色客家合菜（如仙草雞湯、客家小炒），避開週六傍晚 17:30～18:45 國道北上尖峰車潮，吃飽喝足從容整裝。
+              </div>
+            </li>
+
+            <!-- 19:00 - 20:30 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">19:00 - 20:30</span>
+              <span class="timeline-transit-badge">國三北上 車程約 65～75 分</span>
+              <div class="timeline-content-title">順暢歸途：關西交流道 → 國三北上 → 信義快速道路 → 廣慈還車</div>
+              <div class="timeline-content-desc">
+                19:00～19:15 啟程行駛國道三號平穩北上，晚間車流平穩，於 20:30 前從容抵達台北信義區廣慈博愛園區完成還車手續（順利於 20:40 前完成），6 歲孩子在車上熟睡，回家洗澡後安穩就寢。
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div> <!-- /#timeline-taoyuan -->
+
+      <!-- 方案 B（備選）：林口休閒時間軸 -->
+      <div class="plan-view" id="timeline-linkou">
+        <!-- Day 1 -->
+        <div class="day-block">
+          <div class="day-heading">
+            <span>Day 1：11/20 (五) 廣慈取車 → 台灣山豬城餵萌寵 → 福容徠旅入住 → 三井 OUTLET 雙館晚餐</span>
+            <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">主要移動方式：自駕定點停放 ＋ 短程計程車/室內漫步</span>
+          </div>
+
+          <ul class="timeline-list">
+            <!-- 13:00 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">13:00</span>
+              <span class="timeline-transit-badge">出發前置 15 分</span>
+              <div class="timeline-content-title">廣慈博愛園區取車出發</div>
+              <div class="timeline-content-desc">
+                於廣慈地下停車場或周邊共享汽車點完成取車，出發上信義快速道路，轉建國高架或國三接國道一號北上往林口。
+              </div>
+            </li>
+
+            <!-- 13:15 - 14:15 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">13:15 - 14:15</span>
+              <span class="timeline-transit-badge">車程約 45～50 分</span>
+              <div class="timeline-content-title">行車動線：前往林口下福山區</div>
+              <div class="timeline-content-desc">
+                週五午後車流平順，由林口交流道下後順行前往下福山區，沿途山林景緻宜人。
+              </div>
+            </li>
+
+            <!-- 14:15 - 16:15 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">14:15 - 16:15</span>
+              <span class="timeline-transit-badge">戶外萌寵 2 小時</span>
+              <div class="timeline-content-title">午後焦點：台灣山豬城戶外親近餵動物</div>
+              <div class="timeline-content-desc">
+                免門票農莊，6 歲女孩購買草料、紅蘿蔔親手餵食水牛、白鴕鳥、山羊、山豬、天鵝與錦鯉，享受山林大自然踏青。
+              </div>
+              <div class="alt-options">
+                <div class="alt-row">
+                  <span class="badge-primary">萌寵互動</span>
+                  <span><strong>台灣山豬城</strong>（免門票入園，飼料投餵、水鳥池塘環湖慢步，停留約 1.5～2 小時）</span>
+                  <a href="#place-boar" class="anchor-link">查看介紹</a>
+                </div>
+                <div class="alt-row">
+                  <span class="badge-secondary">順遊備選</span>
+                  <span><strong>林口大峽谷（八里水牛坑）</strong>（若時間充裕可遠眺海景與荒野地貌，停留 20 分鐘）</span>
+                </div>
+              </div>
+            </li>
+
+            <!-- 16:45 - 17:30 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">16:45 - 17:30</span>
+              <span class="timeline-transit-badge">車程約 20 分</span>
+              <div class="timeline-content-title">福容徠旅林口：Check-in 入住 ＆ 車輛定點停妥</div>
+              <div class="timeline-content-desc">
+                車輛駛入飯店地下停車場停妥，辦理入住手續（週五平日憑券入住免加大假日加價），客房稍作休息恢復體能。
+              </div>
+              <div class="alt-options">
+                <div class="alt-row">
+                  <span class="badge-primary">住宿核心</span>
+                  <span><strong>福容徠旅林口</strong>（憑 ITF 聯合住宿券 1 張入住，週五平日免加價）</span>
+                  <a href="#place-fullon-linkou" class="anchor-link">查看介紹</a>
+                </div>
+              </div>
+            </li>
+
+            <!-- 17:45 - 20:30 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">17:45 - 20:30</span>
+              <span class="timeline-transit-badge">計程車 8 分鐘（避開周邊塞車）</span>
+              <div class="timeline-content-title">夜晚時光：MITSUI OUTLET PARK 林口（一二館）漫步晚餐</div>
+              <div class="timeline-content-desc">
+                由飯店搭乘短程計程車直達商場門口，免去開車排隊找車位。全室內平坦無障礙空間、品嚐精緻各國美食、採買小朋友零食。
+              </div>
+              <div class="alt-options">
+                <div class="alt-row">
+                  <span class="badge-primary">晚餐首選</span>
+                  <span><strong>三井 OUTLET 餐廳群</strong>（日式豬排、拉麵、義式餐廳或二館特色料理）</span>
+                  <a href="#place-mitsui" class="anchor-link">查看介紹</a>
+                </div>
+                <div class="alt-row">
+                  <span class="badge-secondary">生活採買</span>
+                  <span>三井二館大型生活專門店、日系藥妝與甜點輕食漫步</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Day 2 -->
+        <div class="day-block">
+          <div class="day-heading">
+            <span>Day 2：11/21 (六) 徠旅晨間退房 → 小熊特色公園磨石滑梯放電 → 三井二館親子時光 → 順暢返北</span>
+            <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">主要移動方式：自駕短程接駁 ＋ 傍晚國道順暢返程</span>
+          </div>
+
+          <ul class="timeline-list">
+            <!-- 09:30 - 10:30 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">09:30 - 10:30</span>
+              <span class="timeline-transit-badge">11:00 前退房</span>
+              <div class="timeline-content-title">悠閒早餐 ＆ 辦理退房</div>
+              <div class="timeline-content-desc">
+                於飯店享用元氣早餐後退房取車，車程約 5 分鐘抵達林口最熱門的戶外共融特色遊戲場。
+              </div>
+            </li>
+
+            <!-- 10:30 - 12:30 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">10:30 - 12:30</span>
+              <span class="timeline-transit-badge">戶外放電 2 小時</span>
+              <div class="timeline-content-title">上午焦點：林口小熊特色運動公園（社區運動公園）</div>
+              <div class="timeline-content-desc">
+                新北市代表性全共融遊戲場。2.9 公尺獨立磨石子溜滑梯、多功能球型攀爬網、大面積潔淨白沙坑與樹皮木屑鋪面，讓 6 歲孩童在陽光大草坪盡情奔跑放電。
+              </div>
+              <div class="alt-options">
+                <div class="alt-row">
+                  <span class="badge-primary">戶外首選</span>
+                  <span><strong>林口小熊特色遊戲場</strong>（磨石子滑梯、沙坑、旋轉盤、草地野餐）</span>
+                  <a href="#place-bear-park" class="anchor-link">查看介紹</a>
+                </div>
+                <div class="alt-row">
+                  <span class="badge-secondary">文化備案</span>
+                  <span><strong>竹林山觀音寺公園</strong>（江南宮殿庭園造景、錦鯉池餵魚與林蔭步道）</span>
+                </div>
+              </div>
+            </li>
+
+            <!-- 12:45 - 16:30 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">12:45 - 16:30</span>
+              <span class="timeline-transit-badge">室內悠閒親子時光</span>
+              <div class="timeline-content-title">午餐與室內充電：三井 OUTLET 二館親子主題區</div>
+              <div class="timeline-content-desc">
+                戶外放電後重回全空調三井二館，享用美味正餐與甜品下午茶，館內提供寬敞親子設施與舒適休息座椅。
+              </div>
+              <div class="alt-options">
+                <div class="alt-row">
+                  <span class="badge-primary">悠閒午餐</span>
+                  <span><strong>三井 OUTLET 二館主題美食</strong>（美式、日式、義式多樣選擇）</span>
+                  <a href="#place-mitsui" class="anchor-link">查看介紹</a>
+                </div>
+                <div class="alt-row">
+                  <span class="badge-secondary">室內玩樂</span>
+                  <span><strong>室內親子樂園／遊戲主題店</strong>（雨天或烈日備用）</span>
+                </div>
+              </div>
+            </li>
+
+            <!-- 17:00 - 19:30 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">17:00 - 19:30</span>
+              <span class="timeline-transit-badge">特色晚餐 ＆ 休憩</span>
+              <div class="timeline-content-title">林口市區在地晚餐 ＆ 避開傍晚國道尖峰</div>
+              <div class="timeline-content-desc">
+                於文化二路或昕境廣場周邊享用小家庭友善晚餐，避開 17:30-19:00 第一波北返車流。
+              </div>
+            </li>
+
+            <!-- 19:45 - 20:40 -->
+            <li class="timeline-item">
+              <div class="timeline-dot"></div>
+              <span class="timeline-time">19:45 - 20:40</span>
+              <span class="timeline-transit-badge">國道返程約 40～45 分</span>
+              <div class="timeline-content-title">順暢返北歸途：林口交流道 → 國道一號 → 台北廣慈還車</div>
+              <div class="timeline-content-desc">
+                晚間 19:45 自林口出發由林口交流道上國道一號，順暢行駛約 40 分鐘抵達台北信義區，於 20:40 前從容抵達廣慈博愛園區完成還車，孩子在車上安穩就寢。
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div> <!-- /#timeline-linkou -->
+
+      <!-- 方案 C（備選）：中壢青埔時間軸 -->
+      <div class="plan-view" id="timeline-zhongli">
         <!-- Day 1 -->
         <div class="day-block">
           <div class="day-heading">
@@ -1120,365 +1539,6 @@
         </ul>
       </div>
       </div> <!-- /#timeline-zhongli -->
-
-      <!-- 方案 B：林口休閒時間軸 -->
-      <div class="plan-view" id="timeline-linkou">
-        <!-- Day 1 -->
-        <div class="day-block">
-          <div class="day-heading">
-            <span>Day 1：11/20 (五) 廣慈取車 → 台灣山豬城餵萌寵 → 福容徠旅入住 → 三井 OUTLET 雙館晚餐</span>
-            <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">主要移動方式：自駕定點停放 ＋ 短程計程車/室內漫步</span>
-          </div>
-
-          <ul class="timeline-list">
-            <!-- 13:00 -->
-            <li class="timeline-item">
-              <div class="timeline-dot"></div>
-              <span class="timeline-time">13:00</span>
-              <span class="timeline-transit-badge">出發前置 15 分</span>
-              <div class="timeline-content-title">廣慈博愛園區取車出發</div>
-              <div class="timeline-content-desc">
-                於廣慈地下停車場或周邊共享汽車點完成取車，出發上信義快速道路，轉建國高架或國三接國道一號北上往林口。
-              </div>
-            </li>
-
-            <!-- 13:15 - 14:15 -->
-            <li class="timeline-item">
-              <div class="timeline-dot"></div>
-              <span class="timeline-time">13:15 - 14:15</span>
-              <span class="timeline-transit-badge">車程約 45～50 分</span>
-              <div class="timeline-content-title">行車動線：前往林口下福山區</div>
-              <div class="timeline-content-desc">
-                週五午後車流平順，由林口交流道下後順行前往下福山區，沿途山林景緻宜人。
-              </div>
-            </li>
-
-            <!-- 14:15 - 16:15 -->
-            <li class="timeline-item">
-              <div class="timeline-dot"></div>
-              <span class="timeline-time">14:15 - 16:15</span>
-              <span class="timeline-transit-badge">戶外萌寵 2 小時</span>
-              <div class="timeline-content-title">午後焦點：台灣山豬城戶外親近餵動物</div>
-              <div class="timeline-content-desc">
-                免門票農莊，6 歲女孩購買草料、紅蘿蔔親手餵食水牛、白鴕鳥、山羊、山豬、天鵝與錦鯉，享受山林大自然踏青。
-              </div>
-              <div class="alt-options">
-                <div class="alt-row">
-                  <span class="badge-primary">萌寵互動</span>
-                  <span><strong>台灣山豬城</strong>（免門票入園，飼料投餵、水鳥池塘環湖慢步，停留約 1.5～2 小時）</span>
-                  <a href="#place-boar" class="anchor-link">查看介紹</a>
-                </div>
-                <div class="alt-row">
-                  <span class="badge-secondary">順遊備選</span>
-                  <span><strong>林口大峽谷（八里水牛坑）</strong>（若時間充裕可遠眺海景與荒野地貌，停留 20 分鐘）</span>
-                </div>
-              </div>
-            </li>
-
-            <!-- 16:45 - 17:30 -->
-            <li class="timeline-item">
-              <div class="timeline-dot"></div>
-              <span class="timeline-time">16:45 - 17:30</span>
-              <span class="timeline-transit-badge">車程約 20 分</span>
-              <div class="timeline-content-title">福容徠旅林口：Check-in 入住 ＆ 車輛定點停妥</div>
-              <div class="timeline-content-desc">
-                車輛駛入飯店地下停車場停妥，辦理入住手續（週五平日憑券入住免加大假日加價），客房稍作休息恢復體能。
-              </div>
-              <div class="alt-options">
-                <div class="alt-row">
-                  <span class="badge-primary">住宿核心</span>
-                  <span><strong>福容徠旅林口</strong>（憑 ITF 聯合住宿券 1 張入住，週五平日免加價）</span>
-                  <a href="#place-fullon-linkou" class="anchor-link">查看介紹</a>
-                </div>
-              </div>
-            </li>
-
-            <!-- 17:45 - 20:30 -->
-            <li class="timeline-item">
-              <div class="timeline-dot"></div>
-              <span class="timeline-time">17:45 - 20:30</span>
-              <span class="timeline-transit-badge">計程車 8 分鐘（避開周邊塞車）</span>
-              <div class="timeline-content-title">夜晚時光：MITSUI OUTLET PARK 林口（一二館）漫步晚餐</div>
-              <div class="timeline-content-desc">
-                由飯店搭乘短程計程車直達商場門口，免去開車排隊找車位。全室內平坦無障礙空間、品嚐精緻各國美食、採買小朋友零食。
-              </div>
-              <div class="alt-options">
-                <div class="alt-row">
-                  <span class="badge-primary">晚餐首選</span>
-                  <span><strong>三井 OUTLET 餐廳群</strong>（日式豬排、拉麵、義式餐廳或二館特色料理）</span>
-                  <a href="#place-mitsui" class="anchor-link">查看介紹</a>
-                </div>
-                <div class="alt-row">
-                  <span class="badge-secondary">生活採買</span>
-                  <span>三井二館大型生活專門店、日系藥妝與甜點輕食漫步</span>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Day 2 -->
-        <div class="day-block">
-          <div class="day-heading">
-            <span>Day 2：11/21 (六) 徠旅晨間退房 → 小熊特色公園磨石滑梯放電 → 三井二館親子時光 → 順暢返北</span>
-            <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">主要移動方式：自駕短程接駁 ＋ 傍晚國道順暢返程</span>
-          </div>
-
-          <ul class="timeline-list">
-            <!-- 09:30 - 10:30 -->
-            <li class="timeline-item">
-              <div class="timeline-dot"></div>
-              <span class="timeline-time">09:30 - 10:30</span>
-              <span class="timeline-transit-badge">11:00 前退房</span>
-              <div class="timeline-content-title">悠閒早餐 ＆ 辦理退房</div>
-              <div class="timeline-content-desc">
-                於飯店享用元氣早餐後退房取車，車程約 5 分鐘抵達林口最熱門的戶外共融特色遊戲場。
-              </div>
-            </li>
-
-            <!-- 10:30 - 12:30 -->
-            <li class="timeline-item">
-              <div class="timeline-dot"></div>
-              <span class="timeline-time">10:30 - 12:30</span>
-              <span class="timeline-transit-badge">戶外放電 2 小時</span>
-              <div class="timeline-content-title">上午焦點：林口小熊特色運動公園（社區運動公園）</div>
-              <div class="timeline-content-desc">
-                新北市代表性全共融遊戲場。2.9 公尺獨立磨石子溜滑梯、多功能球型攀爬網、大面積潔淨白沙坑與樹皮木屑鋪面，讓 6 歲孩童在陽光大草坪盡情奔跑放電。
-              </div>
-              <div class="alt-options">
-                <div class="alt-row">
-                  <span class="badge-primary">戶外首選</span>
-                  <span><strong>林口小熊特色遊戲場</strong>（磨石子滑梯、沙坑、旋轉盤、草地野餐）</span>
-                  <a href="#place-bear-park" class="anchor-link">查看介紹</a>
-                </div>
-                <div class="alt-row">
-                  <span class="badge-secondary">文化備案</span>
-                  <span><strong>竹林山觀音寺公園</strong>（江南宮殿庭園造景、錦鯉池餵魚與林蔭步道）</span>
-                </div>
-              </div>
-            </li>
-
-            <!-- 12:45 - 16:30 -->
-            <li class="timeline-item">
-              <div class="timeline-dot"></div>
-              <span class="timeline-time">12:45 - 16:30</span>
-              <span class="timeline-transit-badge">室內悠閒親子時光</span>
-              <div class="timeline-content-title">午餐與室內充電：三井 OUTLET 二館親子主題區</div>
-              <div class="timeline-content-desc">
-                戶外放電後重回全空調三井二館，享用美味正餐與甜品下午茶，館內提供寬敞親子設施與舒適休息座椅。
-              </div>
-              <div class="alt-options">
-                <div class="alt-row">
-                  <span class="badge-primary">悠閒午餐</span>
-                  <span><strong>三井 OUTLET 二館主題美食</strong>（美式、日式、義式多樣選擇）</span>
-                  <a href="#place-mitsui" class="anchor-link">查看介紹</a>
-                </div>
-                <div class="alt-row">
-                  <span class="badge-secondary">室內玩樂</span>
-                  <span><strong>室內親子樂園／遊戲主題店</strong>（雨天或烈日備用）</span>
-                </div>
-              </div>
-            </li>
-
-            <!-- 17:00 - 19:30 -->
-            <li class="timeline-item">
-              <div class="timeline-dot"></div>
-              <span class="timeline-time">17:00 - 19:30</span>
-              <span class="timeline-transit-badge">特色晚餐 ＆ 休憩</span>
-              <div class="timeline-content-title">林口市區在地晚餐 ＆ 避開傍晚國道尖峰</div>
-              <div class="timeline-content-desc">
-                於文化二路或昕境廣場周邊享用小家庭友善晚餐，避開 17:30-19:00 第一波北返車流。
-              </div>
-            </li>
-
-            <!-- 19:45 - 20:40 -->
-            <li class="timeline-item">
-              <div class="timeline-dot"></div>
-              <span class="timeline-time">19:45 - 20:40</span>
-              <span class="timeline-transit-badge">國道返程約 40～45 分</span>
-              <div class="timeline-content-title">順暢返北歸途：林口交流道 → 國道一號 → 台北廣慈還車</div>
-              <div class="timeline-content-desc">
-                晚間 19:45 自林口出發由林口交流道上國道一號，順暢行駛約 40 分鐘抵達台北信義區，於 20:40 前從容抵達廣慈博愛園區完成還車，孩子在車上安穩就寢。
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div> <!-- /#timeline-linkou -->
-
-      <!-- 方案 C：桃園藝文時間軸 -->
-      <div class="plan-view" id="timeline-taoyuan">
-        <!-- Day 1 -->
-        <div class="day-block">
-          <div class="day-heading">
-            <span>Day 1：11/20 (五) 漫步城市森林與最美圖書館 → 福容泡湯 ＆ 櫻桃烤鴨晚餐</span>
-            <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">主要移動方式：自駕定點 ＋ 藝文特區散策</span>
-          </div>
-
-          <ul class="timeline-list">
-            <!-- 13:00 - 13:50 -->
-            <li class="timeline-item">
-              <div class="timeline-dot"></div>
-              <span class="timeline-time">13:00 - 13:50</span>
-              <span class="timeline-transit-badge">車程約 45～50 分</span>
-              <div class="timeline-content-title">輕鬆出發、避開通勤車潮</div>
-              <div class="timeline-content-desc">
-                從廣慈奉天宮出發，週五午後出發正好避開早通勤尖峰，行駛信義快接國道一號南下，順暢抵達桃園藝文特區。
-              </div>
-            </li>
-
-            <!-- 13:50 - 15:15 -->
-            <li class="timeline-item">
-              <div class="timeline-dot"></div>
-              <span class="timeline-time">13:50 - 15:15</span>
-              <span class="timeline-transit-badge">室內用餐 ＋ 停車續停</span>
-              <div class="timeline-content-title">中茂新天地：午後餐點與精緻甜品</div>
-              <div class="timeline-content-desc">
-                直接導航進入中茂新天地地下停車場，帶孩子享用精緻家庭料理或下午茶。餐後車輛續停於商場地下室，直接步行至隔壁圖書館。
-              </div>
-              <div class="alt-options">
-                <div class="alt-row">
-                  <span class="badge-primary">日料首選</span>
-                  <span><strong>欣葉日本料理（中茂店）</strong>（精緻日料自助餐，菜色多元適合親子）</span>
-                </div>
-                <div class="alt-row">
-                  <span class="badge-secondary">鍋物備選</span>
-                  <span><strong>中茂新天地特色火鍋</strong>（環境舒適寬敞，用餐折抵停車）</span>
-                </div>
-              </div>
-            </li>
-
-            <!-- 15:15 - 17:15 -->
-            <li class="timeline-item">
-              <div class="timeline-dot"></div>
-              <span class="timeline-time">15:15 - 17:15</span>
-              <span class="timeline-transit-badge">步行 2 分 全室內 2 小時</span>
-              <div class="timeline-content-title">桃園市立圖書館總館：生命樹童書繪本與蔦屋書店</div>
-              <div class="timeline-content-desc">
-                全國最美綠建築圖書館，內部規劃超寬敞舒適的兒童閱覽區與玩具租借區，1 樓設有日本蔦屋書店與星巴克。午後吹冷氣共讀繪本毫無壓力。
-              </div>
-              <div class="alt-options">
-                <div class="alt-row">
-                  <span class="badge-primary">童書繪本</span>
-                  <span><strong>桃園市立圖書館總館兒童閱覽區</strong>（生命樹採光中庭、分齡繪本與立體玩具）</span>
-                  <a href="#place-ty-library" class="anchor-link">查看介紹</a>
-                </div>
-                <div class="alt-row">
-                  <span class="badge-secondary">咖啡午茶</span>
-                  <span><strong>蔦屋書店 (Tsutaya Books) ＆ 星巴克</strong>（大人喝咖啡翻雜誌、沉浸美學空間）</span>
-                </div>
-              </div>
-            </li>
-
-            <!-- 17:15 - 18:45 -->
-            <li class="timeline-item">
-              <div class="timeline-dot"></div>
-              <span class="timeline-time">17:15 - 18:45</span>
-              <span class="timeline-transit-badge">車程 3 分鐘</span>
-              <div class="timeline-content-title">福容大飯店 桃園 Check-in ＆ 親子玩水／露天三溫暖</div>
-              <div class="timeline-content-desc">
-                散步取車開車 3 分鐘抵達福容大飯店桃園店辦理入住並停妥車輛（週五平日憑券入住免加價）。帶女兒至戶外溫水游泳池玩水，或大人輪流體驗頂樓露天風呂三溫暖舒壓。
-              </div>
-              <div class="alt-options">
-                <div class="alt-row">
-                  <span class="badge-primary">住宿核心</span>
-                  <span><strong>福容大飯店 桃園</strong>（憑 ITF 聯合住宿券 1 張入住精緻客房，含 2 客早餐，週五免加價）</span>
-                  <a href="#place-fullon-ty" class="anchor-link">查看介紹</a>
-                </div>
-              </div>
-            </li>
-
-            <!-- 19:00 ~ -->
-            <li class="timeline-item">
-              <div class="timeline-dot"></div>
-              <span class="timeline-time">19:00 ~</span>
-              <span class="timeline-transit-badge">館內免開車</span>
-              <div class="timeline-content-title">慵懶晚餐：館內福粵樓道地櫻桃烤鴨</div>
-              <div class="timeline-content-desc">
-                完全無需再開車出門找車位，直接在飯店 2 樓福粵樓享用經典櫻桃片皮烤鴨與港式點心，大廳晚間享受現場音樂演奏度假氛圍。
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Day 2 -->
-        <div class="day-block">
-          <div class="day-heading">
-            <span>Day 2：11/21 (六) 公園滾輪溜滑梯大放電 → 77 藝文町日式木屋野餐下午茶 → 順暢返程</span>
-            <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">主要移動方式：自駕市區短程 ＋ 徒步慢遊</span>
-          </div>
-
-          <ul class="timeline-list">
-            <!-- 08:30 - 10:30 -->
-            <li class="timeline-item">
-              <div class="timeline-dot"></div>
-              <span class="timeline-time">08:30 - 10:30</span>
-              <span class="timeline-transit-badge">悠閒晨光 11:00 退房</span>
-              <div class="timeline-content-title">飯店人氣早餐：現沖牛肉湯 ＆ 歐姆蛋</div>
-              <div class="timeline-content-desc">
-                週六早上睡到自然醒，享用福容口碑極高的自助早餐：現沖鮮甜牛肉湯、現煮熱騰騰擔擔麵與現做歐姆蛋，吃飽回房收拾行李於 11:00 準時退房。
-              </div>
-            </li>
-
-            <!-- 11:00 - 13:00 -->
-            <li class="timeline-item">
-              <div class="timeline-dot"></div>
-              <span class="timeline-time">11:00 - 13:00</span>
-              <span class="timeline-transit-badge">車程約 10 分鐘</span>
-              <div class="timeline-content-title">風禾公園：挑戰全台最長 50 公尺滾輪溜滑梯</div>
-              <div class="timeline-content-desc">
-                開車前往風禾公園停妥於公有車格，挑戰超人氣 50 公尺滾輪溜滑梯、多重攀爬繩網與大草皮奔跑，微涼 11 月讓 6 歲孩童盡情放電 1.5～2 小時。
-              </div>
-              <div class="alt-options">
-                <div class="alt-row">
-                  <span class="badge-primary">放電首選</span>
-                  <span><strong>風禾公園共融遊戲場</strong>（50m滾輪溜滑梯、大沙坑、攀爬繩網、大草坪）</span>
-                  <a href="#place-fenghe" class="anchor-link">查看介紹</a>
-                </div>
-              </div>
-            </li>
-
-            <!-- 13:30 - 16:30 -->
-            <li class="timeline-item">
-              <div class="timeline-dot"></div>
-              <span class="timeline-time">13:30 - 16:30</span>
-              <span class="timeline-transit-badge">車程約 10 分 文昌公園地下停車場</span>
-              <div class="timeline-content-title">桃園 77 藝文町：日式木屋散策 ＆ 成真咖啡舒芙蕾厚鬆餅</div>
-              <div class="timeline-content-desc">
-                日治時期警察宿舍改建的京都風文創園區，進駐「成真咖啡」，享用大人特調咖啡與小女生最愛的招牌澎鬆舒芙蕾厚鬆餅，逛逛週六漫慢文創市集。
-              </div>
-              <div class="alt-options">
-                <div class="alt-row">
-                  <span class="badge-primary">午後午茶</span>
-                  <span><strong>桃園 77 藝文町（成真咖啡）</strong>（日式木造官舍、草皮庭院、舒芙蕾下午茶）</span>
-                  <a href="#place-art77" class="anchor-link">查看介紹</a>
-                </div>
-              </div>
-            </li>
-
-            <!-- 17:00 - 19:30 -->
-            <li class="timeline-item">
-              <div class="timeline-dot"></div>
-              <span class="timeline-time">17:00 - 19:30</span>
-              <span class="timeline-transit-badge">市區特色晚餐 ＆ 休憩</span>
-              <div class="timeline-content-title">桃園市區在地晚餐 ＆ 避開國道返程第一波高峰</div>
-              <div class="timeline-content-desc">
-                於桃園市區享用在地經典小吃或合菜，避開週六傍晚 17:30-18:30 國道北上尖峰，從容用餐。
-              </div>
-            </li>
-
-            <!-- 19:40 - 20:40 -->
-            <li class="timeline-item">
-              <div class="timeline-dot"></div>
-              <span class="timeline-time">19:40 - 20:40</span>
-              <span class="timeline-transit-badge">返程車程約 50～60 分</span>
-              <div class="timeline-content-title">平順返程：返回台北信義區廣慈奉天宮</div>
-              <div class="timeline-content-desc">
-                晚間 19:40 上國道平穩開回台北廣慈完成還車（於 20:40 前順暢完成），孩子在後座舒服補眠小憩，回家洗澡安穩就寢。
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div> <!-- /#timeline-taoyuan -->
     </section>
 
     <!-- Chapter 2: Interactive Map -->
@@ -1489,16 +1549,18 @@
       </div>
 
       <div id="map-container">
-        <!-- 方案 A 工具列 -->
-        <div class="map-toolbar plan-view active" id="toolbar-zhongli">
-          <span class="map-toolbar-label">中壢線聚焦：</span>
-          <button type="button" class="map-btn active" id="btn-zoom-all">🗺️ 桃園景點全覽 (中壢・龍岡・青埔)</button>
-          <button type="button" class="map-btn" id="btn-zoom-zhongli">🏘️ 中壢市區 (飯店與老街溪／新勢公園)</button>
-          <button type="button" class="map-btn" id="btn-zoom-qingpu">🐬 青埔特區 (Xpark ＆ 橫山書法公園)</button>
-          <button type="button" class="map-btn" id="btn-zoom-longgang">🍜 龍岡忠貞 (米干商圈與馬祖新村)</button>
+        <!-- 方案 A（首選）工具列 -->
+        <div class="map-toolbar plan-view active" id="toolbar-taoyuan">
+          <span class="map-toolbar-label">桃園六福線聚焦：</span>
+          <button type="button" class="map-btn active" id="btn-zoom-ty-all">🗺️ 路線全覽 (土地公館・虎頭山・藝文・六福淺山)</button>
+          <button type="button" class="map-btn" id="btn-zoom-ty-tudigong">🏮 土地公文化館 (古裝體驗/雨備)</button>
+          <button type="button" class="map-btn" id="btn-zoom-ty-hutou">🌲 虎頭山公園 (奧爾森林學堂樹屋)</button>
+          <button type="button" class="map-btn" id="btn-zoom-ty-art">📚 桃園藝文特區 (總圖與福容飯店)</button>
+          <button type="button" class="map-btn" id="btn-zoom-ty-farm">🌾 關西六福淺山農場 (野炊小農夫基地)</button>
+          <button type="button" class="map-btn" id="btn-zoom-ty-resort">🦒 六福莊生態園區 (動物散步/遊戲島)</button>
         </div>
 
-        <!-- 方案 B 工具列 -->
+        <!-- 方案 B（備選）工具列 -->
         <div class="map-toolbar plan-view" id="toolbar-linkou">
           <span class="map-toolbar-label">林口線聚焦：</span>
           <button type="button" class="map-btn active" id="btn-zoom-linkou-all">🗺️ 林口景點全覽 (台北・三井・山豬城)</button>
@@ -1507,13 +1569,13 @@
           <button type="button" class="map-btn" id="btn-zoom-linkou-park">🐻 小熊特色公園 (共融溜滑梯沙坑)</button>
         </div>
 
-        <!-- 方案 C 工具列 -->
-        <div class="map-toolbar plan-view" id="toolbar-taoyuan">
-          <span class="map-toolbar-label">桃園線聚焦：</span>
-          <button type="button" class="map-btn active" id="btn-zoom-ty-all">🗺️ 桃園景點全覽 (藝文・總圖・風禾・77町)</button>
-          <button type="button" class="map-btn" id="btn-zoom-ty-art">📚 藝文特區 (總圖與飯店)</button>
-          <button type="button" class="map-btn" id="btn-zoom-ty-park">🛝 風禾公園 (滾輪滑梯)</button>
-          <button type="button" class="map-btn" id="btn-zoom-ty-77">🍵 77 藝文町 (站前日式木屋)</button>
+        <!-- 方案 C（備選）工具列 -->
+        <div class="map-toolbar plan-view" id="toolbar-zhongli">
+          <span class="map-toolbar-label">中壢線聚焦：</span>
+          <button type="button" class="map-btn active" id="btn-zoom-all">🗺️ 桃園景點全覽 (中壢・龍岡・青埔)</button>
+          <button type="button" class="map-btn" id="btn-zoom-zhongli">🏘️ 中壢市區 (飯店與老街溪／新勢公園)</button>
+          <button type="button" class="map-btn" id="btn-zoom-qingpu">🐬 青埔特區 (Xpark ＆ 橫山書法公園)</button>
+          <button type="button" class="map-btn" id="btn-zoom-longgang">🍜 龍岡忠貞 (米干商圈與馬祖新村)</button>
         </div>
 
         <div id="map"></div>
@@ -1545,8 +1607,428 @@
         <div class="section-subtitle">附開放時間、停車建議與官方/具公信力資訊連結</div>
       </div>
 
-      <!-- 方案 A：中壢青埔地點清單 -->
-      <div class="place-grid plan-view active" id="places-zhongli">
+      <!-- 方案 A（首選）：桃園藝文 ＆ 關西六福淺山農場地點清單 -->
+      <div class="place-grid plan-view active" id="places-taoyuan">
+
+        <!-- 桃園市土地公文化館 -->
+        <article class="place-card" id="place-tudigong-hall">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">桃園市土地公文化館（兒童古裝與布袋戲體驗）</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.4 <span class="rating-count">(2.8k+)</span></span>
+                <span class="place-category cat-culture">文化展館</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              全台首座以土地公信仰與在地民俗為核心的公有文化館。2 樓打造專屬「兒童文化館」，免費提供多套兒童與成人傳統歌仔戲服、古裝自由試穿變裝拍照，並設有精緻布袋戲偶操偶小舞台、土地公體感闖關遊戲與求籤詩機；全館具備冷氣空調與地下停車場，是兼具常民童趣與高品質的室內景點。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>開館時間：</strong>週二至週日 09:00 - 17:00（每週一休館，週五全日開放；停車場開放至 17:00）</li>
+              <li><strong>門票費用：</strong>全館免費參觀（免門票，常設展與兒童體驗皆免費）</li>
+              <li><strong>停車資訊：</strong>館內附設 B1、B2 地下停車場（計時收費約 30 元/時，電梯直達展廳免淋雨）</li>
+              <li><strong>接駁時間：</strong>距虎頭山公園僅約 1.5 公里（車程 4～5 分鐘）；距住宿點福容大飯店桃園僅約 3.2 公里（車程 8～10 分鐘）</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://travel.tycg.gov.tw/content/images/attractions/21732/480x360_files636356415318349477.jpg" onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/8/8b/%E6%A1%83%E5%9C%92%E5%B8%82%E5%9C%9F%E5%9C%B0%E5%85%AC%E6%96%87%E5%8C%96%E9%A4%A8_%E5%9C%9F%E5%9C%B0%E5%85%AC%E7%A5%9E%E5%83%8F_20200321.jpg';" alt="桃園市土地公文化館外觀與展廳" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>展館實景：</strong>全台首座土地公文化旗艦館，設有兒童布袋戲舞台與戲服體驗。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=桃園市土地公文化館" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">古裝變裝</span>
+            </div>
+            <a href="https://www.taoyuantudigong.org.tw/" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              官方網站 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 虎頭山公園（奧爾森林學堂） -->
+        <article class="place-card" id="place-hutoushan-park">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">虎頭山公園（奧爾森林學堂）</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.5 <span class="rating-count">(10k+)</span></span>
+                <span class="place-category cat-culture">自然森林公園</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              被譽為「桃園後花園」，核心亮點「奧爾森林學堂」以貓頭鷹（Owl）為意象，依傍大樹興建三座不傷樹木的活樹屋（讀樹教室、咕咕屋、綠野方舟）與穿梭樹冠的高架空中松鼠木棧道。園區綠樹成蔭不曬太陽，設有雙色水管溜滑梯、磨石溜滑梯、攀爬網與鞦韆，是 6 歲孩童大肢體放電與自然觀察的首選。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>開園時間：</strong>全區 24 小時開放（樹屋設施與兒童遊戲區建議日間 08:00 - 17:00 遊憩）</li>
+              <li><strong>門票費用：</strong>全區免費參觀入園（免門票）</li>
+              <li><strong>停車資訊：</strong>設有虎頭山公園公有停車場及桃園孔廟旁停車場（平日停車多免收費或約 20～30 元/時，車位充裕）</li>
+              <li><strong>交通時間：</strong>自台北信義區廣慈出發走國一南下約 35～45 分鐘；距當晚住宿點福容大飯店桃園僅約 3.8 公里（車程 10～12 分鐘，極為順路）</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://travel.tycg.gov.tw/content/images/attractions/101312/1024x768_attractions-image-2yeqtf8fiks8k9ibe4hgca.jpg" onerror="this.onerror=null; this.src='https://upload.wikimedia.org/wikipedia/commons/2/25/%E6%A1%83%E5%9C%92%E5%B8%82%E8%99%8E%E9%A0%AD%E5%B1%B1%E5%85%AC%E5%9C%92%E6%A8%B9%E5%B1%8B%E7%BE%A4(%E5%A5%A7%E7%88%BE%E6%A3%AE%E6%9E%97%E5%AD%B8%E5%A0%82)_-_panoramio.jpg';" alt="虎頭山公園奧爾森林學堂樹屋與空中木棧道" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>景點實景：</strong>奧爾森林學堂貓頭鷹高架空中木棧道與穿梭樹冠之活樹屋。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=虎頭山公園奧爾森林學堂" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">樹屋放電</span>
+            </div>
+            <a href="https://travel.tycg.gov.tw/zh-tw/travel/attraction/420" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              桃園觀光導覽網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 桃園市立圖書館總館 -->
+        <article class="place-card" id="place-ty-library">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">桃園市立圖書館總館（生命樹綠建築）</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.6 <span class="rating-count">(7.2k+)</span></span>
+                <span class="place-category cat-culture">藝文地標</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              全台最美綠建築圖書館，以「生命樹」為核心設計概念。館內設有極為寬敞舒適的兒童閱覽區、分齡繪本與立體玩具租借空間，1 樓並有日本蔦屋書店 (TSUTAYA BOOKSTORE) 與星巴克進駐，是親子共讀與美學薰陶的旗艦空間。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>開館時間：</strong>週二至週六 08:30 - 21:00，週日 08:30 - 17:00（週一及國定假日休館）</li>
+              <li><strong>親子亮點：</strong>3 樓親子閱覽區、立體童書與繪本區、小巨幕視聽區、無障礙推車動線完善</li>
+              <li><strong>停車資訊：</strong>圖書館設有地下收費停車場（汽車平日 30 元/時、假日 40 元/時），或停放鄰近中茂新天地地下停車場</li>
+              <li><strong>步行時間：</strong>自中茂新天地徒步約 2 分鐘即可抵達</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://travel.tycg.gov.tw/content/images/attractions/82843/1024x768_attractions-image-gjd5ja_k-0c64f_0hudmaw.jpg" alt="桃園市立圖書館總館外觀與藝文廣場" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>建築實景：</strong>以生命樹螺旋環保節能意象打造之全台旗艦級圖書館總館。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=桃園市立圖書館總館" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">童書繪本</span>
+            </div>
+            <a href="https://travel.tycg.gov.tw/zh-tw/travel/attraction/1656" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              桃園觀光導覽網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 福容大飯店 桃園 -->
+        <article class="place-card" id="place-fullon-ty">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">福容大飯店 桃園（藝文特區旁）</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.0 <span class="rating-count">(4.8k+)</span></span>
+                <span class="place-category cat-hotel">住宿基地</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              座落於桃園市大興西路精華地段，鄰近藝文特區與圖書館總館。飯店設有頂樓露天風呂三溫暖與戶外溫水游泳池，2 樓「福粵樓」櫻桃烤鴨與港式點心廣受好評，館內設施完善，是極具度假感的住宿首選。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>入退時間：</strong>當日 15:00 後入住，隔日 11:00 前退房（本行程預計 09:20 退房前往農場）</li>
+              <li><strong>票券適用性：</strong>憑「2026 ITF 聯合住宿券」<strong>1 張</strong>，即可平日（週日至週五）入住精緻客房一晚，含自助早餐 2 客，週五入住無需額外加價（符合週五出發條件）</li>
+              <li><strong>停車資訊：</strong>房客享有每房 1 台免費停車位（平面與地下機械混合，採先到先停制）</li>
+              <li><strong>美食提醒：</strong>2 樓福粵樓櫻桃片皮鴨為人氣招牌，建議於訂房時或出發前一週預先電話訂鴨</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://dsvhle85nnpqa.cloudfront.net/includes/UploadImg//images/2026ITF%20-%20%E8%A1%A8%E6%A0%BC_%E8%AA%AA%E6%98%8E%E6%9C%83_%E8%81%AF%E5%90%88%E4%BD%8F%E5%AE%BF%E5%88%B8.jpg" alt="2026 ITF 聯合住宿券使用規範表格（福容大飯店桃園平日 1 張入住）" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>票券官方規章：</strong>福容大飯店桃園店平日憑券 1 張入住精緻客房含 2 客早餐（週五不加價）。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=福容大飯店桃園" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">住宿休閒</span>
+            </div>
+            <a href="https://www.fullon-hotels.com.tw/ty/tw/" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              福容大飯店桃園官網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 關西六福村淺山農場 -->
+        <article class="place-card" id="place-leofoo-farm">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">關西六福村淺山農場（野炊小農夫體驗基地）</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.8 <span class="rating-count">(經典精緻體驗)</span></span>
+                <span class="place-category cat-water">田園野炊</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              位於六福村園區旁、六福莊生態農場之友善有機場域。融合「野炊小達人 × 淺山小農夫」經典雙系列體驗，帶領孩童親近土地、體驗當季有機採收、親自撿枝挖窯控烤地瓜/南瓜，並動手鋸竹打磨專屬竹水杯與竹筷。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>預約梯次：</strong>11/21 (六) 上午 10:30 場次（體驗約 2～2.5 小時，務必提前 20 分鐘於 10:10 報到）</li>
+              <li><strong>費用方案：</strong>每位小朋友 NT$499（享 1 位大人免費陪同！第 2 位大人 NT$150，未滿 3 歲幼兒免費陪同；現場不開放未付費陪同）</li>
+              <li><strong>成果帶回：</strong>每位小農夫可親手帶回 1 斤有機地瓜或 1 顆有機南瓜（或當週有機作物），以及親手裁鋸打磨的竹水杯與竹筷</li>
+              <li><strong>活動贈送：</strong>參加野炊活動即加碼贈送當日六福莊免費「LRG 活動體驗資格」，結束後可直接前往隔壁六福莊櫃檯登記參加下午動物散步</li>
+              <li><strong>裝備建議：</strong>田間泥土操作，現場不提供一次性手套，建議自備工作手套、防蚊液、防風外套，穿著耐髒長褲與球鞋</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?auto=format&fit=crop&w=1024&q=80" alt="田園野炊自然農事控窯體驗" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>田園實景：</strong>六福淺山農場有機農事採收、挖窯烤地瓜與親手製作竹水杯竹筷。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=新竹縣關西鎮仁安里拱子溝60號" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);\">野炊小農夫</span>
+            </div>
+            <a href="https://www.leofooresort.com.tw/zh-TW/" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              六福莊生態園區官網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 關西六福莊生態休閒區 -->
+        <article class="place-card" id="place-leofoo-resort">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">關西六福莊生態休閒區（動物放風散步 ＆ 免費生態導覽）</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.3 <span class="rating-count">(4.1k+)</span></span>
+                <span class="place-category cat-culture">生態園區</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              亞洲知名生態度假園區，緊鄰淺山農場。戶外木棧道環繞長頸鹿、白犀牛與狐猴生活棲地。參加野炊活動特別享有當日免費 LRG 活動登記資格，下午可依場次參與動物放風散步與多項館內免費表演活動。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>免費活動登記：</strong>13:45 結束野炊後至大廳服務櫃檯，憑活動證明登記當日「免費 LRG 活動」（首選 15:30 青青草原動物散步），並索取當日免費活動時程表</li>
+              <li><strong>動物放風散步：</strong>週六下午 15:30～16:00 於青青草原展開，近距離跟著溫馴羊駝、黑皮羊在草地上散步互動拍照</li>
+              <li><strong>中庭免費探索：</strong>漫步環景木棧道俯瞰非洲草食動物，特定時段可觀看「飛翔精靈鸚鵡見面會」及「非洲部落迎賓音樂會」</li>
+              <li><strong>餐飲休憩：</strong>園區內設有主題特色餐飲、咖啡館與手作小點，適合午後悠閒漫步充電</li>
+              <li><strong>停車指南：</strong>六福莊園區設有大型專用停車場，開車進出十分方便</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://images.unsplash.com/photo-1534567153574-2b12153a87f0?auto=format&fit=crop&w=1024&q=80" alt="六福莊生態園區動物散步與自然互動景致" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>生態實景：</strong>六福莊戶外動物自然棲地木棧道與青青草原動物散步互動。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=關西六福莊生態度假旅館" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">動物互動</span>
+            </div>
+            <a href="https://www.leofooresort.com.tw/zh-TW/" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              六福莊生態園區官網 ↗
+            </a>
+          </div>
+        </article>
+
+      </div> <!-- /#places-taoyuan -->
+
+      <!-- 方案 B（備選）：林口休閒地點清單 -->
+      <div class="place-grid plan-view" id="places-linkou">
+
+        <!-- 台灣山豬城 -->
+        <article class="place-card" id="place-boar">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">台灣山豬城（免門票萌寵農莊）</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.1 <span class="rating-count">(6.8k+)</span></span>
+                <span class="place-category cat-culture">萌寵生態</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              隱身林口下福山區的免費動物農莊，園區飼養台灣山豬、水牛、白鴕鳥、山羊、天鵝、白孔雀與錦鯉等十數種動物。小朋友可在福利社購買草料、紅蘿蔔親手餵食，親近大自然。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>入園門票：</strong>全區免費參觀，飼料每份約 20～30 元自由購買</li>
+              <li><strong>開放時間：</strong>11:00 - 21:00（戶外動物區建議於日落前參觀完畢）</li>
+              <li><strong>客觀用餐提醒：</strong>附設餐廳以大型傳統台式合菜為主，份量偏大較不適合 2 大 1 小；建議純粹餵動物踏青，午餐安排於林口市區</li>
+              <li><strong>停車資訊：</strong>附設大型免費停車場，開車前往便利（山區產業道路請慢速駕駛）</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Formosan_Wild_Boar_in_Shoushan_Zoo.jpg" alt="台灣山豬城園區山豬與動物放養生態" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>園區特色：</strong>林口下福山區之免門票特色動物園，備有草料供孩童近距離體驗餵食樂趣。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=台灣山豬城" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">萌寵放電</span>
+            </div>
+            <a href="http://www.boar.com.tw/" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              台灣山豬城官網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- MITSUI OUTLET PARK 林口 -->
+        <article class="place-card" id="place-mitsui">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">MITSUI OUTLET PARK 林口（一二館）</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.1 <span class="rating-count">(45k+)</span></span>
+                <span class="place-category cat-culture">美式暢貨</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              雙北最具規模的南洋渡假風複合購物休閒中心。一館匯聚國際時尚精品與排隊名店，新落成的二館則大幅強化親子生活品牌、知名餐飲與兒童主題遊樂天地。全區推車無障礙、空調涼爽，無日曬雨淋之憂。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>營業時間：</strong>週一至週四 11:00-21:30 / 週五及假日前夕 11:00-22:00 / 週末 10:30-22:00</li>
+              <li><strong>親子特色：</strong>二館大型親子休閒專區、母嬰親善育嬰室、多元各國兒童友善餐飲</li>
+              <li><strong>交通避塞提醒：</strong>週末下午周邊文化二／三路易壅塞，由飯店搭乘計程車約 8 分鐘直達商場大門，可省下約 40 分鐘排隊找車位時間。</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Mitsui_Outlet_Park_Linkou_1_2016_6.JPG" alt="MITSUI OUTLET PARK 林口商場外觀與渡假水景" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>商場景緻：</strong>南國渡假氛圍大型購物中心，一二館連通空橋提供全天候舒適散步與家庭餐飲。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=MITSUI+OUTLET+PARK+林口" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">全室內休閒</span>
+            </div>
+            <a href="https://www.mop.com.tw/linkou/te/index.html" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              三井 OUTLET 官網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 福容徠旅林口 -->
+        <article class="place-card" id="place-fullon-linkou">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">福容徠旅林口 (Fullon Poshtel Linkou)</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.2 <span class="rating-count">(850+)</span></span>
+                <span class="place-category cat-stay">住宿基地</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              福容大飯店旗下都會輕旅品牌，座落於龜山文二一街（林口長庚商圈），距三井 OUTLET 僅約 2.5 公里。客房風格活潑俐落、採光極佳，設有地下平面收費停車場（住宿折抵）與男女三溫暖水療設施。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>入住 / 退房：</strong>16:00 入住 / 11:00 退房</li>
+              <li><strong>地利優勢：</strong>車程至三井 OUTLET 約 8 分鐘、至小熊運動公園 5 分鐘、至國道一號林口交流道 4 分鐘</li>
+              <li><strong>票券適用：</strong>二天一夜 1 張聯合住宿券・閱旅客房（含 2 客早餐・原價超值折抵）</li>
+              <li><strong>加價規定：</strong>11/20（週五）屬平日，依券面規定每房每晚<strong>免加收大假日差額</strong>（憑 1 張券即可直接入住）</li>
+            </ul>
+
+            <div class="voucher-preview table-preview">
+              <img src="https://dsvhle85nnpqa.cloudfront.net/includes/UploadImg//images/2026ITF%20-%20%E8%A1%A8%E6%A0%BC_%E8%AA%AA%E6%98%8E%E6%9C%83_%E8%81%AF%E5%90%88%E4%BD%8F%E5%AE%BF%E5%88%B8.jpg" alt="福容大飯店 2026 ITF 聯合住宿券規格說明表" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>憑證方案核對：</strong>福容大飯店 2026 ITF 聯合住宿券官方規格表，本行程適用「徠旅林口・二天一夜 1 張・閱旅客房（含 2 客早餐）・11/20 週五平日入住免加大假日加價」。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=福容徠旅林口" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">住宿核心</span>
+            </div>
+            <a href="https://www.fullon-hotels.com.tw/fullon-poshtels/lk/tw/" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              福容徠旅林口官網 ↗
+            </a>
+          </div>
+        </article>
+
+        <!-- 林口小熊特色運動公園 -->
+        <article class="place-card" id="place-bear-park">
+          <div class="place-top">
+            <div class="place-header-row">
+              <h3 class="place-title">林口小熊特色運動公園（社區運動公園）</h3>
+              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
+                <span class="rating-badge"><span class="rating-star">★</span> 4.3 <span class="rating-count">(2.6k+)</span></span>
+                <span class="place-category cat-culture">共融遊樂場</span>
+              </div>
+            </div>
+            <p class="place-desc">
+              新北市極具指標性的全共融旗艦遊戲場，佔地廣大。園內以小熊為視覺主題，打造 2.9 公尺獨立磨石子滑梯、大型球體攀爬繩網、共融式鞦韆、跳樁與大面積潔淨白沙坑，地面採用自然樹皮與木屑鋪設，非常適合 6 歲孩童奔跑探險。
+            </p>
+            <ul class="place-info-list">
+              <li><strong>開放時間：</strong>戶外特色遊戲場 24 小時全日開放，免費入園</li>
+              <li><strong>亮點設施：</strong>小熊磨石滑梯、沙坑附洗腳池、攀爬網、無障礙旋轉盤、大草皮</li>
+              <li><strong>周邊連結：</strong>距福容徠旅林口車程僅約 5 分鐘，附設親子廁所與停車格</li>
+            </ul>
+
+            <div class="voucher-preview">
+              <img src="https://images.unsplash.com/photo-1575783970733-1aaedde1db74?auto=format&fit=crop&w=1024&q=80" alt="特色運動公園兒童共融遊具與大沙坑" class="zoomable-image" title="點擊放大檢視">
+              <div class="voucher-caption">
+                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
+                <strong>共融放電：</strong>新北市特色共融遊戲場大沙坑與安全地景鋪面，適合 6 歲孩童安心放電玩樂。
+              </div>
+            </div>
+          </div>
+          <div class="place-footer">
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <a href="https://www.google.com/maps/search/?api=1&query=林口社區運動公園小熊特色遊戲場" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
+                📍 Google 地圖 ↗
+              </a>
+              <span style="font-size: 0.75rem; color: var(--text-light);">共融溜滑梯</span>
+            </div>
+            <a href="https://www.landscaping.ntpc.gov.tw/cht/index.php?code=list&ids=67" target="_blank" rel="noopener noreferrer" class="place-ext-link">
+              新北景觀處資訊 ↗
+            </a>
+          </div>
+        </article>
+
+      </div> <!-- /#places-linkou -->
+
+      <!-- 方案 C（備選）：中壢青埔地點清單 -->
+      <div class="place-grid plan-view" id="places-zhongli">
 
         <!-- 阿美米干 1981 -->
         <article class="place-card" id="place-amei">
@@ -1914,349 +2396,13 @@
         </article>
 
       </div> <!-- /#places-zhongli -->
-
-      <!-- 方案 B：林口休閒地點清單 -->
-      <div class="place-grid plan-view" id="places-linkou">
-
-        <!-- 台灣山豬城 -->
-        <article class="place-card" id="place-boar">
-          <div class="place-top">
-            <div class="place-header-row">
-              <h3 class="place-title">台灣山豬城（免門票萌寵農莊）</h3>
-              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
-                <span class="rating-badge"><span class="rating-star">★</span> 4.1 <span class="rating-count">(6.8k+)</span></span>
-                <span class="place-category cat-culture">萌寵生態</span>
-              </div>
-            </div>
-            <p class="place-desc">
-              隱身林口下福山區的免費動物農莊，園區飼養台灣山豬、水牛、白鴕鳥、山羊、天鵝、白孔雀與錦鯉等十數種動物。小朋友可在福利社購買草料、紅蘿蔔親手餵食，親近大自然。
-            </p>
-            <ul class="place-info-list">
-              <li><strong>入園門票：</strong>全區免費參觀，飼料每份約 20～30 元自由購買</li>
-              <li><strong>開放時間：</strong>11:00 - 21:00（戶外動物區建議於日落前參觀完畢）</li>
-              <li><strong>客觀用餐提醒：</strong>附設餐廳以大型傳統台式合菜為主，份量偏大較不適合 2 大 1 小；建議純粹餵動物踏青，午餐安排於林口市區</li>
-              <li><strong>停車資訊：</strong>附設大型免費停車場，開車前往便利（山區產業道路請慢速駕駛）</li>
-            </ul>
-
-            <div class="voucher-preview">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Formosan_Wild_Boar_in_Shoushan_Zoo.jpg" alt="台灣山豬城園區山豬與動物放養生態" class="zoomable-image" title="點擊放大檢視">
-              <div class="voucher-caption">
-                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
-                <strong>園區特色：</strong>林口下福山區之免門票特色動物園，備有草料供孩童近距離體驗餵食樂趣。
-              </div>
-            </div>
-          </div>
-          <div class="place-footer">
-            <div style="display: flex; gap: 0.5rem; align-items: center;">
-              <a href="https://www.google.com/maps/search/?api=1&query=台灣山豬城" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
-                📍 Google 地圖 ↗
-              </a>
-              <span style="font-size: 0.75rem; color: var(--text-light);">萌寵放電</span>
-            </div>
-            <a href="http://www.boar.com.tw/" target="_blank" rel="noopener noreferrer" class="place-ext-link">
-              台灣山豬城官網 ↗
-            </a>
-          </div>
-        </article>
-
-        <!-- MITSUI OUTLET PARK 林口 -->
-        <article class="place-card" id="place-mitsui">
-          <div class="place-top">
-            <div class="place-header-row">
-              <h3 class="place-title">MITSUI OUTLET PARK 林口（一二館）</h3>
-              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
-                <span class="rating-badge"><span class="rating-star">★</span> 4.1 <span class="rating-count">(45k+)</span></span>
-                <span class="place-category cat-culture">美式暢貨</span>
-              </div>
-            </div>
-            <p class="place-desc">
-              雙北最具規模的南洋渡假風複合購物休閒中心。一館匯聚國際時尚精品與排隊名店，新落成的二館則大幅強化親子生活品牌、知名餐飲與兒童主題遊樂天地。全區推車無障礙、空調涼爽，無日曬雨淋之憂。
-            </p>
-            <ul class="place-info-list">
-              <li><strong>營業時間：</strong>週一至週四 11:00-21:30 / 週五及假日前夕 11:00-22:00 / 週末 10:30-22:00</li>
-              <li><strong>親子特色：</strong>二館大型親子休閒專區、母嬰親善育嬰室、多元各國兒童友善餐飲</li>
-              <li><strong>交通避塞提醒：</strong>週末下午周邊文化二／三路易壅塞，由飯店搭乘計程車約 8 分鐘直達商場大門，可省下約 40 分鐘排隊找車位時間。</li>
-            </ul>
-
-            <div class="voucher-preview">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Mitsui_Outlet_Park_Linkou_1_2016_6.JPG" alt="MITSUI OUTLET PARK 林口商場外觀與渡假水景" class="zoomable-image" title="點擊放大檢視">
-              <div class="voucher-caption">
-                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
-                <strong>商場景緻：</strong>南國渡假氛圍大型購物中心，一二館連通空橋提供全天候舒適散步與家庭餐飲。
-              </div>
-            </div>
-          </div>
-          <div class="place-footer">
-            <div style="display: flex; gap: 0.5rem; align-items: center;">
-              <a href="https://www.google.com/maps/search/?api=1&query=MITSUI+OUTLET+PARK+林口" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
-                📍 Google 地圖 ↗
-              </a>
-              <span style="font-size: 0.75rem; color: var(--text-light);">全室內休閒</span>
-            </div>
-            <a href="https://www.mop.com.tw/linkou/te/index.html" target="_blank" rel="noopener noreferrer" class="place-ext-link">
-              三井 OUTLET 官網 ↗
-            </a>
-          </div>
-        </article>
-
-        <!-- 福容徠旅林口 -->
-        <article class="place-card" id="place-fullon-linkou">
-          <div class="place-top">
-            <div class="place-header-row">
-              <h3 class="place-title">福容徠旅林口 (Fullon Poshtel Linkou)</h3>
-              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
-                <span class="rating-badge"><span class="rating-star">★</span> 4.2 <span class="rating-count">(850+)</span></span>
-                <span class="place-category cat-stay">住宿基地</span>
-              </div>
-            </div>
-            <p class="place-desc">
-              福容大飯店旗下都會輕旅品牌，座落於龜山文二一街（林口長庚商圈），距三井 OUTLET 僅約 2.5 公里。客房風格活潑俐落、採光極佳，設有地下平面收費停車場（住宿折抵）與男女三溫暖水療設施。
-            </p>
-            <ul class="place-info-list">
-              <li><strong>入住 / 退房：</strong>16:00 入住 / 11:00 退房</li>
-              <li><strong>地利優勢：</strong>車程至三井 OUTLET 約 8 分鐘、至小熊運動公園 5 分鐘、至國道一號林口交流道 4 分鐘</li>
-              <li><strong>票券適用：</strong>二天一夜 1 張聯合住宿券・閱旅客房（含 2 客早餐・原價超值折抵）</li>
-              <li><strong>加價規定：</strong>11/20（週五）屬平日，依券面規定每房每晚<strong>免加收大假日差額</strong>（憑 1 張券即可直接入住）</li>
-            </ul>
-
-            <div class="voucher-preview table-preview">
-              <img src="https://dsvhle85nnpqa.cloudfront.net/includes/UploadImg//images/2026ITF%20-%20%E8%A1%A8%E6%A0%BC_%E8%AA%AA%E6%98%8E%E6%9C%83_%E8%81%AF%E5%90%88%E4%BD%8F%E5%AE%BF%E5%88%B8.jpg" alt="福容大飯店 2026 ITF 聯合住宿券規格說明表" class="zoomable-image" title="點擊放大檢視">
-              <div class="voucher-caption">
-                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
-                <strong>憑證方案核對：</strong>福容大飯店 2026 ITF 聯合住宿券官方規格表，本行程適用「徠旅林口・二天一夜 1 張・閱旅客房（含 2 客早餐）・11/20 週五平日入住免加大假日加價」。
-              </div>
-            </div>
-          </div>
-          <div class="place-footer">
-            <div style="display: flex; gap: 0.5rem; align-items: center;">
-              <a href="https://www.google.com/maps/search/?api=1&query=福容徠旅林口" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
-                📍 Google 地圖 ↗
-              </a>
-              <span style="font-size: 0.75rem; color: var(--text-light);">住宿核心</span>
-            </div>
-            <a href="https://www.fullon-hotels.com.tw/fullon-poshtels/lk/tw/" target="_blank" rel="noopener noreferrer" class="place-ext-link">
-              福容徠旅林口官網 ↗
-            </a>
-          </div>
-        </article>
-
-        <!-- 林口小熊特色運動公園 -->
-        <article class="place-card" id="place-bear-park">
-          <div class="place-top">
-            <div class="place-header-row">
-              <h3 class="place-title">林口小熊特色運動公園（社區運動公園）</h3>
-              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
-                <span class="rating-badge"><span class="rating-star">★</span> 4.3 <span class="rating-count">(2.6k+)</span></span>
-                <span class="place-category cat-culture">共融遊樂場</span>
-              </div>
-            </div>
-            <p class="place-desc">
-              新北市極具指標性的全共融旗艦遊戲場，佔地廣大。園內以小熊為視覺主題，打造 2.9 公尺獨立磨石子滑梯、大型球體攀爬繩網、共融式鞦韆、跳樁與大面積潔淨白沙坑，地面採用自然樹皮與木屑鋪設，非常適合 6 歲孩童奔跑探險。
-            </p>
-            <ul class="place-info-list">
-              <li><strong>開放時間：</strong>戶外特色遊戲場 24 小時全日開放，免費入園</li>
-              <li><strong>亮點設施：</strong>小熊磨石滑梯、沙坑附洗腳池、攀爬網、無障礙旋轉盤、大草皮</li>
-              <li><strong>周邊連結：</strong>距福容徠旅林口車程僅約 5 分鐘，附設親子廁所與停車格</li>
-            </ul>
-
-            <div class="voucher-preview">
-              <img src="https://images.unsplash.com/photo-1575783970733-1aaedde1db74?auto=format&fit=crop&w=1024&q=80" alt="特色運動公園兒童共融遊具與大沙坑" class="zoomable-image" title="點擊放大檢視">
-              <div class="voucher-caption">
-                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
-                <strong>共融放電：</strong>新北市特色共融遊戲場大沙坑與安全地景鋪面，適合 6 歲孩童安心放電玩樂。
-              </div>
-            </div>
-          </div>
-          <div class="place-footer">
-            <div style="display: flex; gap: 0.5rem; align-items: center;">
-              <a href="https://www.google.com/maps/search/?api=1&query=林口社區運動公園小熊特色遊戲場" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
-                📍 Google 地圖 ↗
-              </a>
-              <span style="font-size: 0.75rem; color: var(--text-light);">共融溜滑梯</span>
-            </div>
-            <a href="https://www.landscaping.ntpc.gov.tw/cht/index.php?code=list&ids=67" target="_blank" rel="noopener noreferrer" class="place-ext-link">
-              新北景觀處資訊 ↗
-            </a>
-          </div>
-        </article>
-
-      </div> <!-- /#places-linkou -->
-
-      <!-- 方案 C：桃園藝文美學地點清單 -->
-      <div class="place-grid plan-view" id="places-taoyuan">
-
-        <!-- 桃園市立圖書館總館 -->
-        <article class="place-card" id="place-ty-library">
-          <div class="place-top">
-            <div class="place-header-row">
-              <h3 class="place-title">桃園市立圖書館總館（生命樹綠建築）</h3>
-              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
-                <span class="rating-badge"><span class="rating-star">★</span> 4.6 <span class="rating-count">(7.2k+)</span></span>
-                <span class="place-category cat-culture">藝文地標</span>
-              </div>
-            </div>
-            <p class="place-desc">
-              全台最美綠建築圖書館，以「生命樹」為核心設計概念。館內設有極為寬敞舒適的兒童閱覽區、分齡繪本與立體玩具租借空間，1 樓並有日本蔦屋書店 (TSUTAYA BOOKSTORE) 與星巴克進駐，是親子共讀與美學薰陶的旗艦空間。
-            </p>
-            <ul class="place-info-list">
-              <li><strong>開館時間：</strong>週二至週六 08:30 - 21:00，週日 08:30 - 17:00（週一及國定假日休館）</li>
-              <li><strong>親子亮點：</strong>3 樓親子閱覽區、立體童書與繪本區、小巨幕視聽區、無障礙推車動線完善</li>
-              <li><strong>停車資訊：</strong>圖書館設有地下收費停車場（汽車平日 30 元/時、假日 40 元/時），或停放鄰近中茂新天地地下停車場</li>
-              <li><strong>步行時間：</strong>自中茂新天地徒步約 2 分鐘即可抵達</li>
-            </ul>
-
-            <div class="voucher-preview">
-              <img src="https://travel.tycg.gov.tw/content/images/attractions/82843/1024x768_attractions-image-gjd5ja_k-0c64f_0hudmaw.jpg" alt="桃園市立圖書館總館外觀與藝文廣場" class="zoomable-image" title="點擊放大檢視">
-              <div class="voucher-caption">
-                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
-                <strong>建築實景：</strong>以生命樹螺旋環保節能意象打造之全台旗艦級圖書館總館。
-              </div>
-            </div>
-          </div>
-          <div class="place-footer">
-            <div style="display: flex; gap: 0.5rem; align-items: center;">
-              <a href="https://www.google.com/maps/search/?api=1&query=桃園市立圖書館總館" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
-                📍 Google 地圖 ↗
-              </a>
-              <span style="font-size: 0.75rem; color: var(--text-light);">童書繪本</span>
-            </div>
-            <a href="https://travel.tycg.gov.tw/zh-tw/travel/attraction/1656" target="_blank" rel="noopener noreferrer" class="place-ext-link">
-              桃園觀光導覽網 ↗
-            </a>
-          </div>
-        </article>
-
-        <!-- 福容大飯店 桃園 -->
-        <article class="place-card" id="place-fullon-ty">
-          <div class="place-top">
-            <div class="place-header-row">
-              <h3 class="place-title">福容大飯店 桃園（藝文特區旁）</h3>
-              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
-                <span class="rating-badge"><span class="rating-star">★</span> 4.0 <span class="rating-count">(4.8k+)</span></span>
-                <span class="place-category cat-hotel">住宿基地</span>
-              </div>
-            </div>
-            <p class="place-desc">
-              座落於桃園市大興西路精華地段，鄰近藝文特區與圖書館總館。飯店設有頂樓露天風呂三溫暖與戶外溫水游泳池，2 樓「福粵樓」櫻桃烤鴨與港式點心廣受好評，館內設施完善，是極具度假感的住宿首選。
-            </p>
-            <ul class="place-info-list">
-              <li><strong>入退時間：</strong>當日 15:00 後入住，隔日 11:00 前退房</li>
-              <li><strong>票券適用性：</strong>憑「2026 ITF 聯合住宿券」<strong>1 張</strong>，即可平日（週日至週五）入住精緻客房一晚，含自助早餐 2 客，週五入住無需額外加價（符合週五出發條件）</li>
-              <li><strong>停車資訊：</strong>房客享有每房 1 台免費停車位（平面與地下機械混合，採先到先停制）</li>
-              <li><strong>美食提醒：</strong>2 樓福粵樓櫻桃片皮鴨為人氣招牌，建議於訂房時或出發前一週預先電話訂鴨</li>
-            </ul>
-
-            <div class="voucher-preview">
-              <img src="https://dsvhle85nnpqa.cloudfront.net/includes/UploadImg//images/2026ITF%20-%20%E8%A1%A8%E6%A0%BC_%E8%AA%AA%E6%98%8E%E6%9C%83_%E8%81%AF%E5%90%88%E4%BD%8F%E5%AE%BF%E5%88%B8.jpg" alt="2026 ITF 聯合住宿券使用規範表格（福容大飯店桃園平日 1 張入住）" class="zoomable-image" title="點擊放大檢視">
-              <div class="voucher-caption">
-                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
-                <strong>票券官方規章：</strong>福容大飯店桃園店平日憑券 1 張入住精緻客房含 2 客早餐（週五不加價）。
-              </div>
-            </div>
-          </div>
-          <div class="place-footer">
-            <div style="display: flex; gap: 0.5rem; align-items: center;">
-              <a href="https://www.google.com/maps/search/?api=1&query=福容大飯店桃園" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
-                📍 Google 地圖 ↗
-              </a>
-              <span style="font-size: 0.75rem; color: var(--text-light);">住宿休閒</span>
-            </div>
-            <a href="https://www.fullon-hotels.com.tw/ty/tw/" target="_blank" rel="noopener noreferrer" class="place-ext-link">
-              福容大飯店桃園官網 ↗
-            </a>
-          </div>
-        </article>
-
-        <!-- 風禾公園 -->
-        <article class="place-card" id="place-fenghe">
-          <div class="place-top">
-            <div class="place-header-row">
-              <h3 class="place-title">風禾公園（50 米滾輪滑梯遊戲場）</h3>
-              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
-                <span class="rating-badge"><span class="rating-star">★</span> 4.3 <span class="rating-count">(8.1k+)</span></span>
-                <span class="place-category cat-water">特色共融公園</span>
-              </div>
-            </div>
-            <p class="place-desc">
-              結合防災滯洪功能的都會綠意共融公園，擁有全台最長達 50 公尺的滾輪滑梯，另有磨石子高速滑梯、大型攀爬繩網、白沙坑與廣闊草坪，是讓 6 歲孩童充分享受速度感與大動作肌力放電的戶外勝地。
-            </p>
-            <ul class="place-info-list">
-              <li><strong>開放時間：</strong>24 小時全日開放（滾輪滑梯夜間 22:00 熄燈）</li>
-              <li><strong>門票費用：</strong>全區公共開放空間，免費遊玩</li>
-              <li><strong>孩童提醒：</strong>滾輪溜滑梯可自備或現場使用軟式滑草坐墊保護褲子與臀部；園區較空曠，秋冬建議穿著防風外套並備防蚊液</li>
-              <li><strong>停車資訊：</strong>慈文路與文平路周邊設有公有路邊收費停車格及「風禾公園停車場」</li>
-            </ul>
-
-            <div class="voucher-preview">
-              <img src="https://travel.tycg.gov.tw/content/images/Attractions/59889/1024x768_attractions-image-qxqo_-7yk0s01zzd0htkmw.jpg" alt="風禾公園全景與滾輪溜滑梯設施" class="zoomable-image" title="點擊放大檢視">
-              <div class="voucher-caption">
-                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
-                <strong>公園實景：</strong>結合水塘滯洪池與 50 公尺滾輪溜滑梯之旗艦特色遊戲場。
-              </div>
-            </div>
-          </div>
-          <div class="place-footer">
-            <div style="display: flex; gap: 0.5rem; align-items: center;">
-              <a href="https://www.google.com/maps/search/?api=1&query=風禾公園" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
-                📍 Google 地圖 ↗
-              </a>
-              <span style="font-size: 0.75rem; color: var(--text-light);">戶外大放電</span>
-            </div>
-            <a href="https://travel.tycg.gov.tw/zh-tw/travel/attraction/1532" target="_blank" rel="noopener noreferrer" class="place-ext-link">
-              桃園觀光導覽網 ↗
-            </a>
-          </div>
-        </article>
-
-        <!-- 桃園 77 藝文町 -->
-        <article class="place-card" id="place-art77">
-          <div class="place-top">
-            <div class="place-header-row">
-              <h3 class="place-title">桃園 77 藝文町（日式老宅與成真咖啡）</h3>
-              <div style="display: flex; gap: 0.35rem; align-items: center; flex-shrink: 0;">
-                <span class="rating-badge"><span class="rating-star">★</span> 4.2 <span class="rating-count">(4.5k+)</span></span>
-                <span class="place-category cat-culture">日式老宅園區</span>
-              </div>
-            </div>
-            <p class="place-desc">
-              日治時期桃園警察局日式宿舍群修復而成的歷史建築文創園區，充滿木造京都風情。園區進駐著名「成真咖啡」，提供招牌蓬鬆舒芙蕾厚鬆餅、特調咖啡與手作點心，週六並有手作市集，環境優雅舒適。
-            </p>
-            <ul class="place-info-list">
-              <li><strong>開園時間：</strong>園區 10:00 - 22:00（成真咖啡營業至 21:00，週一全區休園）</li>
-              <li><strong>參觀門票：</strong>園區免費入園參觀；成真咖啡採每人低消一杯飲品或餐點</li>
-              <li><strong>親子美味：</strong>招牌現烤舒芙蕾厚鬆餅（如莓麗時光、熔岩焦糖），口感鬆軟綿密，深受孩童喜愛</li>
-              <li><strong>停車建議：</strong>市區道路狹窄不宜路邊臨停，建議停放「文昌公園地下停車場」，步行約 3～4 分鐘抵達園區</li>
-            </ul>
-
-            <div class="voucher-preview">
-              <img src="https://travel.tycg.gov.tw/content/images/attractions/44256/1024x768_attractions-image-tp133dgm6kwfzndhbebb1w.jpg" alt="桃園 77 藝文町成真咖啡日式木屋門面與庭園" class="zoomable-image" title="點擊放大檢視">
-              <div class="voucher-caption">
-                <span style="display: block; font-weight: 600; color: var(--color-primary); margin-bottom: 0.15rem;">🔍 點擊上方圖片可全螢幕放大檢視</span>
-                <strong>老宅實景：</strong>日治時期警察官舍歷史建築，綠意庭院與日式木屋成真咖啡館。
-              </div>
-            </div>
-          </div>
-          <div class="place-footer">
-            <div style="display: flex; gap: 0.5rem; align-items: center;">
-              <a href="https://www.google.com/maps/search/?api=1&query=桃園77藝文町" target="_blank" rel="noopener noreferrer" class="place-gmaps-link">
-                📍 Google 地圖 ↗
-              </a>
-              <span style="font-size: 0.75rem; color: var(--text-light);">午茶散策</span>
-            </div>
-            <a href="https://travel.tycg.gov.tw/zh-tw/travel/attraction/1424" target="_blank" rel="noopener noreferrer" class="place-ext-link">
-              桃園觀光導覽網 ↗
-            </a>
-          </div>
-        </article>
-
-      </div> <!-- /#places-taoyuan -->
     </section>
 
   </main>
 
   <footer>
     <div class="container">
-      <p>北部二日親子自駕慢活建議行程（中壢・林口・桃園三大方案 ｜ 11/20 13:00 - 11/21 20:40）</p>
+      <p>北部二日親子自駕慢活建議行程（首選桃園六福淺山・備選林口／中壢三大方案 ｜ 11/20 13:00 - 11/21 20:40）</p>
       <p style="margin-top: 0.25rem;">交通數據參考 Google Maps 常態路況預估 ｜ 出發前請即時查詢高速公路 1968 App 最新路況</p>
     </div>
   </footer>
@@ -2428,8 +2574,32 @@
         }
       ];
 
-      // 方案 C：桃園藝文美學座標點位
+      // 方案 A（首選）：桃園藝文 ＆ 關西六福淺山農場座標點位
       const placesTaoyuan = [
+        {
+          id: "place-tudigong-hall",
+          title: "桃園市土地公文化館",
+          shortTitle: "🏮 土地公文化館",
+          desc: "免費兒童古裝體驗、布袋戲小舞台與體感求籤互動",
+          lat: 24.9961,
+          lng: 121.3218,
+          color: "#f59e0b",
+          type: "文化展館",
+          rating: "4.4 (2.8k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=桃園市土地公文化館"
+        },
+        {
+          id: "place-hutoushan-park",
+          title: "虎頭山公園（奧爾森林學堂）",
+          shortTitle: "🌲 虎頭山森林學堂",
+          desc: "貓頭鷹樹屋群、空中松鼠木棧道與雙色水管溜滑梯",
+          lat: 25.0028,
+          lng: 121.3283,
+          color: "#16a34a",
+          type: "森林公園",
+          rating: "4.5 (10k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=虎頭山公園奧爾森林學堂"
+        },
         {
           id: "place-ty-library",
           title: "桃園市立圖書館總館",
@@ -2455,28 +2625,28 @@
           gmaps: "https://www.google.com/maps/search/?api=1&query=福容大飯店桃園"
         },
         {
-          id: "place-fenghe",
-          title: "風禾公園",
-          shortTitle: "🛝 風禾滾輪滑梯",
-          desc: "全台最長 50 米滾輪滑梯與共融攀爬網草坪",
-          lat: 24.9995,
-          lng: 121.2889,
-          color: "#2563eb",
-          type: "特色公園",
-          rating: "4.3 (8.1k+)",
-          gmaps: "https://www.google.com/maps/search/?api=1&query=風禾公園"
+          id: "place-leofoo-farm",
+          title: "關西六福村淺山農場",
+          shortTitle: "🌾 六福淺山農場",
+          desc: "野炊小農夫控窯烤地瓜、手作竹水杯竹筷與當季採收",
+          lat: 24.8236,
+          lng: 121.1822,
+          color: "#16a34a",
+          type: "田園野炊",
+          rating: "4.8 (小農夫經典)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=新竹縣關西鎮仁安里拱子溝60號"
         },
         {
-          id: "place-art77",
-          title: "桃園 77 藝文町",
-          shortTitle: "🍵 77 藝文町",
-          desc: "日式木造警察宿舍群與成真咖啡舒芙蕾",
-          lat: 24.9904,
-          lng: 121.3122,
-          color: "#d97706",
-          type: "日式老宅",
-          rating: "4.2 (4.5k+)",
-          gmaps: "https://www.google.com/maps/search/?api=1&query=桃園77藝文町"
+          id: "place-leofoo-resort",
+          title: "關西六福莊生態休閒區",
+          shortTitle: "🦒 六福莊生態園",
+          desc: "動物散步草泥馬象龜零距離、非洲遊戲島室內暢玩",
+          lat: 24.8218,
+          lng: 121.1835,
+          color: "#ea580c",
+          type: "生態園區",
+          rating: "4.3 (4.1k+)",
+          gmaps: "https://www.google.com/maps/search/?api=1&query=關西六福莊生態度假旅館"
         }
       ];
 
@@ -2554,9 +2724,6 @@
         }
       }
 
-      // 預設載入中壢方案標記
-      createPins(placesZhongli);
-
       // 中壢快速聚焦按鈕邏輯
       const btnAll = document.getElementById('btn-zoom-all');
       const btnZhongli = document.getElementById('btn-zoom-zhongli');
@@ -2623,12 +2790,14 @@
         map.setView([25.0792, 121.3855], 16);
       });
 
-      // 桃園快速聚焦按鈕邏輯
+      // 桃園六福快速聚焦按鈕邏輯
       const btnTyAll = document.getElementById('btn-zoom-ty-all');
+      const btnTyTudigong = document.getElementById('btn-zoom-ty-tudigong');
+      const btnTyHutou = document.getElementById('btn-zoom-ty-hutou');
       const btnTyArt = document.getElementById('btn-zoom-ty-art');
-      const btnTyPark = document.getElementById('btn-zoom-ty-park');
-      const btnTy77 = document.getElementById('btn-zoom-ty-77');
-      const tyBtns = [btnTyAll, btnTyArt, btnTyPark, btnTy77];
+      const btnTyFarm = document.getElementById('btn-zoom-ty-farm');
+      const btnTyResort = document.getElementById('btn-zoom-ty-resort');
+      const tyBtns = [btnTyAll, btnTyTudigong, btnTyHutou, btnTyArt, btnTyFarm, btnTyResort];
 
       function setTyActive(target) {
         tyBtns.forEach(b => b.classList.remove('active'));
@@ -2641,19 +2810,29 @@
         map.fitBounds(group.getBounds().pad(0.14));
       });
 
+      btnTyTudigong.addEventListener('click', () => {
+        setTyActive(btnTyTudigong);
+        map.setView([24.9961, 121.3218], 16);
+      });
+
+      btnTyHutou.addEventListener('click', () => {
+        setTyActive(btnTyHutou);
+        map.setView([25.0028, 121.3283], 16);
+      });
+
       btnTyArt.addEventListener('click', () => {
         setTyActive(btnTyArt);
         map.setView([25.0135, 121.2995], 16);
       });
 
-      btnTyPark.addEventListener('click', () => {
-        setTyActive(btnTyPark);
-        map.setView([24.9995, 121.2889], 16);
+      btnTyFarm.addEventListener('click', () => {
+        setTyActive(btnTyFarm);
+        map.setView([24.8236, 121.1822], 16);
       });
 
-      btnTy77.addEventListener('click', () => {
-        setTyActive(btnTy77);
-        map.setView([24.9904, 121.3122], 16);
+      btnTyResort.addEventListener('click', () => {
+        setTyActive(btnTyResort);
+        map.setView([24.8218, 121.1835], 16);
       });
 
       // 方案切換 Tab 邏輯
@@ -2704,6 +2883,10 @@
       tabZhongli.addEventListener('click', () => switchPlan('zhongli'));
       tabLinkou.addEventListener('click', () => switchPlan('linkou'));
       tabTaoyuan.addEventListener('click', () => switchPlan('taoyuan'));
+
+      // 初始預設載入桃園六福淺山方案標記 (首選)
+      createPins(placesTaoyuan);
+      setTyActive(btnTyAll);
 
       // Lightbox 點擊放大邏輯 (採用委派，支援所有方案動態圖片)
       const lightbox = document.getElementById('lightbox');
