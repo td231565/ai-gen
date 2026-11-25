@@ -1,0 +1,1436 @@
+<!doctype html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="text-scale" content="scale" />
+    <title>慢活兩天一夜行程表｜宜蘭三代同行</title>
+    <style>
+      :root {
+        --surface-page: oklch(0.968 0.01 82);
+        --surface-sheet: oklch(0.992 0.005 82);
+        --surface-subtle: oklch(0.945 0.014 82);
+        --surface-hero: oklch(0.3 0.052 152);
+        --ink-primary: oklch(0.22 0.016 80);
+        --ink-secondary: oklch(0.38 0.018 80);
+        --ink-muted: oklch(0.45 0.016 80);
+        --ink-on-hero: oklch(0.975 0.008 82);
+        --ink-on-hero-soft: oklch(0.87 0.018 90);
+        --accent-terracotta: oklch(0.5 0.135 42);
+        --accent-terracotta-bg: oklch(0.955 0.025 48);
+        --accent-pine: oklch(0.36 0.068 152);
+        --accent-pine-bg: oklch(0.945 0.022 152);
+        --accent-sun: oklch(0.45 0.115 74);
+        --accent-sun-bg: oklch(0.962 0.03 82);
+        --accent-rain: oklch(0.4 0.082 232);
+        --accent-rain-bg: oklch(0.95 0.022 232);
+        --border-hairline: oklch(0.875 0.014 82);
+        --border-strong: oklch(0.76 0.02 82);
+        --focus-ring: oklch(0.5 0.14 42);
+        --font-sans:
+          "PingFang TC", "Noto Sans TC", "Hiragino Sans CNS",
+          "Microsoft JhengHei", system-ui, sans-serif;
+        --font-serif: "Songti TC", "Noto Serif TC", "PMingLiU", Georgia, serif;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        html {
+          scroll-behavior: smooth;
+        }
+      }
+
+      body {
+        margin: 0;
+        background-color: var(--surface-page);
+        color: var(--ink-primary);
+        font-family: var(--font-sans);
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      img,
+      svg {
+        display: block;
+        max-inline-size: 100%;
+      }
+
+      a {
+        color: var(--accent-terracotta);
+        text-decoration-thickness: 1.5px;
+        text-underline-offset: 0.2em;
+      }
+
+      a:hover {
+        color: oklch(0.42 0.14 40);
+      }
+
+      :where(a:any-link, button, .table-wrapper):focus-visible {
+        outline: 3px solid var(--focus-ring);
+        outline-offset: 3px;
+      }
+
+      .visually-hidden:where(:not(:focus-within, :active)) {
+        position: absolute !important;
+        clip-path: inset(50%) !important;
+        overflow: hidden !important;
+        width: 1px !important;
+        height: 1px !important;
+        margin: -1px !important;
+        padding: 0 !important;
+        border: 0 !important;
+        white-space: nowrap !important;
+      }
+
+      .skip-link:focus-visible {
+        position: fixed;
+        inset-block-start: 0.75rem;
+        inset-inline-start: 0.75rem;
+        z-index: 100;
+        padding: 0.6rem 1rem;
+        border-radius: 0.5rem;
+        background-color: var(--surface-hero);
+        color: var(--ink-on-hero);
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .site-header {
+        position: sticky;
+        inset-block-start: 0;
+        z-index: 20;
+        background-color: var(--surface-sheet);
+        border-block-end: 1px solid var(--border-hairline);
+      }
+
+      .header-inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem 1.25rem;
+        max-inline-size: 70rem;
+        margin-inline: auto;
+        padding: 0.75rem clamp(1rem, 3vw, 2rem);
+      }
+
+      .brand-mark {
+        font-family: var(--font-serif);
+        font-weight: 700;
+        font-size: 1.1rem;
+        letter-spacing: 0.04em;
+        color: var(--accent-pine);
+      }
+
+      .header-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem 0.75rem;
+      }
+
+      nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.35rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .nav-link {
+        display: inline-flex;
+        align-items: center;
+        min-block-size: 2.125rem;
+        padding: 0.35rem 0.75rem;
+        border-radius: 999px;
+        color: var(--ink-secondary);
+        font-size: 0.92rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition:
+          background-color 160ms ease-out,
+          color 160ms ease-out;
+      }
+
+      .nav-link:hover {
+        background-color: var(--surface-subtle);
+        color: var(--ink-primary);
+      }
+
+      .print-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        min-block-size: 2.25rem;
+        padding: 0.4rem 0.95rem;
+        border: 1px solid var(--border-strong);
+        border-radius: 999px;
+        background-color: var(--surface-subtle);
+        color: var(--ink-primary);
+        font-family: inherit;
+        font-size: 0.92rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+          background-color 160ms ease-out,
+          border-color 160ms ease-out;
+      }
+
+      .print-btn:hover {
+        background-color: var(--accent-pine-bg);
+        border-color: var(--accent-pine);
+        color: var(--accent-pine);
+      }
+
+      @media (pointer: coarse) {
+        .nav-link,
+        .print-btn {
+          min-block-size: 2.75rem;
+          padding-inline: 1rem;
+        }
+      }
+
+      main {
+        max-inline-size: 70rem;
+        margin-inline: auto;
+        padding: clamp(1.25rem, 3vw, 2.5rem) clamp(1rem, 3vw, 2rem) 3.5rem;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+        gap: clamp(1.5rem, 3vw, 2.5rem);
+        align-items: center;
+        padding: clamp(1.5rem, 4vw, 2.75rem);
+        border-radius: 1.25rem;
+        background-color: var(--surface-hero);
+        color: var(--ink-on-hero);
+        margin-block-end: clamp(2rem, 4vw, 3rem);
+      }
+
+      @media (max-width: 52rem) {
+        .hero {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
+
+      .hero-eyebrow {
+        margin: 0 0 0.6rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        color: var(--ink-on-hero-soft);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .hero h1 {
+        margin: 0 0 0.75rem;
+        font-family: var(--font-serif);
+        font-size: clamp(1.75rem, 1.35rem + 1.5vw, 2.65rem);
+        line-height: 1.25;
+        letter-spacing: 0.02em;
+        color: var(--ink-on-hero);
+      }
+
+      .hero-route {
+        margin: 0 0 1.25rem;
+        max-inline-size: 65ch;
+        font-size: 1.05rem;
+        line-height: 1.65;
+        color: var(--ink-on-hero-soft);
+      }
+
+      .hero-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .hero-chips li {
+        padding: 0.32rem 0.8rem;
+        border: 1px solid oklch(0.87 0.018 90 / 0.32);
+        border-radius: 999px;
+        background-color: oklch(0.24 0.044 152);
+        color: var(--ink-on-hero);
+        font-size: 0.88rem;
+        font-weight: 500;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .hero-map {
+        padding: 0.85rem;
+        border: 1px solid oklch(0.87 0.018 90 / 0.24);
+        border-radius: 1rem;
+        background-color: oklch(0.25 0.045 152);
+      }
+
+      .day-section {
+        container-type: inline-size;
+        margin-block-end: clamp(2.25rem, 4vw, 3.25rem);
+        scroll-margin-block-start: 4.75rem;
+      }
+
+      .section-head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.5rem 1.25rem;
+        padding-block-end: 0.85rem;
+        margin-block-end: 1.35rem;
+        border-block-end: 1px solid var(--border-strong);
+      }
+
+      .day-badge {
+        display: inline-block;
+        padding: 0.2rem 0.7rem;
+        border-radius: 999px;
+        font-size: 0.84rem;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        margin-inline-end: 0.65rem;
+        vertical-align: middle;
+      }
+
+      .day-badge--one {
+        background-color: var(--accent-terracotta-bg);
+        color: var(--accent-terracotta);
+        border: 1px solid oklch(0.82 0.06 46);
+      }
+
+      .day-badge--two {
+        background-color: var(--accent-pine-bg);
+        color: var(--accent-pine);
+        border: 1px solid oklch(0.8 0.04 152);
+      }
+
+      .section-head h2 {
+        margin: 0;
+        font-family: var(--font-serif);
+        font-size: clamp(1.3rem, 1.1rem + 0.8vw, 1.75rem);
+        line-height: 1.35;
+        color: var(--ink-primary);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .section-subtitle {
+        margin: 0;
+        color: var(--ink-secondary);
+        font-size: 0.98rem;
+        font-weight: 500;
+      }
+
+      .timeline {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 1rem;
+      }
+
+      .stop-item {
+        display: grid;
+        grid-template-columns: 11.5rem minmax(0, 1fr);
+        gap: 1rem 1.5rem;
+        padding: clamp(1.1rem, 2.5vw, 1.5rem);
+        border: 1px solid var(--border-hairline);
+        border-radius: 1rem;
+        background-color: var(--surface-sheet);
+      }
+
+      .stop-item--transit {
+        background-color: var(--surface-subtle);
+      }
+
+      .stop-meta {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.45rem;
+      }
+
+      .stop-time {
+        font-family: var(--font-serif);
+        font-size: 1.22rem;
+        font-weight: 700;
+        line-height: 1.2;
+        white-space: nowrap;
+        font-variant-numeric: tabular-nums;
+        color: var(--accent-terracotta);
+      }
+
+      .day-section--two .stop-time {
+        color: var(--accent-pine);
+      }
+
+      .drive-pill,
+      .stay-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        padding: 0.25rem 0.6rem;
+        border: 1px solid var(--border-hairline);
+        border-radius: 0.5rem;
+        background-color: var(--surface-subtle);
+        color: var(--ink-secondary);
+        font-size: 0.82rem;
+        line-height: 1.4;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .stop-item--transit .drive-pill {
+        background-color: var(--surface-sheet);
+      }
+
+      .stay-pill {
+        background-color: var(--accent-terracotta-bg);
+        border-color: oklch(0.84 0.06 46);
+        color: var(--accent-terracotta);
+        font-weight: 600;
+      }
+
+      .day-section--two .stay-pill {
+        background-color: var(--accent-pine-bg);
+        border-color: oklch(0.8 0.04 152);
+        color: var(--accent-pine);
+      }
+
+      .stop-body {
+        min-inline-size: 0;
+      }
+
+      .stop-body h3 {
+        margin: 0 0 0.5rem;
+        font-size: clamp(1.08rem, 1rem + 0.3vw, 1.25rem);
+        line-height: 1.4;
+        color: var(--ink-primary);
+      }
+
+      .stop-address {
+        font-weight: 400;
+        font-size: 0.92em;
+        color: var(--ink-muted);
+      }
+
+      .stop-highlight {
+        margin: 0;
+        max-inline-size: 68ch;
+        color: var(--ink-secondary);
+      }
+
+      .highlight-label {
+        display: inline-block;
+        margin-inline-end: 0.4rem;
+        padding: 0.08rem 0.48rem;
+        border-radius: 0.35rem;
+        background-color: var(--surface-subtle);
+        color: var(--ink-primary);
+        font-size: 0.85rem;
+        font-weight: 700;
+      }
+
+      @container (width < 40rem) {
+        .stop-item {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 0.75rem;
+        }
+
+        .stop-meta {
+          flex-direction: row;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: space-between;
+          padding-block-end: 0.65rem;
+          border-block-end: 1px solid var(--border-hairline);
+        }
+      }
+
+      .option-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+        gap: 0.9rem;
+        margin-block-start: 0.85rem;
+      }
+
+      .option-card {
+        padding: 1rem 1.1rem;
+        border-radius: 0.85rem;
+        border: 1px solid var(--border-hairline);
+      }
+
+      .option-card--sun {
+        background-color: var(--accent-sun-bg);
+        border-color: oklch(0.84 0.065 80);
+      }
+
+      .option-card--rain {
+        background-color: var(--accent-rain-bg);
+        border-color: oklch(0.83 0.045 232);
+      }
+
+      .option-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        margin-block-end: 0.45rem;
+        font-size: 0.86rem;
+        font-weight: 700;
+      }
+
+      .option-card--sun .option-badge {
+        color: var(--accent-sun);
+      }
+
+      .option-card--rain .option-badge {
+        color: var(--accent-rain);
+      }
+
+      .option-card h4 {
+        margin: 0 0 0.4rem;
+        font-size: 1.02rem;
+        line-height: 1.4;
+        color: var(--ink-primary);
+      }
+
+      .option-card p {
+        margin: 0;
+        font-size: 0.95rem;
+        color: var(--ink-secondary);
+        max-inline-size: 60ch;
+      }
+
+      .option-card .cell-list {
+        font-size: 0.94rem;
+        color: var(--ink-secondary);
+      }
+
+      .notice-box {
+        margin-block-start: 0.9rem;
+        padding: 0.95rem 1.1rem;
+        border: 1px solid oklch(0.82 0.06 46);
+        border-radius: 0.85rem;
+        background-color: var(--accent-terracotta-bg);
+        color: var(--ink-primary);
+      }
+
+      .notice-title {
+        margin: 0 0 0.45rem;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--accent-terracotta);
+      }
+
+      .notice-box .cell-list {
+        font-size: 0.94rem;
+        color: var(--ink-secondary);
+      }
+
+      .tickets-section {
+        scroll-margin-block-start: 4.75rem;
+      }
+
+      .table-wrapper {
+        overflow-x: auto;
+        max-inline-size: 100%;
+        container-type: inline-size;
+        border: 1px solid var(--border-hairline);
+        border-radius: 1rem;
+        background-color: var(--surface-sheet);
+      }
+
+      table {
+        border-collapse: separate;
+        border-spacing: 0;
+        inline-size: 100%;
+        text-align: start;
+        --label-2: "最新門票價格（全票／敬老／兒童）";
+        --label-3: "特色活動與收費明細";
+        --label-4: "預約與購票提醒";
+      }
+
+      caption {
+        padding: 1rem 1.25rem 0.65rem;
+        text-align: start;
+        font-size: 0.94rem;
+        color: var(--ink-muted);
+        background-color: var(--surface-sheet);
+      }
+
+      thead {
+        position: sticky;
+        inset-block-start: 0;
+        z-index: 1;
+      }
+
+      thead th {
+        padding: 0.85rem 1rem;
+        background-color: var(--surface-subtle);
+        color: var(--ink-primary);
+        font-size: 0.92rem;
+        font-weight: 700;
+        border-block-start: 1px solid var(--border-hairline);
+        border-block-end: 1px solid var(--border-strong);
+        vertical-align: bottom;
+      }
+
+      thead th:first-child {
+        position: sticky;
+        inset-inline-start: 0;
+        z-index: 2;
+        min-inline-size: 11.5rem;
+      }
+
+      tbody th,
+      tbody td {
+        padding: 1rem;
+        border-block-end: 1px solid var(--border-hairline);
+        vertical-align: top;
+        font-variant-numeric: tabular-nums;
+      }
+
+      tbody tr:last-child th,
+      tbody tr:last-child td {
+        border-block-end: 0;
+      }
+
+      tbody th {
+        position: sticky;
+        inset-inline-start: 0;
+        z-index: 1;
+        background-color: var(--surface-sheet);
+        text-align: start;
+        font-weight: 700;
+        min-inline-size: 11.5rem;
+      }
+
+      .spot-tag {
+        display: inline-block;
+        margin-block-start: 0.35rem;
+        padding: 0.12rem 0.5rem;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        border: 1px solid var(--border-hairline);
+        background-color: var(--surface-subtle);
+        color: var(--ink-secondary);
+      }
+
+      .spot-tag--new {
+        background-color: var(--accent-terracotta-bg);
+        color: var(--accent-terracotta);
+        border-color: oklch(0.84 0.06 46);
+      }
+
+      .spot-tag--sun {
+        background-color: var(--accent-sun-bg);
+        color: var(--accent-sun);
+        border-color: oklch(0.84 0.065 80);
+      }
+
+      .spot-tag--rain {
+        background-color: var(--accent-rain-bg);
+        color: var(--accent-rain);
+        border-color: oklch(0.83 0.045 232);
+      }
+
+      .cell-list {
+        margin: 0;
+        padding-inline-start: 1.15em;
+      }
+
+      .cell-list li + li {
+        margin-block-start: 0.35rem;
+      }
+
+      @container (width < 46rem) {
+        .table-wrapper {
+          border: 0;
+          border-radius: 0;
+          background-color: transparent;
+          overflow: visible;
+        }
+
+        caption {
+          padding-inline: 0;
+          padding-block-start: 0;
+          background-color: transparent;
+        }
+
+        table,
+        thead,
+        tbody,
+        tr,
+        th,
+        td {
+          display: block;
+        }
+
+        thead {
+          display: none;
+        }
+
+        tr {
+          margin-block-end: 1.25rem;
+          border: 1px solid var(--border-hairline);
+          border-radius: 1rem;
+          overflow: hidden;
+          background-color: var(--surface-sheet);
+        }
+
+        tbody th {
+          position: sticky;
+          inset-block-start: 0;
+          inset-inline-start: auto;
+          z-index: 2;
+          background-color: var(--surface-subtle);
+          border-block-end: 1px solid var(--border-strong);
+          min-inline-size: 0;
+        }
+
+        tbody td {
+          padding: 0.85rem 1rem;
+        }
+
+        td:nth-child(2)::before {
+          content: var(--label-2);
+          display: block;
+          margin-block-end: 0.35rem;
+          font-size: 0.84rem;
+          font-weight: 700;
+          color: var(--ink-muted);
+        }
+
+        td:nth-child(3)::before {
+          content: var(--label-3);
+          display: block;
+          margin-block-end: 0.35rem;
+          font-size: 0.84rem;
+          font-weight: 700;
+          color: var(--ink-muted);
+        }
+
+        td:nth-child(4)::before {
+          content: var(--label-4);
+          display: block;
+          margin-block-end: 0.35rem;
+          font-size: 0.84rem;
+          font-weight: 700;
+          color: var(--ink-muted);
+        }
+      }
+
+      footer {
+        max-inline-size: 70rem;
+        margin-inline: auto;
+        padding: 1.25rem clamp(1rem, 3vw, 2rem) 2.5rem;
+        border-block-start: 1px solid var(--border-hairline);
+        color: var(--ink-muted);
+        font-size: 0.9rem;
+      }
+
+      footer p {
+        margin: 0;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+        }
+      }
+
+      @media print {
+        body {
+          background-color: oklch(0.998 0 0);
+          color: oklch(0.18 0.01 80);
+          line-height: 1.55;
+        }
+
+        .skip-link,
+        .site-header,
+        .print-btn {
+          display: none !important;
+        }
+
+        main {
+          max-inline-size: none;
+          padding: 0;
+        }
+
+        .hero {
+          background-color: oklch(0.96 0.01 152);
+          color: oklch(0.18 0.01 80);
+          border: 1px solid oklch(0.75 0.01 80);
+          break-inside: avoid;
+        }
+
+        .hero h1,
+        .hero-eyebrow,
+        .hero-route {
+          color: oklch(0.18 0.01 80);
+        }
+
+        .hero-chips li {
+          background-color: oklch(0.998 0 0);
+          color: oklch(0.18 0.01 80);
+          border-color: oklch(0.7 0.01 80);
+        }
+
+        .hero-map {
+          background-color: oklch(0.3 0.052 152);
+        }
+
+        .stop-item,
+        .option-card,
+        tbody tr {
+          break-inside: avoid;
+        }
+
+        .table-wrapper {
+          overflow: visible;
+        }
+
+        thead,
+        thead th:first-child,
+        tbody th {
+          position: static;
+        }
+
+        a {
+          color: oklch(0.18 0.01 80);
+          text-decoration: underline;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link visually-hidden"
+      >跳至主要行程內容</a
+    >
+
+    <header class="site-header">
+      <div class="header-inner">
+        <span class="brand-mark">宜蘭慢活手冊</span>
+        <div class="header-actions">
+          <nav aria-label="行程章節">
+            <ul>
+              <li><a class="nav-link" href="#day1">Day 1 週五</a></li>
+              <li><a class="nav-link" href="#day2">Day 2 週六</a></li>
+              <li><a class="nav-link" href="#tickets">景點門票參考</a></li>
+            </ul>
+          </nav>
+          <button type="button" class="print-btn" onclick="window.print()">
+            列印行程
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <p class="hero-eyebrow">
+            12/11（週五）– 12/12（週六）｜住宿固定：品文旅礁溪
+          </p>
+          <h1 id="main-content" tabindex="-1">慢活兩天一夜行程表</h1>
+          <p class="hero-route">
+            台北出發 ➔ 礁溪輕散步與午餐 ➔ 品文旅礁溪玩水放鬆 ➔
+            週六彈性慢遊與晚餐 ➔ 台北萬華龍山寺
+          </p>
+          <ul class="hero-chips">
+            <li>住宿：品文旅礁溪</li>
+            <li>必帶：泳衣與泳帽</li>
+            <li>12 月戲水注意低溫保暖</li>
+          </ul>
+        </div>
+        <div class="hero-map">
+          <svg role="img" viewBox="0 0 420 220" width="420" height="220">
+            <title>礁溪品文旅兩天一夜慢活路線示意圖</title>
+            <path
+              d="M10 185 Q105 135 190 160 T410 140 L410 212 L10 212 Z"
+              fill="oklch(0.975 0.008 82 / 0.08)"
+            />
+            <path
+              d="M10 198 Q135 162 245 178 T410 168 L410 212 L10 212 Z"
+              fill="oklch(0.975 0.008 82 / 0.12)"
+            />
+            <path
+              d="M56 54 C115 58, 138 78, 184 86 C238 96, 286 112, 324 128 C342 136, 310 162, 240 168 C172 174, 108 158, 60 132"
+              fill="none"
+              stroke="oklch(0.87 0.018 90 / 0.72)"
+              stroke-width="2.5"
+              stroke-dasharray="5 5"
+              stroke-linecap="round"
+            />
+
+            <circle cx="56" cy="54" r="6" fill="oklch(0.975 0.008 82)" />
+            <text
+              x="56"
+              y="38"
+              text-anchor="middle"
+              fill="oklch(0.975 0.008 82)"
+              font-size="12"
+              font-weight="700"
+            >
+              台北出發
+            </text>
+
+            <circle cx="184" cy="86" r="6" fill="oklch(0.76 0.12 46)" />
+            <text
+              x="184"
+              y="68"
+              text-anchor="middle"
+              fill="oklch(0.975 0.008 82)"
+              font-size="11"
+            >
+              礁溪（溫泉公園／品文旅）
+            </text>
+
+            <circle cx="324" cy="128" r="6" fill="oklch(0.84 0.11 82)" />
+            <text
+              x="324"
+              y="110"
+              text-anchor="middle"
+              fill="oklch(0.975 0.008 82)"
+              font-size="11"
+            >
+              週六彈性慢遊（未定）
+            </text>
+
+            <circle cx="240" cy="168" r="6" fill="oklch(0.84 0.10 148)" />
+            <text
+              x="240"
+              y="190"
+              text-anchor="middle"
+              fill="oklch(0.975 0.008 82)"
+              font-size="11"
+            >
+              宜北／宜中晚餐（18:00）
+            </text>
+
+            <circle cx="60" cy="132" r="6" fill="oklch(0.82 0.075 232)" />
+            <text
+              x="72"
+              y="154"
+              text-anchor="middle"
+              fill="oklch(0.975 0.008 82)"
+              font-size="11"
+            >
+              萬華龍山寺
+            </text>
+          </svg>
+        </div>
+      </section>
+
+      <section id="day1" class="day-section day-section--one">
+        <div class="section-head">
+          <h2>
+            <span class="day-badge day-badge--one">DAY 1</span>12/11（週五）
+          </h2>
+          <p class="section-subtitle">
+            礁溪輕散步與午餐 ➔ 品文旅礁溪入住玩水 ➔ 館內放鬆
+          </p>
+        </div>
+
+        <ol class="timeline" role="list">
+          <li class="stop-item stop-item--transit">
+            <div class="stop-meta">
+              <span class="stop-time">10:00~11:00</span>
+              <span class="drive-pill">交通約 50–60 分鐘</span>
+            </div>
+            <div class="stop-body">
+              <h3>台北出發 ➔ 礁溪</h3>
+              <p class="stop-highlight">
+                <span class="highlight-label">適合長輩與幼童的亮點</span>
+                經國道5號頭城／礁溪交流道下，避開早尖峰，輕鬆抵達礁溪展開行程。
+              </p>
+            </div>
+          </li>
+
+          <li class="stop-item">
+            <div class="stop-meta">
+              <span class="stop-time">11:00~12:00</span>
+              <span class="stay-pill">停留約 1 小時</span>
+            </div>
+            <div class="stop-body">
+              <h3>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&amp;query=%E7%A4%81%E6%BA%AA%E6%BA%AB%E6%B3%89%E5%85%AC%E5%9C%92"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >礁溪溫泉公園（幾米兔）</a
+                >
+                <span class="stop-address">（礁溪鄉公園路70巷60號）</span>
+              </h3>
+              <p class="stop-highlight">
+                <span class="highlight-label">適合長輩與幼童的亮點</span>
+                園區平緩好走、免費參觀；沿途有多組幾米兔裝置藝術方便孩子拍照尋寶，長輩可在涼亭免費泡足湯歇息（建議自備小毛巾並先試水溫），車可停礁溪轉運站停車場。
+              </p>
+            </div>
+          </li>
+
+          <li class="stop-item">
+            <div class="stop-meta">
+              <span class="stop-time">12:10~13:30</span>
+              <span class="drive-pill">交通 12:00~12:10｜約 5–10 分</span>
+              <span class="stay-pill">用餐約 1 小時 20 分鐘</span>
+            </div>
+            <div class="stop-body">
+              <h3>礁溪市區享用午餐</h3>
+              <p class="stop-highlight">
+                <span class="highlight-label">適合長輩與幼童的亮點</span>
+                於礁溪市區就近享用午餐並稍作休息，飯後短程車程即可抵達飯店。
+              </p>
+            </div>
+          </li>
+
+          <li class="stop-item">
+            <div class="stop-meta">
+              <span class="stop-time">13:45~21:00</span>
+              <span class="drive-pill">交通 13:30~13:45｜約 5–10 分</span>
+              <span class="stay-pill">約 13:30–14:00 抵達｜15:00 標準進房</span>
+            </div>
+            <div class="stop-body">
+              <h3>
+                抵達
+                <a
+                  href="https://www.google.com/maps/search/?api=1&amp;query=%E5%93%81%E6%96%87%E6%97%85%E7%A4%81%E6%BA%AA"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >品文旅礁溪</a
+                >
+                ＆ 玩水、館內設施
+                <span class="stop-address">（礁溪鄉健康二街21巷2號）</span>
+              </h3>
+              <p class="stop-highlight">
+                <span class="highlight-label">入住與設施動線</span>
+                預計 13:30–14:00
+                抵達飯店辦理登記與寄放行李，向櫃檯詢問是否可提前使用 2 館 1
+                樓溫泉 SPA 水療池（13:00–22:00 開放，12:00–13:00
+                清潔）或館內遊戲設施；15:00 正式進房後繼續悠閒玩水與泡湯。
+              </p>
+              <div class="notice-box">
+                <p class="notice-title">玩水與 12 月保暖提醒</p>
+                <ul class="cell-list">
+                  <li>
+                    <strong>務必攜帶泳衣與泳帽</strong>：品文旅礁溪溫泉 SPA
+                    水療池規定須穿著泳裝並配戴泳帽方可入池。
+                  </li>
+                  <li>
+                    <strong>天氣偏冷注意保暖</strong
+                    >準備連帽浴巾或保暖外衣，起身後立刻擦乾保暖。
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <section id="day2" class="day-section day-section--two">
+        <div class="section-head">
+          <h2>
+            <span class="day-badge day-badge--two">DAY 2</span>12/12（週六）
+          </h2>
+          <p class="section-subtitle">
+            飯店退房 ➔ 彈性慢遊（未定）➔ 宜北／宜中晚餐 ➔ 返回萬華龍山寺
+          </p>
+        </div>
+
+        <ol class="timeline" role="list">
+          <li class="stop-item">
+            <div class="stop-meta">
+              <span class="stop-time">08:30~11:00</span>
+              <span class="stay-pill">11:00 前辦理退房</span>
+            </div>
+            <div class="stop-body">
+              <h3>品文旅礁溪早餐、館內放鬆與退房</h3>
+              <p class="stop-highlight">
+                <span class="highlight-label">適合長輩與幼童的亮點</span>
+                睡飽享用飯店早餐，退房前可再輕鬆泡湯或讓孩子使用館內設施，不趕行程。
+              </p>
+            </div>
+          </li>
+
+          <li class="stop-item">
+            <div class="stop-meta">
+              <span class="stop-time">11:00~17:30</span>
+              <span class="stay-pill">依當日天氣與體力自由挑選 1–2 站</span>
+            </div>
+            <div class="stop-body">
+              <h3>週六彈性慢遊時段（尚未決定）</h3>
+              <p class="stop-highlight">
+                <span class="highlight-label">適合長輩與幼童的亮點</span>
+                退房後視天氣與長輩幼童精神決定去處，以下保留候選清單供現場挑選：
+              </p>
+              <div class="option-grid">
+                <div class="option-card option-card--sun">
+                  <span class="option-badge">
+                    <svg
+                      aria-hidden="true"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="12" cy="12" r="4" />
+                      <path
+                        d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
+                      />
+                    </svg>
+                    晴天／戶外候選
+                  </span>
+                  <ul class="cell-list">
+                    <li>
+                      <a
+                        href="https://www.google.com/search?kgmid=%2Fg%2F11b77bk03k"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >宜蘭幾米公園</a
+                      >（宜興路一段240號）：免費拍立體繪本裝置與丟丟噹森林。
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.google.com/search?kgmid=%2Fg%2F155t06q8"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >羅東林業文化園區</a
+                      >（羅東鎮中正北路118號）：免費平緩木棧道、長椅與蒸汽火車頭。
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.google.com/search?kgmid=%2Fg%2F11bwc5dtby"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >宜農牧場</a
+                      >（冬山鄉長春路239巷17號）：平坦好走，孩子餵小羊小豬、長輩喝羊奶休息。
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="option-card option-card--rain">
+                  <span class="option-badge">
+                    <svg
+                      aria-hidden="true"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M22 12a10.06 10.06 0 0 0-20 0Z" />
+                      <path d="M12 12v8a2 2 0 0 0 4 0" />
+                      <path d="M12 2v1" />
+                    </svg>
+                    雨天／室內與騎樓候選
+                  </span>
+                  <ul class="cell-list">
+                    <li>
+                      <a
+                        href="https://www.google.com/search?kgmid=%2Fg%2F11vc4cywh8"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >宜蘭傳藝園區</a
+                      >（五結鄉五濱路二段201號）：全平地連貫騎樓長廊，看戲曲、踩街與童玩手作。
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.google.com/search?kgmid=%2Fg%2F1tlqmqm5"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >溪和水產觀光工廠</a
+                      >（五結鄉利興二路11號）：全室內冷暖氣無魚腥味，吃海鮮與汆燙／透抽壓片
+                      DIY。
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <li class="stop-item">
+            <div class="stop-meta">
+              <span class="stop-time">18:00~19:30</span>
+              <span class="drive-pill">交通 17:30~18:00｜約 15–30 分</span>
+              <span class="stay-pill">用餐約 1 小時 30 分鐘</span>
+            </div>
+            <div class="stop-body">
+              <h3>宜蘭北部或中部享用晚餐</h3>
+              <p class="stop-highlight">
+                <span class="highlight-label">適合長輩與幼童的亮點</span>
+                預計 18:00
+                左右在礁溪或宜蘭市區（宜北／宜中）吃晚餐，推薦老字號台菜合菜（如<a
+                  href="https://www.google.com/search?kgmid=%2Fg%2F1tfthytz"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >渡小月</a
+                >、<a
+                  href="https://www.google.com/search?kgmid=%2Fg%2F1ts3hyt0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >蘭陽風味餐廳</a
+                >）或礁溪在地合菜，菜色軟嫩好入口且飯後就近上交流道。
+              </p>
+            </div>
+          </li>
+
+          <li class="stop-item stop-item--transit">
+            <div class="stop-meta">
+              <span class="stop-time">19:30~20:45</span>
+              <span class="drive-pill">交通約 60–75 分鐘</span>
+            </div>
+            <div class="stop-body">
+              <h3>
+                啟程北返 ➔
+                <a
+                  href="https://www.google.com/maps/search/?api=1&amp;query=%E8%89%8B%E8%88%BA%E9%BE%8D%E5%B1%B1%E5%AF%BA"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >台北萬華龍山寺</a
+                >附近
+              </h3>
+              <p class="stop-highlight">
+                <span class="highlight-label">適合長輩與幼童的亮點</span>
+                餐畢自頭城／礁溪或宜蘭交流道上國道5號北返台北萬華龍山寺附近；週六晚間國5北上偶有車多路段，預留約
+                60–75 分鐘車程較寬裕。
+              </p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <section id="tickets" class="tickets-section">
+        <div class="section-head">
+          <h2>景點門票與活動參考明細</h2>
+          <p class="section-subtitle">
+            包含礁溪首站與週六候選景點之票價、DIY 項目與停車提醒
+          </p>
+        </div>
+
+        <div
+          tabindex="0"
+          role="region"
+          aria-labelledby="tickets-table-caption"
+          class="table-wrapper"
+        >
+          <table>
+            <caption id="tickets-table-caption">
+              全行程景點最新門票價格、特色活動與預約提醒
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">景點名稱</th>
+                <th scope="col">最新門票價格（全票／敬老／兒童）</th>
+                <th scope="col">特色活動與收費明細</th>
+                <th scope="col">預約與購票提醒</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">
+                  <div>
+                    <a
+                      href="https://www.google.com/maps/search/?api=1&amp;query=%E7%A4%81%E6%BA%AA%E6%BA%AB%E6%B3%89%E5%85%AC%E5%9C%92"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >礁溪溫泉公園（幾米兔）</a
+                    >
+                  </div>
+                  <span class="spot-tag spot-tag--new">Day 1 首站</span>
+                </th>
+                <td>免費參觀（戶外泡腳池免費；森林風呂露天裸湯另計）</td>
+                <td>
+                  <ul class="cell-list">
+                    <li>
+                      免費：幾米兔裝置藝術拍照散步、戶外泡腳池（建議自備小毛巾並先試水溫）
+                    </li>
+                  </ul>
+                </td>
+                <td>免預約；建議停放礁溪轉運站收費停車場再步行進入。</td>
+              </tr>
+
+              <tr>
+                <th scope="row">
+                  <div>
+                    <a
+                      href="https://www.google.com/search?kgmid=%2Fg%2F11b77bk03k"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >宜蘭幾米公園</a
+                    >
+                  </div>
+                </th>
+                <td>免費參觀（24小時開放）</td>
+                <td>
+                  <ul class="cell-list">
+                    <li>
+                      免費：拍攝《星空》、《向左走·向右走》立體繪本裝置藝術，可順遊對面丟丟噹森林
+                    </li>
+                  </ul>
+                </td>
+                <td>免預約；周邊路邊或收費停車場計時收費（約 $20–$50/時）。</td>
+              </tr>
+
+              <tr>
+                <th scope="row">
+                  <div>
+                    <a
+                      href="https://www.google.com/search?kgmid=%2Fg%2F11vc4cywh8"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >宜蘭傳藝園區</a
+                    >
+                  </div>
+                  <span class="spot-tag spot-tag--rain">雨天友善</span>
+                </th>
+                <td>
+                  <ul class="cell-list">
+                    <li>普通票：$150</li>
+                    <li>敬老票（65歲以上）：$75</li>
+                    <li>優惠票（6歲以上學生）：$120</li>
+                    <li>未滿6歲兒童：免費</li>
+                  </ul>
+                </td>
+                <td>
+                  <ul class="cell-list">
+                    <li>
+                      門票內含：定時踩街表演、演藝廳戲曲演出、文昌祠與歷史建築參觀
+                    </li>
+                    <li>
+                      付費體驗：畫舫遊冬山河、糖蔥/木工/彩繪/陶瓷等傳統工藝 DIY
+                    </li>
+                  </ul>
+                </td>
+                <td>
+                  免預約，現場或線上購票皆可（停車費 $30/時，當日最高 $60）；70
+                  歲長輩購票請出示身分證享半價 $75。
+                </td>
+              </tr>
+
+              <tr>
+                <th scope="row">
+                  <div>
+                    <a
+                      href="https://recreation.forest.gov.tw/Forestry/CP?typ_id=0100021"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >羅東林業文化園區（官方網站）</a
+                    >
+                  </div>
+                </th>
+                <td>免費入園</td>
+                <td>
+                  <ul class="cell-list">
+                    <li>
+                      免費：貯木池環池木棧道散步、看蒸汽火車頭與林業展館（展館開放
+                      09:00–12:00、13:30–17:00）
+                    </li>
+                  </ul>
+                </td>
+                <td>
+                  免預約；園區設有收費停車場（小型車每小時 $60，平日最高
+                  $100）。
+                </td>
+              </tr>
+
+              <tr>
+                <th scope="row">
+                  <div>
+                    <a
+                      href="https://www.facebook.com/elfarm123/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >宜農牧場（官方粉專）</a
+                    >
+                  </div>
+                  <span class="spot-tag spot-tag--sun">晴天備案</span>
+                </th>
+                <td>
+                  <ul class="cell-list">
+                    <li>全票（13–65歲）：$150</li>
+                    <li>半票（6–12歲 / 66歲以上）：$100</li>
+                    <li>5歲以下：免費</li>
+                  </ul>
+                </td>
+                <td>
+                  <ul class="cell-list">
+                    <li>
+                      門票內含：餵食小羊、天竺鼠、兔子與小豬，並兌換 $60
+                      鮮羊奶或飲品
+                    </li>
+                    <li>
+                      付費體驗：餵小豬喝奶瓶（現場加購）、羊奶香皂
+                      DIY（$320）、羊奶鬆餅 DIY
+                    </li>
+                  </ul>
+                </td>
+                <td>
+                  免預約，現場購票即可（週五、週六皆正常營業）；羊奶鬆餅 DIY
+                  建議提前電話預約。
+                </td>
+              </tr>
+
+              <tr>
+                <th scope="row">
+                  <div>
+                    <a
+                      href="https://www.siho.com.tw/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >溪和水產觀光工廠（官方網站）</a
+                    >
+                  </div>
+                  <span class="spot-tag spot-tag--rain">雨天備案</span>
+                </th>
+                <td>
+                  <ul class="cell-list">
+                    <li>普通票：$100</li>
+                    <li>優待票（65歲以上）：$50</li>
+                    <li>120公分以下幼童：免費</li>
+                  </ul>
+                </td>
+                <td>
+                  <ul class="cell-list">
+                    <li>
+                      門票內含：互動式漫畫展與水產導覽，門票可全額折抵伴手禮
+                    </li>
+                    <li>
+                      付費體驗：海鮮汆燙體驗、透抽壓片、三角飯糰 DIY（套票組
+                      $299，最晚 15:30 入場）
+                    </li>
+                  </ul>
+                </td>
+                <td>
+                  散客免預約，現場購票即可（週五、週六皆正常營業）；免費停車。
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>慢活兩天一夜宜蘭行程表 · 出發前可點擊各景點連結確認最新公告</p>
+    </footer>
+  </body>
+</html>
